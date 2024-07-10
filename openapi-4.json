@@ -1,0 +1,2067 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "https://api.verihubs.com"
+        }
+    ],
+    "info": {
+        "title": "Sandbox - AI API Documentation",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "Face",
+            "description": "Get information about Face API (Sandbox)"
+        },
+        {
+            "name": "KTP",
+            "description": "Get information about KTP API (Sandbox)"
+        }
+    ],
+    "paths": {
+        "/v1/face/enroll": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Sandbox - Enroll Face",
+                "description": "This method helps you to enroll image containing face<br>\n\nThe following table describes the image option to be used as input.<br>\nImage scenario consists of Person A to J. Person is described in the last character: _A means person A, _B means person B, up until _J means person_J. Besides, image scenario consists of number of face in single image 1-9.  Number of Face is described in the last character, which are _1 means 1 face in photo, _2 means 2 face in photo.<br>\n\n| Images                          | Description                                                                                               |\n|---------------------------------|-----------------------------------------------------------------------------------------------------------|\n| IMAGE_EXCEED_LIMIT              | Photo with size > 5MB                                                                                    |\n| NO_FACE_PHOTO                   | Photo with no face detected                                                                               |\n| LIVE_PERSON_A_N                   | Photo of Live Person (A)                                                                                  |\n| LIVE_PERSON_M_A_N                 | Photo of Live Person (A) wearing Mask                                                                     |\n| LIVE_PERSON_V_A_N                 | Photo of Live Person (A) wearing Veil                                                                     |\n| LIVE_PERSON_S_A_N                 | Photo of Live Person (A) wearing Sunglasses                                                               |\n| LIVE_PERSON_MV_A_N                | Photo of Live Person (A) wearing Mask, Veil                                                               |\n| LIVE_PERSON_MS_A_N                | Photo of Live Person (A) wearing Mask, Sunglasses                                                         |\n| LIVE_PERSON_VS_A_N                | Photo of Live Person (A) wearing Veil, Sunglasses                                                         |\n| LIVE_PERSON_MVS_A_N               | Photo of Live Person (A) wearing Mask, Veil, Sunglasses                                                   |\n| LIVE_PERSON_BLUR_A_N              | Photo of Live Person (A) with blur condition                                                              |\n| LIVE_PERSON_DARK_A_N              | Photo of Live Person (A) with dark condition                                                              |\n| LIVE_PERSON_BLURDARK_A_N          | Photo of Live Person (A) with blur and dark condition                                                     |\n| LIVE_PERSON_BLUR_M_A_N            | Photo of Live Person (A) wearing Mask, with blur condition                                                |\n| LIVE_PERSON_BLUR_V_A_N            | Photo of Live Person (A) wearing Veil, with blur condition                                                |\n| LIVE_PERSON_BLUR_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with blur condition                                          |\n| LIVE_PERSON_BLUR_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with blur condition                                          |\n| LIVE_PERSON_BLUR_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses with blur condition                                     |\n| LIVE_PERSON_BLUR_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses, with blur condition                                    |\n| LIVE_PERSON_BLUR_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur condition                              |\n| LIVE_PERSON_DARK_M_A_N            | Photo of Live Person (A) wearing Mask, with dark condition                                                |\n| LIVE_PERSON_DARK_V_A_N            | Photo of Live Person (A) wearing Veil, with dark condition                                                |\n| LIVE_PERSON_DARK_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with dark condition                                          |\n| LIVE_PERSON_DARK_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with dark condition                                          |\n| LIVE_PERSON_DARK_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses, with dark condition                                    |\n| LIVE_PERSON_DARK_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses with blur and dark condition                            |\n| LIVE_PERSON_DARK_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with dark condition                              |\n| LIVE_PERSON_BLURDARK_M_A_N        | Photo of Live Person (A) wearing Mask, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_V_A_N        | Photo of Live Person (A) wearing Veil, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_S_A_N        | Photo of Live Person (A) wearing Sunglasses, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MV_A_N       | Photo of Live Person (A) wearing Mask, Veil, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MS_A_N       | Photo of Live Person (A) wearing Mask, Sunglasses, with blur and dark condition                           |\n| LIVE_PERSON_BLURDARK_VS_A_N       | Photo of Live Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                   |\n| LIVE_PERSON_BLURDARK_MVS_A_N      | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                     |\n| SPOOF_PERSON_A_N                  | Photo of Spoof Person (A)                                                                                 |\n| SPOOF_PERSON_M_A_N                | Photo of Spoof Person (A) wearing Mask                                                                    |\n| SPOOF_PERSON_V_A_N                | Photo of Spoof Person (A) wearing Veil                                                                    |\n| SPOOF_PERSON_S_A_N                | Photo of Spoof Person (A) wearing Sunglasses                                                              |\n| SPOOF_PERSON_MV_A_N               | Photo of Spoof Person (A) wearing Mask, Veil                                                              |\n| SPOOF_PERSON_MS_A_N               | Photo of Spoof Person (A) wearing Mask, Sunglasses                                                        |\n| SPOOF_PERSON_VS_A_N               | Photo of Spoof Person (A) wearing Veil, Sunglasses                                                        |\n| SPOOF_PERSON_MVS_A_N              | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses                                                  |\n| SPOOF_PERSON_BLUR_A_N             | Photo of Spoof Person (A) with blur condition                                                             |\n| SPOOF_PERSON_DARK_A_N             | Photo of Spoof Person (A) with dark condition                                                             |\n| SPOOF_PERSON_BLURDARK_A_N         | Photo of Spoof Person (A) with blur and dark condition                                                    |\n| SPOOF_PERSON_GRAY_A_N             | Photo of Spoof Person (A) in grayscale image                                                              |\n| SPOOF_PERSON_GRAY_M_A_N           | Photo of Spoof Person (A) in grayscale image wearing Mask                                                 |\n| SPOOF_PERSON_GRAY_V_A_N           | Photo of Spoof Person (A) in grayscale image wearing Veil                                                 |\n| SPOOF_PERSON_GRAY_S_A_N           | Photo of Spoof Person (A) in grayscale image wearing Sunglasses                                           |\n| SPOOF_PERSON_GRAY_MV_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil                                           |\n| SPOOF_PERSON_GRAY_MS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_VS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Veil, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_MVS_A_N         | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil, Sunglasses                               |\n| SPOOF_PERSON_GRAYBLUR_A_N         | Photo of Spoof Person (A) in grayscale image with blur condition                                          |\n| SPOOF_PERSON_GRAYDARK_A_N         | Photo of Spoof Person (A) in grayscale image with dark condition                                          |\n| SPOOF_PERSON_GRAYBLURDARK_A_N     | Photo of Spoof Person (A) in grayscale image with blur and dark condition                                 |\n| SPOOF_PERSON_BLUR_M_A_N           | Photo of Spoof Person (A) wearing Mask, with blur condition                                               |\n| SPOOF_PERSON_BLUR_V_A_N           | Photo of Spoof Person (A) wearing Veil, with blur condition                                               |\n| SPOOF_PERSON_BLUR_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses with blur condition                                    |\n| SPOOF_PERSON_BLUR_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses, with blur condition                                   |\n| SPOOF_PERSON_BLUR_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur condition                             |\n| SPOOF_PERSON_DARK_M_A_N           | Photo of Spoof Person (A) wearing Mask, with dark condition                                               |\n| SPOOF_PERSON_DARK_V_A_N           | Photo of Spoof Person (A) wearing Veil, with dark condition                                               |\n| SPOOF_PERSON_DARK_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with dark condition                                         |\n| SPOOF_PERSON_DARK_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with dark condition                                         |\n| SPOOF_PERSON_DARK_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses, with dark condition                                   |\n| SPOOF_PERSON_DARK_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and dark condition                           |\n| SPOOF_PERSON_DARK_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with dark condition                             |\n| SPOOF_PERSON_BLURDARK_M_A_N       | Photo of Spoof Person (A) wearing Mask, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_V_A_N       | Photo of Spoof Person (A) wearing Veil, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_S_A_N       | Photo of Spoof Person (A) wearing Sunglasses, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MV_A_N      | Photo of Spoof Person (A) wearing Mask, Veil, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MS_A_N      | Photo of Spoof Person (A) wearing Mask, Sunglasses, with blur and dark condition                          |\n| SPOOF_PERSON_BLURDARK_VS_A_N      | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                  |\n| SPOOF_PERSON_BLURDARK_MVS_A_N     | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                    |\n| SPOOF_PERSON_GRAYBLUR_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur condition          |\n| SPOOF_PERSON_GRAYDARK_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with dark condition          |\n| SPOOF_PERSON_GRAYBLURDARK_M_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_V_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_S_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MV_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_VS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_MVS_A_N | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur and dark condition |\n\n<br> \nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n\n| Error code                    | Description                                  |\n| -----------------------------|:---------------------------------------------|\n| INVALID_PAYLOAD                | no value in payload or empty string more than 1  |\n| INVALID_PAYLOAD_IMAGE_SIZE    | invalid payload image size too large |\n| MISSING_PAYLOAD_IMAGE         |  missing payload image                       |\n| INVALID_PAYLOAD_IMAGE_MISSING | image empty string  |\n| INVALID_PAYLOAD_SUBJECT_ID_MISSING | subject id empty string    |\n| FACE_NOT_DETECTED              | face not detected from image              |\n| INVALID_SANDBOX_IMAGE_CODE    | image not exist in image code sandbox |\n| INVALID_SANDBOX_IDENTITY      | identity of image not between A-J |\n| INVALID_SANDBOX_NFACE   | number of face in image not 1-9|\n| INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY  | is_quality must be true if validate_quality true |\n| INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true |\n| INVALID_PAYLOAD_LIVENESS_VALIDATION_DEPENDENCY  | is_liveness must be true if validate_liveness true |\n| FAIL_ON_1                      | fail on liveness                          |\n| FAIL_ON_2                      | fail on attribute                         |\n| FAIL_ON_3                      | fail on liveness and attribute            |\n| FAIL_ON_4                      | fail on quality                           |\n| FAIL_ON_5                      | fail on liveness and quality              |\n| FAIL_ON_6                      | fail on attribute and quality             |\n| FAIL_ON_7                      | fail on liveness, attribute, and quality  |\n|FAIL_ON_8            |fail on number of face (nface)|\n|FAIL_ON_9            |fail on number of face (nface) and liveness|\n|FAIL_ON_10            |fail on nfail on number of face (nface) and attribute|\n|FAIL_ON_11            |fail on number of face (nface), attribute, and liveness|\n|FAIL_ON_12            |fail on number of face (nface) and quality|\n|FAIL_ON_13            |fail on number of face (nface), quality, and liveness|\n|FAIL_ON_14            |fail on number of face (nface), quality, and attribute|\n|FAIL_ON_15            |fail on number of face (nface), quality, attribute, and liveness|\n| INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "enroll_face_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EnrollFace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseEnrollFace"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Successful Response (Insert New)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseEnrollFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Sanbox - Delete Enrolled Face",
+                "description": "This method helps you to delete enrolled image<br>\n\nThe following table describes subject_id option to be used as input.\n\n| subject_id    | Description                                   |\n|---------------|-----------------------------------------------|\n| SUB_EXIST     | subject_id exist in respected App-ID          |\n| SUB_NOT_EXIST | subject_id does not exist in respected App-ID |\n\n<br>\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error code                    | Description                                  |\n| -----------------------------|:---------------------------------------------|\n| INVALID_SANDBOX_SUBJECT_ID   | subject_id not exist in image code sandbox  |\n| INVALID_PAYLOAD_SUBJECT_ID    | subject id not valid / subject id is not found |\n| INVALID_PAYLOAD_SUBJECT_ID_MISSING | Subject id payload is empty/null  |\n| MISSING_PAYLOAD_SUBJECT_ID    | Subject id payload is missing   |\n| INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "enroll_face_delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "subject_id",
+                            "type": "string"
+                        },
+                        "name": "subject_id",
+                        "description": "Subject ID to be deleted (choose from available option)",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDeleteEnrollFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Subject ID is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNotFoundDeleteEnrollFace"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/face/compare": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Sandbox - Compare Face",
+                "description": "This method helps you to compare face between 2 images<br>\n\nThe following table describes the image option to be used as input.<br>\nImage scenario consists of Person A to J. Person is described in the last character: _A means person A, _B means person B, up until _J means person_J. Besides, image scenario consists of number of face in single image 1-9.  Number of Face is described in the last character, which are _1 means 1 face in photo, _2 means 2 face in photo.<br>\n\n| Images                          | Description                                                                                               |\n|---------------------------------|-----------------------------------------------------------------------------------------------------------|\n| IMAGE_EXCEED_LIMIT              | Photo with size > 5MiB                                                                                    |\n| NO_FACE_PHOTO                   | Photo with no face detected                                                                               |\n| LIVE_PERSON_A_N                   | Photo of Live Person (A)                                                                                  |\n| LIVE_PERSON_M_A_N                 | Photo of Live Person (A) wearing Mask                                                                     |\n| LIVE_PERSON_V_A_N                 | Photo of Live Person (A) wearing Veil                                                                     |\n| LIVE_PERSON_S_A_N                 | Photo of Live Person (A) wearing Sunglasses                                                               |\n| LIVE_PERSON_MV_A_N                | Photo of Live Person (A) wearing Mask, Veil                                                               |\n| LIVE_PERSON_MS_A_N                | Photo of Live Person (A) wearing Mask, Sunglasses                                                         |\n| LIVE_PERSON_VS_A_N                | Photo of Live Person (A) wearing Veil, Sunglasses                                                         |\n| LIVE_PERSON_MVS_A_N               | Photo of Live Person (A) wearing Mask, Veil, Sunglasses                                                   |\n| LIVE_PERSON_BLUR_A_N              | Photo of Live Person (A) with blur condition                                                              |\n| LIVE_PERSON_DARK_A_N              | Photo of Live Person (A) with dark condition                                                              |\n| LIVE_PERSON_BLURDARK_A_N          | Photo of Live Person (A) with blur and dark condition                                                     |\n| LIVE_PERSON_BLUR_M_A_N            | Photo of Live Person (A) wearing Mask, with blur condition                                                |\n| LIVE_PERSON_BLUR_V_A_N            | Photo of Live Person (A) wearing Veil, with blur condition                                                |\n| LIVE_PERSON_BLUR_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with blur condition                                          |\n| LIVE_PERSON_BLUR_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with blur condition                                          |\n| LIVE_PERSON_BLUR_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses with blur condition                                     |\n| LIVE_PERSON_BLUR_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses, with blur condition                                    |\n| LIVE_PERSON_BLUR_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur condition                              |\n| LIVE_PERSON_DARK_M_A_N            | Photo of Live Person (A) wearing Mask, with dark condition                                                |\n| LIVE_PERSON_DARK_V_A_N            | Photo of Live Person (A) wearing Veil, with dark condition                                                |\n| LIVE_PERSON_DARK_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with dark condition                                          |\n| LIVE_PERSON_DARK_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with dark condition                                          |\n| LIVE_PERSON_DARK_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses, with dark condition                                    |\n| LIVE_PERSON_DARK_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses with blur and dark condition                            |\n| LIVE_PERSON_DARK_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with dark condition                              |\n| LIVE_PERSON_BLURDARK_M_A_N        | Photo of Live Person (A) wearing Mask, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_V_A_N        | Photo of Live Person (A) wearing Veil, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_S_A_N        | Photo of Live Person (A) wearing Sunglasses, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MV_A_N       | Photo of Live Person (A) wearing Mask, Veil, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MS_A_N       | Photo of Live Person (A) wearing Mask, Sunglasses, with blur and dark condition                           |\n| LIVE_PERSON_BLURDARK_VS_A_N       | Photo of Live Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                   |\n| LIVE_PERSON_BLURDARK_MVS_A_N      | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                     |\n| SPOOF_PERSON_A_N                  | Photo of Spoof Person (A)                                                                                 |\n| SPOOF_PERSON_M_A_N                | Photo of Spoof Person (A) wearing Mask                                                                    |\n| SPOOF_PERSON_V_A_N                | Photo of Spoof Person (A) wearing Veil                                                                    |\n| SPOOF_PERSON_S_A_N                | Photo of Spoof Person (A) wearing Sunglasses                                                              |\n| SPOOF_PERSON_MV_A_N               | Photo of Spoof Person (A) wearing Mask, Veil                                                              |\n| SPOOF_PERSON_MS_A_N               | Photo of Spoof Person (A) wearing Mask, Sunglasses                                                        |\n| SPOOF_PERSON_VS_A_N               | Photo of Spoof Person (A) wearing Veil, Sunglasses                                                        |\n| SPOOF_PERSON_MVS_A_N              | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses                                                  |\n| SPOOF_PERSON_BLUR_A_N             | Photo of Spoof Person (A) with blur condition                                                             |\n| SPOOF_PERSON_DARK_A_N             | Photo of Spoof Person (A) with dark condition                                                             |\n| SPOOF_PERSON_BLURDARK_A_N         | Photo of Spoof Person (A) with blur and dark condition                                                    |\n| SPOOF_PERSON_GRAY_A_N             | Photo of Spoof Person (A) in grayscale image                                                              |\n| SPOOF_PERSON_GRAY_M_A_N           | Photo of Spoof Person (A) in grayscale image wearing Mask                                                 |\n| SPOOF_PERSON_GRAY_V_A_N           | Photo of Spoof Person (A) in grayscale image wearing Veil                                                 |\n| SPOOF_PERSON_GRAY_S_A_N           | Photo of Spoof Person (A) in grayscale image wearing Sunglasses                                           |\n| SPOOF_PERSON_GRAY_MV_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil                                           |\n| SPOOF_PERSON_GRAY_MS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_VS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Veil, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_MVS_A_N         | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil, Sunglasses                               |\n| SPOOF_PERSON_GRAYBLUR_A_N         | Photo of Spoof Person (A) in grayscale image with blur condition                                          |\n| SPOOF_PERSON_GRAYDARK_A_N         | Photo of Spoof Person (A) in grayscale image with dark condition                                          |\n| SPOOF_PERSON_GRAYBLURDARK_A_N     | Photo of Spoof Person (A) in grayscale image with blur and dark condition                                 |\n| SPOOF_PERSON_BLUR_M_A_N           | Photo of Spoof Person (A) wearing Mask, with blur condition                                               |\n| SPOOF_PERSON_BLUR_V_A_N           | Photo of Spoof Person (A) wearing Veil, with blur condition                                               |\n| SPOOF_PERSON_BLUR_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses with blur condition                                    |\n| SPOOF_PERSON_BLUR_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses, with blur condition                                   |\n| SPOOF_PERSON_BLUR_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur condition                             |\n| SPOOF_PERSON_DARK_M_A_N           | Photo of Spoof Person (A) wearing Mask, with dark condition                                               |\n| SPOOF_PERSON_DARK_V_A_N           | Photo of Spoof Person (A) wearing Veil, with dark condition                                               |\n| SPOOF_PERSON_DARK_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with dark condition                                         |\n| SPOOF_PERSON_DARK_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with dark condition                                         |\n| SPOOF_PERSON_DARK_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses, with dark condition                                   |\n| SPOOF_PERSON_DARK_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and dark condition                           |\n| SPOOF_PERSON_DARK_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with dark condition                             |\n| SPOOF_PERSON_BLURDARK_M_A_N       | Photo of Spoof Person (A) wearing Mask, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_V_A_N       | Photo of Spoof Person (A) wearing Veil, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_S_A_N       | Photo of Spoof Person (A) wearing Sunglasses, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MV_A_N      | Photo of Spoof Person (A) wearing Mask, Veil, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MS_A_N      | Photo of Spoof Person (A) wearing Mask, Sunglasses, with blur and dark condition                          |\n| SPOOF_PERSON_BLURDARK_VS_A_N      | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                  |\n| SPOOF_PERSON_BLURDARK_MVS_A_N     | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                    |\n| SPOOF_PERSON_GRAYBLUR_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur condition          |\n| SPOOF_PERSON_GRAYDARK_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with dark condition          |\n| SPOOF_PERSON_GRAYBLURDARK_M_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_V_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_S_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MV_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_VS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_MVS_A_N | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur and dark condition |\n\n\nThe following table describes the similarity between the images. Only the same photo could give 100% similarity.\n\n| SIMILARITY | A           | B           | C           | D           | E           | F           | G           | H           | I           | J           |\n|------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|\n| A          | SAME PERSON |             |             |             |             |             |             |             |             |             |\n| B          | SIMILAR     | SAME PERSON |             |             |             |             |             |             |             |             |\n| C          | SIMILAR     | SIMILAR     | SAME PERSON |             |             |             |             |             |             |             |\n| D          | SIMILAR     | SIMILAR     | DIFFERENT   | SAME PERSON |             |             |             |             |             |             |\n| E          | DIFFERENT   | SIMILAR     | DIFFERENT   | SIMILAR     | SAME PERSON |             |             |             |             |             |\n| F          | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | SAME PERSON |             |             |             |             |\n| G          | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | SIMILAR     | SIMILAR     | SAME PERSON |             |             |             |\n| H          | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | SIMILAR     | SIMILAR     | DIFFERENT   | SAME PERSON |             |             |\n| I          | DIFFERENT   | DIFFERENT   | DIFFERENT   | SIMILAR     | DIFFERENT   | SIMILAR     | SIMILAR     | DIFFERENT   | SAME PERSON |             |\n| J          | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | SIMILAR     | SIMILAR     | SIMILAR     | SIMILAR     | SIMILAR     | SAME PERSON |\n\n<br>\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error code                    | Description                                  |\n| ------------------------------|:---------------------------------------------|\n| INVALID_PAYLOAD                | no value in payload or empty string more than 1  |\n| INVALID_PAYLOAD_IMAGE_1_SIZE    | invalid payload image 1 size too large |\n| INVALID_PAYLOAD_IMAGE_2_SIZE    | invalid payload image 2 size too large |\n| MISSING_PAYLOAD_IMAGE_1        |  missing payload image 1                      |\n| MISSING_PAYLOAD_IMAGE_2         |  missing payload image 2                      |\n| INVALID_PAYLOAD_IMAGE_1_MISSING | image 1 empty string  |\n| INVALID_PAYLOAD_IMAGE_2_MISSING | image 2 empty string  |\n| INVALID_PAYLOAD_THRESHOLD_MISSING | threshold must be basic/moderate/high  |\n| FACE_NOT_DETECTED              | face not detected from image              |\n| INVALID_SANDBOX_IMAGE_1_CODE    | image 1 not exist in image code sandbox |\n| INVALID_SANDBOX_IMAGE_2_CODE    | image 2 not exist in image code sandbox |\n| INVALID_SANDBOX_IDENTITY      | identity of image 1 or image 2 not between A-J |\n| INVALID_SANDBOX_NFACE   | number of face in image not 1-9|\n| INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY  | is_quality must be true if validate_quality true |\n| INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true |\n| INVALID_PAYLOAD_LIVENESS_VALIDATION_DEPENDENCY  | is_liveness must be true if validate_liveness true |\n| FAIL_ON_1                      | fail on liveness                          |\n| FAIL_ON_2                      | fail on attribute                         |\n| FAIL_ON_3                      | fail on liveness and attribute            |\n| FAIL_ON_4                      | fail on quality                           |\n| FAIL_ON_5                      | fail on liveness and quality              |\n| FAIL_ON_6                      | fail on attribute and quality             |\n| FAIL_ON_7                      | fail on liveness, attribute, and quality  |\n|FAIL_ON_8            |fail on number of face (nface)|\n|FAIL_ON_9            |fail on number of face (nface) and liveness|\n|FAIL_ON_10            |fail on nfail on number of face (nface) and attribute|\n|FAIL_ON_11            |fail on number of face (nface), attribute, and liveness|\n|FAIL_ON_12            |fail on number of face (nface) and quality|\n|FAIL_ON_13            |fail on number of face (nface), quality, and liveness|\n|FAIL_ON_14            |fail on number of face (nface), quality, and attribute|\n|FAIL_ON_15            |fail on number of face (nface), quality, attribute, and liveness|\n| INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "compare_face_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CompareFace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCompareFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/face/verify": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Sandbox - Verify Face",
+                "description": "This method helps you verify face with specific image <br>\n\nThe following table describes the image option to be used as input.<br>\nImage scenario consists of Person A to J. Person is described in the last character: _A means person A, _B means person B, up until _J means person_J. Besides, image scenario consists of number of face in single image 1-9.  Number of Face is described in the last character, which are _1 means 1 face in photo, _2 means 2 face in photo.<br>\n\n| Images                          | Description                                                                                               |\n|---------------------------------|-----------------------------------------------------------------------------------------------------------|\n| IMAGE_EXCEED_LIMIT              | Photo with size > 5MiB                                                                                    |\n| NO_FACE_PHOTO                   | Photo with no face detected                                                                               |\n| LIVE_PERSON_A_N                   | Photo of Live Person (A)                                                                                  |\n| LIVE_PERSON_M_A_N                 | Photo of Live Person (A) wearing Mask                                                                     |\n| LIVE_PERSON_V_A_N                 | Photo of Live Person (A) wearing Veil                                                                     |\n| LIVE_PERSON_S_A_N                 | Photo of Live Person (A) wearing Sunglasses                                                               |\n| LIVE_PERSON_MV_A_N                | Photo of Live Person (A) wearing Mask, Veil                                                               |\n| LIVE_PERSON_MS_A_N                | Photo of Live Person (A) wearing Mask, Sunglasses                                                         |\n| LIVE_PERSON_VS_A_N                | Photo of Live Person (A) wearing Veil, Sunglasses                                                         |\n| LIVE_PERSON_MVS_A_N               | Photo of Live Person (A) wearing Mask, Veil, Sunglasses                                                   |\n| LIVE_PERSON_BLUR_A_N              | Photo of Live Person (A) with blur condition                                                              |\n| LIVE_PERSON_DARK_A_N              | Photo of Live Person (A) with dark condition                                                              |\n| LIVE_PERSON_BLURDARK_A_N          | Photo of Live Person (A) with blur and dark condition                                                     |\n| LIVE_PERSON_BLUR_M_A_N            | Photo of Live Person (A) wearing Mask, with blur condition                                                |\n| LIVE_PERSON_BLUR_V_A_N            | Photo of Live Person (A) wearing Veil, with blur condition                                                |\n| LIVE_PERSON_BLUR_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with blur condition                                          |\n| LIVE_PERSON_BLUR_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with blur condition                                          |\n| LIVE_PERSON_BLUR_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses with blur condition                                     |\n| LIVE_PERSON_BLUR_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses, with blur condition                                    |\n| LIVE_PERSON_BLUR_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur condition                              |\n| LIVE_PERSON_DARK_M_A_N            | Photo of Live Person (A) wearing Mask, with dark condition                                                |\n| LIVE_PERSON_DARK_V_A_N            | Photo of Live Person (A) wearing Veil, with dark condition                                                |\n| LIVE_PERSON_DARK_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with dark condition                                          |\n| LIVE_PERSON_DARK_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with dark condition                                          |\n| LIVE_PERSON_DARK_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses, with dark condition                                    |\n| LIVE_PERSON_DARK_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses with blur and dark condition                            |\n| LIVE_PERSON_DARK_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with dark condition                              |\n| LIVE_PERSON_BLURDARK_M_A_N        | Photo of Live Person (A) wearing Mask, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_V_A_N        | Photo of Live Person (A) wearing Veil, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_S_A_N        | Photo of Live Person (A) wearing Sunglasses, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MV_A_N       | Photo of Live Person (A) wearing Mask, Veil, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MS_A_N       | Photo of Live Person (A) wearing Mask, Sunglasses, with blur and dark condition                           |\n| LIVE_PERSON_BLURDARK_VS_A_N       | Photo of Live Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                   |\n| LIVE_PERSON_BLURDARK_MVS_A_N      | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                     |\n| SPOOF_PERSON_A_N                  | Photo of Spoof Person (A)                                                                                 |\n| SPOOF_PERSON_M_A_N                | Photo of Spoof Person (A) wearing Mask                                                                    |\n| SPOOF_PERSON_V_A_N                | Photo of Spoof Person (A) wearing Veil                                                                    |\n| SPOOF_PERSON_S_A_N                | Photo of Spoof Person (A) wearing Sunglasses                                                              |\n| SPOOF_PERSON_MV_A_N               | Photo of Spoof Person (A) wearing Mask, Veil                                                              |\n| SPOOF_PERSON_MS_A_N               | Photo of Spoof Person (A) wearing Mask, Sunglasses                                                        |\n| SPOOF_PERSON_VS_A_N               | Photo of Spoof Person (A) wearing Veil, Sunglasses                                                        |\n| SPOOF_PERSON_MVS_A_N              | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses                                                  |\n| SPOOF_PERSON_BLUR_A_N             | Photo of Spoof Person (A) with blur condition                                                             |\n| SPOOF_PERSON_DARK_A_N             | Photo of Spoof Person (A) with dark condition                                                             |\n| SPOOF_PERSON_BLURDARK_A_N         | Photo of Spoof Person (A) with blur and dark condition                                                    |\n| SPOOF_PERSON_GRAY_A_N             | Photo of Spoof Person (A) in grayscale image                                                              |\n| SPOOF_PERSON_GRAY_M_A_N           | Photo of Spoof Person (A) in grayscale image wearing Mask                                                 |\n| SPOOF_PERSON_GRAY_V_A_N           | Photo of Spoof Person (A) in grayscale image wearing Veil                                                 |\n| SPOOF_PERSON_GRAY_S_A_N           | Photo of Spoof Person (A) in grayscale image wearing Sunglasses                                           |\n| SPOOF_PERSON_GRAY_MV_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil                                           |\n| SPOOF_PERSON_GRAY_MS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_VS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Veil, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_MVS_A_N         | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil, Sunglasses                               |\n| SPOOF_PERSON_GRAYBLUR_A_N         | Photo of Spoof Person (A) in grayscale image with blur condition                                          |\n| SPOOF_PERSON_GRAYDARK_A_N         | Photo of Spoof Person (A) in grayscale image with dark condition                                          |\n| SPOOF_PERSON_GRAYBLURDARK_A_N     | Photo of Spoof Person (A) in grayscale image with blur and dark condition                                 |\n| SPOOF_PERSON_BLUR_M_A_N           | Photo of Spoof Person (A) wearing Mask, with blur condition                                               |\n| SPOOF_PERSON_BLUR_V_A_N           | Photo of Spoof Person (A) wearing Veil, with blur condition                                               |\n| SPOOF_PERSON_BLUR_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses with blur condition                                    |\n| SPOOF_PERSON_BLUR_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses, with blur condition                                   |\n| SPOOF_PERSON_BLUR_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur condition                             |\n| SPOOF_PERSON_DARK_M_A_N           | Photo of Spoof Person (A) wearing Mask, with dark condition                                               |\n| SPOOF_PERSON_DARK_V_A_N           | Photo of Spoof Person (A) wearing Veil, with dark condition                                               |\n| SPOOF_PERSON_DARK_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with dark condition                                         |\n| SPOOF_PERSON_DARK_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with dark condition                                         |\n| SPOOF_PERSON_DARK_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses, with dark condition                                   |\n| SPOOF_PERSON_DARK_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and dark condition                           |\n| SPOOF_PERSON_DARK_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with dark condition                             |\n| SPOOF_PERSON_BLURDARK_M_A_N       | Photo of Spoof Person (A) wearing Mask, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_V_A_N       | Photo of Spoof Person (A) wearing Veil, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_S_A_N       | Photo of Spoof Person (A) wearing Sunglasses, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MV_A_N      | Photo of Spoof Person (A) wearing Mask, Veil, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MS_A_N      | Photo of Spoof Person (A) wearing Mask, Sunglasses, with blur and dark condition                          |\n| SPOOF_PERSON_BLURDARK_VS_A_N      | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                  |\n| SPOOF_PERSON_BLURDARK_MVS_A_N     | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                    |\n| SPOOF_PERSON_GRAYBLUR_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur condition          |\n| SPOOF_PERSON_GRAYDARK_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with dark condition          |\n| SPOOF_PERSON_GRAYBLURDARK_M_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_V_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_S_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MV_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_VS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_MVS_A_N | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur and dark condition |\n\nThe following table describes the similarity between the images.\n\n| SIMILARITY | A           | B           | C           | D           | E           | F           | G           | H           | I           | J           |\n|------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|\n| A          | SAME PERSON |             |             |             |             |             |             |             |             |             |\n| B          | SIMILAR     | SAME PERSON |             |             |             |             |             |             |             |             |\n| C          | SIMILAR     | SIMILAR     | SAME PERSON |             |             |             |             |             |             |             |\n| D          | SIMILAR     | SIMILAR     | DIFFERENT   | SAME PERSON |             |             |             |             |             |             |\n| E          | DIFFERENT   | SIMILAR     | DIFFERENT   | SIMILAR     | SAME PERSON |             |             |             |             |             |\n| F          | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | SAME PERSON |             |             |             |             |\n| G          | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | SIMILAR     | SIMILAR     | SAME PERSON |             |             |             |\n| H          | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | SIMILAR     | SIMILAR     | DIFFERENT   | SAME PERSON |             |             |\n| I          | DIFFERENT   | DIFFERENT   | DIFFERENT   | SIMILAR     | DIFFERENT   | SIMILAR     | SIMILAR     | DIFFERENT   | SAME PERSON |             |\n| J          | DIFFERENT   | DIFFERENT   | DIFFERENT   | DIFFERENT   | SIMILAR     | SIMILAR     | SIMILAR     | SIMILAR     | SIMILAR     | SAME PERSON |\n\n <br>\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error code                    | Description                                  |\n| -----------------------------|:---------------------------------------------|\n| INVALID_PAYLOAD                | no value in payload or empty string more than 1  |\n| INVALID_PAYLOAD_IMAGE_SIZE    | invalid payload image size too large |\n| MISSING_PAYLOAD_IMAGE         |  missing payload image                       |\n| MISSING_PAYLOAD_SUBJECT_ID         |  missing payload subject id                       |\n| INVALID_PAYLOAD_THRESHOLD_MISSING | threshold must be basic/moderate/high  |\n| INVALID_PAYLOAD_IMAGE_MISSING | image empty string  |\n| FACE_NOT_DETECTED              | face not detected from image              |\n| INVALID_SANDBOX_IMAGE_CODE    | image not exist in image code sandbox |\n| INVALID_SANDBOX_IDENTITY      | identity of image not between A-J |\n| INVALID_SANDBOX_NFACE   | number of face in image not 1-9|\n| INVALID_SANDBOX_SUBJECT_ID    | subject_id not exist in image code sandbox |\n| INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY  | is_quality must be true if validate_quality true |\n| INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true |\n| INVALID_PAYLOAD_LIVENESS_VALIDATION_DEPENDENCY  | is_liveness must be true if validate_liveness true |\n| FAIL_ON_1                      | fail on liveness                          |\n| FAIL_ON_2                      | fail on attribute                         |\n| FAIL_ON_3                      | fail on liveness and attribute            |\n| FAIL_ON_4                      | fail on quality                           |\n| FAIL_ON_5                      | fail on liveness and quality              |\n| FAIL_ON_6                      | fail on attribute and quality             |\n| FAIL_ON_7                      | fail on liveness, attribute, and quality  |\n|FAIL_ON_8            |fail on number of face (nface)|\n|FAIL_ON_9            |fail on number of face (nface) and liveness|\n|FAIL_ON_10            |fail on nfail on number of face (nface) and attribute|\n|FAIL_ON_11            |fail on number of face (nface), attribute, and liveness|\n|FAIL_ON_12            |fail on number of face (nface) and quality|\n|FAIL_ON_13            |fail on number of face (nface), quality, and liveness|\n|FAIL_ON_14            |fail on number of face (nface), quality, and attribute|\n|FAIL_ON_15            |fail on number of face (nface), quality, attribute, and liveness|\n| INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "verify_face_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyFace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerifyFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/face/search": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Sandbox - Search Face",
+                "description": "This method helps you search similar faces with specific image<br>\n\nThe following table describes the image option to be used as input.<br>\nImage scenario consists of Person A to J. Person is described in the last character: _A means person A, _B means person B, up until _J means person_J. Besides, image scenario consists of number of face in single image 1-9.  Number of Face is described in the last character, which are _1 means 1 face in photo, _2 means 2 face in photo.<br>\n\n| Images                          | Description                                                                                               |\n|---------------------------------|-----------------------------------------------------------------------------------------------------------|\n| IMAGE_EXCEED_LIMIT              | Photo with size > 5MiB                                                                                    |\n| NO_FACE_PHOTO                   | Photo with no face detected                                                                               |\n| LIVE_PERSON_A_N                   | Photo of Live Person (A)                                                                                  |\n| LIVE_PERSON_M_A_N                 | Photo of Live Person (A) wearing Mask                                                                     |\n| LIVE_PERSON_V_A_N                 | Photo of Live Person (A) wearing Veil                                                                     |\n| LIVE_PERSON_S_A_N                 | Photo of Live Person (A) wearing Sunglasses                                                               |\n| LIVE_PERSON_MV_A_N                | Photo of Live Person (A) wearing Mask, Veil                                                               |\n| LIVE_PERSON_MS_A_N                | Photo of Live Person (A) wearing Mask, Sunglasses                                                         |\n| LIVE_PERSON_VS_A_N                | Photo of Live Person (A) wearing Veil, Sunglasses                                                         |\n| LIVE_PERSON_MVS_A_N               | Photo of Live Person (A) wearing Mask, Veil, Sunglasses                                                   |\n| LIVE_PERSON_BLUR_A_N              | Photo of Live Person (A) with blur condition                                                              |\n| LIVE_PERSON_DARK_A_N              | Photo of Live Person (A) with dark condition                                                              |\n| LIVE_PERSON_BLURDARK_A_N          | Photo of Live Person (A) with blur and dark condition                                                     |\n| LIVE_PERSON_BLUR_M_A_N            | Photo of Live Person (A) wearing Mask, with blur condition                                                |\n| LIVE_PERSON_BLUR_V_A_N            | Photo of Live Person (A) wearing Veil, with blur condition                                                |\n| LIVE_PERSON_BLUR_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with blur condition                                          |\n| LIVE_PERSON_BLUR_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with blur condition                                          |\n| LIVE_PERSON_BLUR_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses with blur condition                                     |\n| LIVE_PERSON_BLUR_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses, with blur condition                                    |\n| LIVE_PERSON_BLUR_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur condition                              |\n| LIVE_PERSON_DARK_M_A_N            | Photo of Live Person (A) wearing Mask, with dark condition                                                |\n| LIVE_PERSON_DARK_V_A_N            | Photo of Live Person (A) wearing Veil, with dark condition                                                |\n| LIVE_PERSON_DARK_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with dark condition                                          |\n| LIVE_PERSON_DARK_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with dark condition                                          |\n| LIVE_PERSON_DARK_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses, with dark condition                                    |\n| LIVE_PERSON_DARK_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses with blur and dark condition                            |\n| LIVE_PERSON_DARK_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with dark condition                              |\n| LIVE_PERSON_BLURDARK_M_A_N        | Photo of Live Person (A) wearing Mask, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_V_A_N        | Photo of Live Person (A) wearing Veil, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_S_A_N        | Photo of Live Person (A) wearing Sunglasses, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MV_A_N       | Photo of Live Person (A) wearing Mask, Veil, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MS_A_N       | Photo of Live Person (A) wearing Mask, Sunglasses, with blur and dark condition                           |\n| LIVE_PERSON_BLURDARK_VS_A_N       | Photo of Live Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                   |\n| LIVE_PERSON_BLURDARK_MVS_A_N      | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                     |\n| SPOOF_PERSON_A_N                  | Photo of Spoof Person (A)                                                                                 |\n| SPOOF_PERSON_M_A_N                | Photo of Spoof Person (A) wearing Mask                                                                    |\n| SPOOF_PERSON_V_A_N                | Photo of Spoof Person (A) wearing Veil                                                                    |\n| SPOOF_PERSON_S_A_N                | Photo of Spoof Person (A) wearing Sunglasses                                                              |\n| SPOOF_PERSON_MV_A_N               | Photo of Spoof Person (A) wearing Mask, Veil                                                              |\n| SPOOF_PERSON_MS_A_N               | Photo of Spoof Person (A) wearing Mask, Sunglasses                                                        |\n| SPOOF_PERSON_VS_A_N               | Photo of Spoof Person (A) wearing Veil, Sunglasses                                                        |\n| SPOOF_PERSON_MVS_A_N              | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses                                                  |\n| SPOOF_PERSON_BLUR_A_N             | Photo of Spoof Person (A) with blur condition                                                             |\n| SPOOF_PERSON_DARK_A_N             | Photo of Spoof Person (A) with dark condition                                                             |\n| SPOOF_PERSON_BLURDARK_A_N         | Photo of Spoof Person (A) with blur and dark condition                                                    |\n| SPOOF_PERSON_GRAY_A_N             | Photo of Spoof Person (A) in grayscale image                                                              |\n| SPOOF_PERSON_GRAY_M_A_N           | Photo of Spoof Person (A) in grayscale image wearing Mask                                                 |\n| SPOOF_PERSON_GRAY_V_A_N           | Photo of Spoof Person (A) in grayscale image wearing Veil                                                 |\n| SPOOF_PERSON_GRAY_S_A_N           | Photo of Spoof Person (A) in grayscale image wearing Sunglasses                                           |\n| SPOOF_PERSON_GRAY_MV_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil                                           |\n| SPOOF_PERSON_GRAY_MS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_VS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Veil, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_MVS_A_N         | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil, Sunglasses                               |\n| SPOOF_PERSON_GRAYBLUR_A_N         | Photo of Spoof Person (A) in grayscale image with blur condition                                          |\n| SPOOF_PERSON_GRAYDARK_A_N         | Photo of Spoof Person (A) in grayscale image with dark condition                                          |\n| SPOOF_PERSON_GRAYBLURDARK_A_N     | Photo of Spoof Person (A) in grayscale image with blur and dark condition                                 |\n| SPOOF_PERSON_BLUR_M_A_N           | Photo of Spoof Person (A) wearing Mask, with blur condition                                               |\n| SPOOF_PERSON_BLUR_V_A_N           | Photo of Spoof Person (A) wearing Veil, with blur condition                                               |\n| SPOOF_PERSON_BLUR_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses with blur condition                                    |\n| SPOOF_PERSON_BLUR_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses, with blur condition                                   |\n| SPOOF_PERSON_BLUR_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur condition                             |\n| SPOOF_PERSON_DARK_M_A_N           | Photo of Spoof Person (A) wearing Mask, with dark condition                                               |\n| SPOOF_PERSON_DARK_V_A_N           | Photo of Spoof Person (A) wearing Veil, with dark condition                                               |\n| SPOOF_PERSON_DARK_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with dark condition                                         |\n| SPOOF_PERSON_DARK_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with dark condition                                         |\n| SPOOF_PERSON_DARK_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses, with dark condition                                   |\n| SPOOF_PERSON_DARK_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and dark condition                           |\n| SPOOF_PERSON_DARK_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with dark condition                             |\n| SPOOF_PERSON_BLURDARK_M_A_N       | Photo of Spoof Person (A) wearing Mask, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_V_A_N       | Photo of Spoof Person (A) wearing Veil, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_S_A_N       | Photo of Spoof Person (A) wearing Sunglasses, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MV_A_N      | Photo of Spoof Person (A) wearing Mask, Veil, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MS_A_N      | Photo of Spoof Person (A) wearing Mask, Sunglasses, with blur and dark condition                          |\n| SPOOF_PERSON_BLURDARK_VS_A_N      | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                  |\n| SPOOF_PERSON_BLURDARK_MVS_A_N     | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                    |\n| SPOOF_PERSON_GRAYBLUR_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur condition          |\n| SPOOF_PERSON_GRAYDARK_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with dark condition          |\n| SPOOF_PERSON_GRAYBLURDARK_M_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_V_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_S_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MV_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_VS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_MVS_A_N | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur and dark condition |\n\n\nThe following table describes image similarity. Only the same photo could give 100% similarity.\n\n| SIMILARITY | A     | B    | C    | D    | E    | F    | G    | H    | I    | J   |\n|------------|-------|------|------|------|------|------|------|------|------|-----|\n| A          | 100   |      |      |      |      |      |      |      |      |     |\n| B          | 90.93 | 100  |      |      |      |      |      |      |      |     |\n| C          | 88.4  | 83.5 | 100  |      |      |      |      |      |      |     |\n| D          | 95.5  | 98.5 | 70.4 | 100  |      |      |      |      |      |     |\n| E          | 60.5  | 55.7 | 30.3 | 88.6 | 100  |      |      |      |      |     |\n| F          | 0     | 15.6 | 80.5 | 78.4 | 68.4 | 100  |      |      |      |     |\n| G          | 15.9  | 33.3 | 44.5 | 0    | 75.9 | 95.4 | 100  |      |      |     |\n| H          | 0     | 55.8 | 0    | 78.9 | 85.7 | 90.2 | 81.4 | 100  |      |     |\n| I          | 42.8  | 0    | 45.7 | 83.4 | 0    | 89.6 | 82.5 | 0    | 100  |     |\n| J          | 0     | 13.8 | 67.6 | 0    | 66.9 | 54.7 | 23.4 | 87.9 | 92.4 | 100 |\n\n<br>\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error code                    | Description                                  |\n| ------------------------------|:---------------------------------------------|\n| INVALID_PAYLOAD                | no value in payload or empty string more than 1  |\n| INVALID_PAYLOAD_IMAGE_SIZE    | invalid payload image size too large |\n| INVALID_PAYLOAD_IMAGE_MISSING | image empty string  |\n| MISSING_PAYLOAD_IMAGE         |  missing payload image                       |\n| INVALID_PAYLOAD_THRESHOLD     | threshold cannot lower than 0 or more than 100 |\n| INVALID_PAYLOAD_LIMIT         | limit cannot lower than 1 or more than 10 |\n| FACE_NOT_DETECTED              | face not detected from image              |\n| INVALID_SANDBOX_IMAGE_CODE    | image not exist in image code sandbox |\n| INVALID_SANDBOX_IDENTITY      | identity of image not between A-J |\n| INVALID_SANDBOX_NFACE   | number of face in image not 1-9|\n| INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY  | is_quality must be true if validate_quality true |\n| INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true |\n| INVALID_PAYLOAD_LIVENESS_VALIDATION_DEPENDENCY  | is_liveness must be true if validate_liveness true |\n| FAIL_ON_1                      | fail on liveness                          |\n| FAIL_ON_2                      | fail on attribute                         |\n| FAIL_ON_3                      | fail on liveness and attribute            |\n| FAIL_ON_4                      | fail on quality                           |\n| FAIL_ON_5                      | fail on liveness and quality              |\n| FAIL_ON_6                      | fail on attribute and quality             |\n| FAIL_ON_7                      | fail on liveness, attribute, and quality  |\n|FAIL_ON_8            |fail on number of face (nface)|\n|FAIL_ON_9            |fail on number of face (nface) and liveness|\n|FAIL_ON_10            |fail on nfail on number of face (nface) and attribute|\n|FAIL_ON_11            |fail on number of face (nface), attribute, and liveness|\n|FAIL_ON_12            |fail on number of face (nface) and quality|\n|FAIL_ON_13            |fail on number of face (nface), quality, and liveness|\n|FAIL_ON_14            |fail on number of face (nface), quality, and attribute|\n|FAIL_ON_15            |fail on number of face (nface), quality, attribute, and liveness|\n| INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "search_face_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchFace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSearchFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/face/liveness": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Sandbox - Detect Face Liveness",
+                "description": "This method helps you to detect liveness from a face image <br>\n\nThe following table describes image option to be used as input. <br>\n\nImage scenario consists of Person A to J. Person is described in the last character: _A means person A, _B means person B, up until _J means person_J. Besides, image scenario consists of number of face in single image 1-9.  Number of Face is described in the last character, which are _1 means 1 face in photo, _2 means 2 face in photo.<br>\n\n| Images                          | Description                                                                                               |\n|---------------------------------|-----------------------------------------------------------------------------------------------------------|\n| IMAGE_EXCEED_LIMIT              | Photo with size > 5MiB                                                                                    |\n| NO_FACE_PHOTO                   | Photo with no face detected                                                                               |\n| LIVE_PERSON_A_N                   | Photo of Live Person (A)                                                                                  |\n| LIVE_PERSON_M_A_N                 | Photo of Live Person (A) wearing Mask                                                                     |\n| LIVE_PERSON_V_A_N                 | Photo of Live Person (A) wearing Veil                                                                     |\n| LIVE_PERSON_S_A_N                 | Photo of Live Person (A) wearing Sunglasses                                                               |\n| LIVE_PERSON_MV_A_N                | Photo of Live Person (A) wearing Mask, Veil                                                               |\n| LIVE_PERSON_MS_A_N                | Photo of Live Person (A) wearing Mask, Sunglasses                                                         |\n| LIVE_PERSON_VS_A_N                | Photo of Live Person (A) wearing Veil, Sunglasses                                                         |\n| LIVE_PERSON_MVS_A_N               | Photo of Live Person (A) wearing Mask, Veil, Sunglasses                                                   |\n| LIVE_PERSON_BLUR_A_N              | Photo of Live Person (A) with blur condition                                                              |\n| LIVE_PERSON_DARK_A_N              | Photo of Live Person (A) with dark condition                                                              |\n| LIVE_PERSON_BLURDARK_A_N          | Photo of Live Person (A) with blur and dark condition                                                     |\n| LIVE_PERSON_BLUR_M_A_N            | Photo of Live Person (A) wearing Mask, with blur condition                                                |\n| LIVE_PERSON_BLUR_V_A_N            | Photo of Live Person (A) wearing Veil, with blur condition                                                |\n| LIVE_PERSON_BLUR_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with blur condition                                          |\n| LIVE_PERSON_BLUR_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with blur condition                                          |\n| LIVE_PERSON_BLUR_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses with blur condition                                     |\n| LIVE_PERSON_BLUR_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses, with blur condition                                    |\n| LIVE_PERSON_BLUR_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur condition                              |\n| LIVE_PERSON_DARK_M_A_N            | Photo of Live Person (A) wearing Mask, with dark condition                                                |\n| LIVE_PERSON_DARK_V_A_N            | Photo of Live Person (A) wearing Veil, with dark condition                                                |\n| LIVE_PERSON_DARK_S_A_N            | Photo of Live Person (A) wearing Sunglasses, with dark condition                                          |\n| LIVE_PERSON_DARK_MV_A_N           | Photo of Live Person (A) wearing Mask, Veil, with dark condition                                          |\n| LIVE_PERSON_DARK_MS_A_N           | Photo of Live Person (A) wearing Mask, Sunglasses, with dark condition                                    |\n| LIVE_PERSON_DARK_VS_A_N           | Photo of Live Person (A) wearing Veil, Sunglasses with blur and dark condition                            |\n| LIVE_PERSON_DARK_MVS_A_N          | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with dark condition                              |\n| LIVE_PERSON_BLURDARK_M_A_N        | Photo of Live Person (A) wearing Mask, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_V_A_N        | Photo of Live Person (A) wearing Veil, with blur and dark condition                                       |\n| LIVE_PERSON_BLURDARK_S_A_N        | Photo of Live Person (A) wearing Sunglasses, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MV_A_N       | Photo of Live Person (A) wearing Mask, Veil, with blur and dark condition                                 |\n| LIVE_PERSON_BLURDARK_MS_A_N       | Photo of Live Person (A) wearing Mask, Sunglasses, with blur and dark condition                           |\n| LIVE_PERSON_BLURDARK_VS_A_N       | Photo of Live Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                   |\n| LIVE_PERSON_BLURDARK_MVS_A_N      | Photo of Live Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                     |\n| SPOOF_PERSON_A_N                  | Photo of Spoof Person (A)                                                                                 |\n| SPOOF_PERSON_M_A_N                | Photo of Spoof Person (A) wearing Mask                                                                    |\n| SPOOF_PERSON_V_A_N                | Photo of Spoof Person (A) wearing Veil                                                                    |\n| SPOOF_PERSON_S_A_N                | Photo of Spoof Person (A) wearing Sunglasses                                                              |\n| SPOOF_PERSON_MV_A_N               | Photo of Spoof Person (A) wearing Mask, Veil                                                              |\n| SPOOF_PERSON_MS_A_N               | Photo of Spoof Person (A) wearing Mask, Sunglasses                                                        |\n| SPOOF_PERSON_VS_A_N               | Photo of Spoof Person (A) wearing Veil, Sunglasses                                                        |\n| SPOOF_PERSON_MVS_A_N              | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses                                                  |\n| SPOOF_PERSON_BLUR_A_N             | Photo of Spoof Person (A) with blur condition                                                             |\n| SPOOF_PERSON_DARK_A_N             | Photo of Spoof Person (A) with dark condition                                                             |\n| SPOOF_PERSON_BLURDARK_A_N         | Photo of Spoof Person (A) with blur and dark condition                                                    |\n| SPOOF_PERSON_GRAY_A_N             | Photo of Spoof Person (A) in grayscale image                                                              |\n| SPOOF_PERSON_GRAY_M_A_N           | Photo of Spoof Person (A) in grayscale image wearing Mask                                                 |\n| SPOOF_PERSON_GRAY_V_A_N           | Photo of Spoof Person (A) in grayscale image wearing Veil                                                 |\n| SPOOF_PERSON_GRAY_S_A_N           | Photo of Spoof Person (A) in grayscale image wearing Sunglasses                                           |\n| SPOOF_PERSON_GRAY_MV_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil                                           |\n| SPOOF_PERSON_GRAY_MS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Mask, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_VS_A_N          | Photo of Spoof Person (A) in grayscale image wearing Veil, Sunglasses                                     |\n| SPOOF_PERSON_GRAY_MVS_A_N         | Photo of Spoof Person (A) in grayscale image wearing Mask, Veil, Sunglasses                               |\n| SPOOF_PERSON_GRAYBLUR_A_N         | Photo of Spoof Person (A) in grayscale image with blur condition                                          |\n| SPOOF_PERSON_GRAYDARK_A_N         | Photo of Spoof Person (A) in grayscale image with dark condition                                          |\n| SPOOF_PERSON_GRAYBLURDARK_A_N     | Photo of Spoof Person (A) in grayscale image with blur and dark condition                                 |\n| SPOOF_PERSON_BLUR_M_A_N           | Photo of Spoof Person (A) wearing Mask, with blur condition                                               |\n| SPOOF_PERSON_BLUR_V_A_N           | Photo of Spoof Person (A) wearing Veil, with blur condition                                               |\n| SPOOF_PERSON_BLUR_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with blur condition                                         |\n| SPOOF_PERSON_BLUR_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses with blur condition                                    |\n| SPOOF_PERSON_BLUR_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses, with blur condition                                   |\n| SPOOF_PERSON_BLUR_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur condition                             |\n| SPOOF_PERSON_DARK_M_A_N           | Photo of Spoof Person (A) wearing Mask, with dark condition                                               |\n| SPOOF_PERSON_DARK_V_A_N           | Photo of Spoof Person (A) wearing Veil, with dark condition                                               |\n| SPOOF_PERSON_DARK_S_A_N           | Photo of Spoof Person (A) wearing Sunglasses, with dark condition                                         |\n| SPOOF_PERSON_DARK_MV_A_N          | Photo of Spoof Person (A) wearing Mask, Veil, with dark condition                                         |\n| SPOOF_PERSON_DARK_MS_A_N          | Photo of Spoof Person (A) wearing Mask, Sunglasses, with dark condition                                   |\n| SPOOF_PERSON_DARK_VS_A_N          | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and dark condition                           |\n| SPOOF_PERSON_DARK_MVS_A_N         | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with dark condition                             |\n| SPOOF_PERSON_BLURDARK_M_A_N       | Photo of Spoof Person (A) wearing Mask, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_V_A_N       | Photo of Spoof Person (A) wearing Veil, with blur and dark condition                                      |\n| SPOOF_PERSON_BLURDARK_S_A_N       | Photo of Spoof Person (A) wearing Sunglasses, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MV_A_N      | Photo of Spoof Person (A) wearing Mask, Veil, with blur and dark condition                                |\n| SPOOF_PERSON_BLURDARK_MS_A_N      | Photo of Spoof Person (A) wearing Mask, Sunglasses, with blur and dark condition                          |\n| SPOOF_PERSON_BLURDARK_VS_A_N      | Photo of Spoof Person (A) wearing Veil, Sunglasses with blur and blur and dark condition                  |\n| SPOOF_PERSON_BLURDARK_MVS_A_N     | Photo of Spoof Person (A) wearing Mask, Veil, Sunglasses, with blur and dark condition                    |\n| SPOOF_PERSON_GRAYBLUR_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur condition                           |\n| SPOOF_PERSON_GRAYBLUR_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur condition                     |\n| SPOOF_PERSON_GRAYBLUR_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur condition               |\n| SPOOF_PERSON_GRAYBLUR_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur condition          |\n| SPOOF_PERSON_GRAYDARK_M_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Mask, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_V_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Veil, with dark condition                           |\n| SPOOF_PERSON_GRAYDARK_S_A_N       | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MV_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with dark condition                     |\n| SPOOF_PERSON_GRAYDARK_MS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_VS_A_N      | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with dark condition               |\n| SPOOF_PERSON_GRAYDARK_MVS_A_N     | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with dark condition          |\n| SPOOF_PERSON_GRAYBLURDARK_M_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Mask, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_V_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Veil, with blur and dark condition                  |\n| SPOOF_PERSON_GRAYBLURDARK_S_A_N   | Photo of Spoof Person (A) in grayscale image, wearing Sunglasses, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MV_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, with blur and dark condition            |\n| SPOOF_PERSON_GRAYBLURDARK_MS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Mask, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_VS_A_N  | Photo of Spoof Person (A) in grayscale image, wearing Veil, Sunglasses, with blur and dark condition      |\n| SPOOF_PERSON_GRAYBLURDARK_MVS_A_N | Photo of Spoof Person (A) in grayscale image, wearing Mask, Veil, Sunglasses with blur and dark condition |\n\n<br>\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error code                                      | Description                                           |\n| ------------------------------------------------|-------------------------------------------------------|\n| INVALID_PAYLOAD                                  | no value in payload or empty string more than 1       |\n| MISSING_PAYLOAD_IMAGE                           | missing payload image                                 |\n| INVALID_PAYLOAD_IMAGE_SIZE                      | invalid payload image size too large                  |\n| INVALID_PAYLOAD_IMAGE_MISSING                   |  missing payload image                                 |\n| FACE_NOT_DETECTED                                | face not detected from image                          |\n| INVALID_SANDBOX_IMAGE_CODE                      | image not exist in image code sandbox                 |\n| INVALID_SANDBOX_IDENTITY                        | identity of image not between A-J                     |\n| INVALID_SANDBOX_NFACE   | number of face in image not 1-9|\n| INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY    | is_quality must be true if validate_quality true      |\n| INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true  |\n| FAIL_ON_2                                        | fail on attribute                                     |\n| FAIL_ON_4                                        | fail on quality                                       |\n| FAIL_ON_6                                        | fail on attribute and quality                         |\n|FAIL_ON_8            |fail on number of face (nface)|\n|FAIL_ON_10            |fail on nfail on number of face (nface) and attribute|\n|FAIL_ON_12            |fail on number of face (nface) and quality|\n|FAIL_ON_14            |fail on number of face (nface), quality, and attribute|\n| INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "detect_face_liveness_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DetectFaceLiveness"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDetectFaceLiveness"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ktp/id/extract-async": {
+            "post": {
+                "tags": [
+                    "KTP"
+                ],
+                "summary": "Sandbox - Extract Async",
+                "description": "This method helps you to recognize text in KTP image.\n\n The following table describes choice of image to be used as input </br>\n\n  | Image                                      | Description                                           |\n  | ------------------------------------------------|-------------------------------------------------------|\n  | IMAGE_SIZE_EXCEED_LIMIT                                  | Image with size larger than 5 MB              |\n  | NO_KTP_DETECTED         | Not a KTP photo            |\n  | KTP                     | KTP photo       |\n  | KTP_B                   | KTP photo with blur condition         |\n  | KTP_D                   | KTP photo with dark condition       |\n  | KTP_BD                  | KTP photo with blur and dark condition|\n  |KTP_BF               |KTP photo with blur and flashlight condition|\n  |KTP_F                    |KTP photo with flashlight condition|\n  |KTP_G                    |KTP photo with grayscale condition|\n  |KTP_FG                   |KTP photo with flashlight and grayscale condition|\n  |KTP_BG                    |KTP photo with blur and grayscale condition|\n  |KTP_DG               |KTP photo with dark and grayscale condition|\n  \n  The following table describe reference_id options to be used as an input.\n  \n  |reference_ID|Description|\n  |-----------|---------|\n  |REFERENCE_ID|Valid reference_id|\n  |REFERENCE_ID_EXIST|reference_id already exist in App-ID (Not Unique)|\n  |REFERENCE_ID_TOO_LONG|reference_id is too long|\n  |REFERENCE_ID_TOO_SHORT|reference_id is too short|\n\nYou will receive a response of your payload request which consists of message and an error code if the request process failed. The following table is a list of error codes for the KTP extraction payload request.\n\n| Error status                                  | Error code                    | Description                                  |\n| ------------------------------|----------------------------------------------|----------------------------------------------|\n| 400 | INVALID_SANDBOX_CODE              | image/reference_id not exist in image/reference_id code sandbox  |\n| 400 | INVALID_PAYLOAD                | No value in payload or empty string more than 1  |\n| 400 | INVALID_PAYLOAD_IMAGE_MISSING  | Image field is an empty string|\n| 400 | INVALID_PAYLOAD_IMAGE_SIZE    | Image size is too big/too small |\n| 400 | INVALID_PAYLOAD_IMAGE_FORMAT           | Image is unable to be decoded/retrieved from url or invalid image extension|\n| 400 | INVALID_PAYLOAD_CALLBACK_URL | Callback url payload is empty/null/ not in url format (https://) |\n| 400 | INVALID_PAYLOAD_REFERENCE_ID | reference_id is too short/too long |\n| 400 | INVALID_PAYLOAD_REFERENCE_ID_EXISTS | reference_id already exists (not unique) |\n| 500 | INTERNAL_SERVER_ERROR         | Internal server error |\n",
+                "operationId": "extract_async_text_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExtractKTPAsync"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseExtractKTPAsync"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ktp/id/extract-async/result": {
+            "get": {
+                "tags": [
+                    "KTP"
+                ],
+                "summary": "Sandbox - Get Extract Async",
+                "description": "This method helps you to get the recognition result of extract KTP asynchronous.\n\n</br>\nYou will receive a response of your payload request which consists of message and an error code if the request fails to process. The following is a list of error codes of get KTP extraction payload request.\n\n</br> reference_id code with _V (e.g REFERENCE_ID_KTP_B_V) means the quality validation is on. \n\n  |reference_id|Description|\n  |-----|-----------|\n  |REFERENCE_ID_KTP|Valid reference_id and KTP photo|\n  |REFERENCE_ID_KTP_B|Valid reference_id and KTP photo in blur condition|\n  |REFERENCE_ID_KTP_D|Valid reference_id and KTP photo in dark condition|\n  |REFERENCE_ID_KTP_BD|Valid reference_id and KTP photo in blur and dark condition|\n  |REFERENCE_ID_KTP_F|Valid reference_id and KTP photo in flashlight condition|\n  |REFERENCE_ID_KTP_G|Valid reference_id and KTP photo in grayscale condition|\n  |REFERENCE_ID_KTP_FG|Valid reference_id and KTP photo in flashlight and grayscale condition|\n  |REFERENCE_ID_KTP_DG|Valid reference_id and KTP photo in dark and grayscale condition|\n  |REFERENCE_ID_KTP_BF|Valid reference_id and KTP photo in blur and flashlight condition|\n  |REFERENCE_ID_KTP_BG|Valid reference_id and KTP photo in blur and grayscale condition|\n  |REFERENCE_ID_KTP_B_V|Valid reference_id and KTP photo in blur condition with validation_quality|\n  |REFERENCE_ID_KTP_D_V|Valid reference_id and KTP photo in dark condition with validation_quality|\n  |REFERENCE_ID_KTP_BD_V|Valid reference_id and KTP photo in blur and dark condition with validation_quality|\n  |REFERENCE_ID_KTP_F_V|Valid reference_id and KTP photo in flashlight condition with validation_quality|\n  |REFERENCE_ID_KTP_G_V|Valid reference_id and KTP photo in grayscale condition with validation_quality|\n  |REFERENCE_ID_KTP_FG_V|Valid reference_id and KTP photo in flashlight and grayscale condition with validation_quality|\n  |REFERENCE_ID_KTP_DG_V|Valid reference_id and KTP photo in dark and grayscale condition with validation_quality|\n  |REFERENCE_ID_KTP_BF_V|Valid reference_id and KTP photo in blur and flashlight condition with validation_quality|\n  |REFERENCE_ID_KTP_BG_V|Valid reference_id and KTP photo in blur and grayscale condition with validation_quality|\n  |REFERENCE_ID_NOT_FOUND|reference_id not found|\n  |REFERENCE_ID_KTP_NOT_DETECTED|reference_id and KTP photo not detected|\n  |REFERENCE_ID_TOO_LONG|reference_id is too long|\n  |REFERENCE_ID_TOO_SHORT|reference_id is too short|\n  \n\nYou will receive a response of your payload request which consists of message and an error code if the request process failed. The following table describes choice of image to be used as input.\n  \n\n|Error Status|  Error code  |Description          |\n|---------------| ------------------------------|----------------------------------------------|\n| 400 | INVALID_SANDBOX_CODE              | reference_id not exist in reference_id code sandbox  |\n|400| INVALID_PAYLOAD_REFERENCE_ID | reference_id is too short/too long |\n|404| INVALID_PAYLOAD_REFERENCE_ID_NOT_FOUND | reference_id is not found / reference_id payload is missing|\n|500| INTERNAL_SERVER_ERROR         | Internal server error |\nBut, you can also receive error_code in your successful request. This error_code indicates an error that appeared in processing the request from the extract-async method. The following is a list of error_code you might get. <br>\n\n| Error code                    | Description                                  |\n|----------------------------------------------|----------------------------------------------|\n| FAIL_ON_1 | Fail on quality |\n| KTP_NOT_DETECTED              | KTP not detected from image              |\n| INTERNAL_SERVER_ERROR         | Internal server error | <br>\n",
+                "operationId": "extract_async_result_text_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "reference_id",
+                            "type": "string"
+                        },
+                        "name": "reference_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseExtractKTPAsyncResult"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "message",
+                    "error_code"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "error_code": {
+                        "title": "Error_code",
+                        "type": "string"
+                    }
+                }
+            },
+            "ValidationUnauthorized": {
+                "title": "ValidationUnauthorized",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Authorization failed"
+                    }
+                }
+            },
+            "EnrollFace": {
+                "title": "EnrollFace",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "choice of image, as given in the table",
+                        "type": "string"
+                    },
+                    "subject_id": {
+                        "description": "used to update enrolled photo, optional.",
+                        "type": "string"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_liveness": {
+                        "description": "A flag to determine whether Passive Liveness will be computed and return as result",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold 50, and also checking whether the image is a black & white image (grayscale is true)",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_liveness": {
+                        "description": "Determines whether Liveness validation will be executed. The validation checks whether input image is live / spoof.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face. (New)",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "CompareFace": {
+                "title": "CompareFace",
+                "required": [
+                    "image_1",
+                    "image_2"
+                ],
+                "type": "object",
+                "properties": {
+                    "image_1": {
+                        "description": "choice of image, as given in the table",
+                        "type": "string"
+                    },
+                    "image_2": {
+                        "description": "choice of image, as given in the table",
+                        "type": "string"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_liveness": {
+                        "description": "A flag to determine whether Passive Liveness will be computed and return as result",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold 50, and also checking whether the image is a black & white image (grayscale is true)",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_liveness": {
+                        "description": "Determines whether Liveness validation will be executed. The validation checks whether input image is live / spoof.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face. (New)",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "threshold": {
+                        "description": "Determines which threshold level will be used. The threshold either basic/moderate/high.",
+                        "type": "string"
+                    }
+                }
+            },
+            "VerifyFace": {
+                "title": "VerifyFace",
+                "required": [
+                    "image",
+                    "subject_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "choice of image, as given in the table",
+                        "type": "string"
+                    },
+                    "subject_id": {
+                        "description": "choice of subject_id, SUB_NOT_EXIST or as image choice table",
+                        "type": "string"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_liveness": {
+                        "description": "A flag to determine whether Passive Liveness will be computed and return as result",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold 50, and also checking whether the image is a black & white image (grayscale is true)",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_liveness": {
+                        "description": "Determines whether Liveness validation will be executed. The validation checks whether input image is live / spoof.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "threshold": {
+                        "description": "Determines which threshold level will be used. The threshold either basic/moderate/high.",
+                        "type": "string"
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face. (New)",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "SearchFace": {
+                "title": "SearchFace",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "choice of image, as given in the table",
+                        "type": "string"
+                    },
+                    "limit": {
+                        "description": "A number indicating search limit (1 to 10), defaults to 1",
+                        "type": "number"
+                    },
+                    "return_image": {
+                        "type": "boolean",
+                        "description": "A flag to return base64 image in matches, defaults to false"
+                    },
+                    "threshold": {
+                        "type": "number",
+                        "description": "A number indicating threshold for confidence (0 to 100), defaults to 82"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_liveness": {
+                        "description": "A flag to determine whether Passive Liveness will be computed and return as result",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold 50, and also checking whether the image is a black & white image (grayscale is true)",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_liveness": {
+                        "description": "Determines whether Liveness validation will be executed. The validation checks whether input image is live / spoof.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face. (New)",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "DetectFaceLiveness": {
+                "title": "DetectFaceLiveness",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "choice of image, as given in the table",
+                        "type": "string"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold 50, and also checking whether the image is a black & white image (grayscale is true)",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face. (New)",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "ResponseEnrollFace": {
+                "title": "ResponseEnrollFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face enrolled successfully"
+                    },
+                    "subject_id": {
+                        "description": "Subject ID",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "sunglasses_on": {
+                                "type": "boolean"
+                            },
+                            "mask_on": {
+                                "type": "boolean"
+                            },
+                            "veil_on": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "liveness": {
+                        "description": "Liveness attribute",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "boolean"
+                            },
+                            "probability": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "image_quality": {
+                        "description": "Shows quality of image",
+                        "type": "object",
+                        "properties": {
+                            "blur": {
+                                "type": "boolean"
+                            },
+                            "dark": {
+                                "type": "boolean"
+                            },
+                            "grayscale": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "rotation": {
+                        "description": "Shows how many rotations need to be done to detect face in image",
+                        "type": "integer"
+                    },
+                    "bounding_box": {
+                        "description": "Shows result of bounding box",
+                        "type": "object",
+                        "properties": {
+                            "TopLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "TopLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Width": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Height": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "face_landmark": {
+                        "description": "Shows result of face landmark",
+                        "type": "object",
+                        "properties": {
+                            "LeftEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "LeftEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face enrolled successfully",
+                        "type": "number"
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image. (New)",
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "ResponseDeleteEnrollFace": {
+                "title": "ResponseDeleteEnrollFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Collection subject id xxx from collection successfuly deleted"
+                    }
+                }
+            },
+            "ResponseNotFoundDeleteEnrollFace": {
+                "title": "ResponseNotFoundDeleteEnrollFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Subject ID is not found"
+                    }
+                }
+            },
+            "ResponseCompareFace": {
+                "title": "ResponseCompareFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face compared successfully"
+                    },
+                    "image_1": {
+                        "description": "Image 1",
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "type": "object",
+                                "properties": {
+                                    "sunglasses_on": {
+                                        "type": "boolean"
+                                    },
+                                    "mask_on": {
+                                        "type": "boolean"
+                                    },
+                                    "veil_on": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "liveness": {
+                                "description": "Liveness attribute",
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "boolean"
+                                    },
+                                    "probability": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            },
+                            "image_quality": {
+                                "description": "Shows quality of image",
+                                "type": "object",
+                                "properties": {
+                                    "blur": {
+                                        "type": "boolean"
+                                    },
+                                    "dark": {
+                                        "type": "boolean"
+                                    },
+                                    "grayscale": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "rotation": {
+                                "description": "Shows how many rotations need to be done to detect face in image",
+                                "type": "integer"
+                            },
+                            "bounding_box": {
+                                "description": "Shows result of bounding box",
+                                "type": "object",
+                                "properties": {
+                                    "TopLeftX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "TopLeftY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "BottomRightX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "BottomRightY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "Width": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "Height": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            },
+                            "face_landmark": {
+                                "description": "Shows result of face landmark",
+                                "type": "object",
+                                "properties": {
+                                    "LeftEyeX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "LeftEyeY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "RightEyeX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "RightEyeY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "NoseX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "NoseY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthLeftX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthLeftY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthRightX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthRightY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "image_2": {
+                        "description": "Image 1",
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "type": "object",
+                                "properties": {
+                                    "sunglasses_on": {
+                                        "type": "boolean"
+                                    },
+                                    "mask_on": {
+                                        "type": "boolean"
+                                    },
+                                    "veil_on": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "liveness": {
+                                "description": "Liveness attribute",
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "boolean"
+                                    },
+                                    "probability": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            },
+                            "image_quality": {
+                                "description": "Shows quality of image",
+                                "type": "object",
+                                "properties": {
+                                    "blur": {
+                                        "type": "boolean"
+                                    },
+                                    "dark": {
+                                        "type": "boolean"
+                                    },
+                                    "grayscale": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "rotation": {
+                                "description": "Shows how many rotations need to be done to detect face in image",
+                                "type": "integer"
+                            },
+                            "bounding_box": {
+                                "description": "Shows result of bounding box",
+                                "type": "object",
+                                "properties": {
+                                    "TopLeftX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "TopLeftY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "BottomRightX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "BottomRightY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "Width": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "Height": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            },
+                            "face_landmark": {
+                                "description": "Shows result of face landmark",
+                                "type": "object",
+                                "properties": {
+                                    "LeftEyeX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "LeftEyeY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "RightEyeX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "RightEyeY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "NoseX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "NoseY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthLeftX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthLeftY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthRightX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthRightY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "similarity_status": {
+                        "description": "Shows similarity result",
+                        "type": "boolean"
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face compared successfully",
+                        "type": "number"
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image. (New)",
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "ResponseVerifyFace": {
+                "title": "ResponseVerifyFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face verified successfully"
+                    },
+                    "subject_id": {
+                        "description": "Subject ID",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "sunglasses_on": {
+                                "type": "boolean"
+                            },
+                            "mask_on": {
+                                "type": "boolean"
+                            },
+                            "veil_on": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "liveness": {
+                        "description": "Liveness attribute",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "boolean"
+                            },
+                            "probability": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "image_quality": {
+                        "description": "Shows quality of image",
+                        "type": "object",
+                        "properties": {
+                            "blur": {
+                                "type": "boolean"
+                            },
+                            "dark": {
+                                "type": "boolean"
+                            },
+                            "grayscale": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "rotation": {
+                        "description": "Shows how many rotations need to be done to detect face in image",
+                        "type": "integer"
+                    },
+                    "bounding_box": {
+                        "description": "Shows result bounding box",
+                        "type": "object",
+                        "properties": {
+                            "TopLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "TopLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Width": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Height": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "face_landmark": {
+                        "description": "Shows result of face landmark",
+                        "type": "object",
+                        "properties": {
+                            "LeftEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "LeftEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "similarity_status": {
+                        "description": "Shows similarity result",
+                        "type": "boolean"
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face verified successfully",
+                        "type": "number"
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image. (New)",
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "ResponseSearchFace": {
+                "title": "ResponseSearchFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face search is successful"
+                    },
+                    "bounding_box": {
+                        "description": "Shows result of bounding box",
+                        "type": "object",
+                        "properties": {
+                            "TopLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "TopLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Width": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Height": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "face_landmark": {
+                        "description": "Shows result of face landmark",
+                        "type": "object",
+                        "properties": {
+                            "LeftEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "LeftEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "rotation": {
+                        "description": "Shows how many rotations need to be done to detect face in image",
+                        "type": "integer"
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face enrolled successfully",
+                        "type": "number"
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image. (New)",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "matches": {
+                        "description": "Shows similar face matches as limit (defaults to 1)",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "subject_id": {
+                                    "description": "Shows respected subject_id of similar matches",
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "description": "Shows respected image of similar matches in base64 format",
+                                    "type": "string",
+                                    "example": "<base64 image>"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseDetectFaceLiveness": {
+                "title": "ResponseDetectFaceLiveness",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-2"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face liveness is detected successfully"
+                    },
+                    "session_id": {
+                        "description": "unique id to represent transaction record",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "sunglasses_on": {
+                                "type": "boolean"
+                            },
+                            "mask_on": {
+                                "type": "boolean"
+                            },
+                            "veil_on": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "image_quality": {
+                        "description": "Shows quality of image",
+                        "type": "object",
+                        "properties": {
+                            "blur": {
+                                "type": "boolean"
+                            },
+                            "dark": {
+                                "type": "boolean"
+                            },
+                            "grayscale": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "liveness": {
+                        "description": "Liveness attribute",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "boolean"
+                            },
+                            "probability": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "rotation": {
+                        "description": "Shows how many rotations need to be done to detect face in image",
+                        "type": "integer"
+                    },
+                    "bounding_box": {
+                        "description": "Shows result of bounding box",
+                        "type": "object",
+                        "properties": {
+                            "TopLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "TopLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Width": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Height": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "face_landmark": {
+                        "description": "Shows result of face landmark",
+                        "type": "object",
+                        "properties": {
+                            "LeftEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "LeftEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image. (New)",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face enrolled successfully",
+                        "type": "number"
+                    }
+                }
+            },
+            "ExtractKTPAsync": {
+                "title": "ExtractKTPAsync",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "Choice of image, as given in the table",
+                        "type": "string"
+                    },
+                    "validate_quality": {
+                        "description": "A flag to determine whether quality validation will be executed. The validation consists of checking blur and dark with threshold.",
+                        "default": false,
+                        "type": "boolean"
+                    },
+                    "reference_id": {
+                        "description": "Choice of reference_id, as given in the table",
+                        "type": "string"
+                    },
+                    "callback_url": {
+                        "description": "used to send recognition results to a specific url",
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseExtractKTPAsync": {
+                "title": "ResponseExtractKTPAsync",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message indicating the status of the request to be processed",
+                        "type": "string",
+                        "example": "Request Success"
+                    },
+                    "data": {
+                        "description": "Shows the id used to pull the recognition result",
+                        "type": "object",
+                        "properties": {
+                            "reference_id": {
+                                "type": "string",
+                                "example": "REFERENCE_ID"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseExtractKTPAsyncResult": {
+                "title": "ResponseExtractKTPAsyncResult",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Success Extract KTP Data"
+                    },
+                    "error_code": {
+                        "description": "This error_code indicates an error that appeared in processing the request from the extract-async method",
+                        "type": "string",
+                        "example": "FAIL_ON_1"
+                    },
+                    "data": {
+                        "description": "Show the recognition result",
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "type": "string",
+                                "description": "Shows address from KTP"
+                            },
+                            "administrative_village": {
+                                "type": "string",
+                                "description": "Shows administrative village from KTP"
+                            },
+                            "blood_type": {
+                                "type": "string",
+                                "description": "Shows blood type from KTP"
+                            },
+                            "city": {
+                                "type": "string",
+                                "description": "Shows city from KTP"
+                            },
+                            "date_of_birth": {
+                                "type": "string",
+                                "description": "Shows date of birth from KTP"
+                            },
+                            "district": {
+                                "type": "string",
+                                "description": "Shows district from KTP"
+                            },
+                            "full_name": {
+                                "description": "Shows full name from KTP",
+                                "type": "string"
+                            },
+                            "gender": {
+                                "description": "Shows gender from KTP",
+                                "type": "string"
+                            },
+                            "marital_status": {
+                                "description": "Shows marital status from KTP",
+                                "type": "string"
+                            },
+                            "nationality": {
+                                "description": "Shows nationality from KTP",
+                                "type": "string"
+                            },
+                            "nik": {
+                                "description": "Shows NIK from KTP",
+                                "type": "string"
+                            },
+                            "occupation": {
+                                "description": "Shows occupation from KTP",
+                                "type": "string"
+                            },
+                            "place_of_birth": {
+                                "description": "Shows place of birth from KTP",
+                                "type": "string"
+                            },
+                            "religion": {
+                                "description": "Shows religion from KTP",
+                                "type": "string"
+                            },
+                            "rt_rw": {
+                                "description": "Shows RT/ RW from KTP",
+                                "type": "string"
+                            },
+                            "state": {
+                                "description": "Shows state from KTP",
+                                "type": "string"
+                            },
+                            "image_quality": {
+                                "description": "Shows quality of image",
+                                "type": "object",
+                                "properties": {
+                                    "blur": {
+                                        "type": "boolean"
+                                    },
+                                    "dark": {
+                                        "type": "boolean"
+                                    },
+                                    "flashlight": {
+                                        "type": "boolean"
+                                    },
+                                    "grayscale": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
