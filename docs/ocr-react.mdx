@@ -1,0 +1,246 @@
+---
+title: "React"
+---
+Follow these steps to get started with ReactJS.
+
+1.  Set up the workspace by running the following command:
+    
+    ```shell shell
+    npx create-react-app ocrtest
+    
+    ```
+    
+    A folder/directory named `ocrtest` should appear and the folder/ directory structure should look like this:
+    
+    ```directory structure directory structure
+    ocrtest/
+        |
+        +-- node_modules/
+        |
+        +-- public/
+        |    |
+        |    +-- favicon.ico
+        |    |
+        |    +-- index.html
+        |    |
+        |    +-- logo192.png
+        |    |
+        |    +-- logo512.png
+        |    |
+        |    +-- manifest.json
+        |    |
+        |    \-- robots.txt
+        |
+        +-- src/
+        |    |
+        |    +-- App.css
+        |    |
+        |    +-- App.js
+        |    |
+        |    +-- App.test.js
+        |    |
+        |    +-- index.css
+        |    |
+        |    +-- index.js
+        |    |
+        |    +-- logo.svg
+        |    |
+        |    +-- reportWebVitals.js
+        |    |
+        |    \-- setupTests.js
+        |
+        +-- .gitignore
+        |
+        +-- package-lock.json
+        |
+        +-- package.json
+        |
+        \-- README
+    
+    ```
+    
+2.  Put the `ocr` folder/directory that contains the ocr engine and builders like `builder.js`, into the `public` folder/directory.
+    
+3.  Add the ocr package to `package.json` by running this command in the `ocrtest` react.js project.
+    
+    ```shell shell
+    npm i file:public/ocr
+    
+    ```
+    
+    This will add `@verihubs/ocr` dependency in `package.json`.
+    
+4.  Add an import to `index.js` file inside `src` folder.
+    
+    ```src/index.js src/index.js
+    import Builder from '@verihubs/ocr';
+    
+    ```
+    
+5.  Add the following code to the `index.js` file inside `src` folder.
+    
+    ```src/index.js src/index.js
+    window.OCRSDK = new Builder()
+      .setAttemptCount(3)
+      .setProxyMiddleware({
+        Extract: {
+          url: 'http://localhost:8888/ocr/extract-async',
+          headers: {
+            'App-ID': '<replace-me-with-app-id>',
+            'API-Key': '<replace-me-with-api-key>',
+          },
+        },
+        ExtractResult: {
+          url: 'http://localhost:8888/ocr/extract-async/result',
+          headers: {
+            'App-ID': '<replace-me-with-app-id>',
+            'API-Key': '<replace-me-with-api-key>',
+          },
+        },
+        License: {
+          url: 'http://localhost:8888/license/{license_id}/check',
+          headers: {
+            'App-ID': '<replace-me-with-app-id>',
+            'API-Key': '<replace-me-with-api-key>',
+          },
+        },
+      })
+      .setURL('./ocr')
+      .build();
+    
+    ```
+    
+    Replace proxy middleware URLs with a URL that points to the correct endoints, and replace `<replace-me-with-app-id>` and `<replace-me-with-api-key>` with the appropriate `APP-ID` and `APIKey` for the ocr (remove the headers if the api doesn't need credentials or the url is pointing towards an intermediate endpoint).
+    
+    <Warning>
+    
+    ## Look Out!
+    
+    To not accidentally leak of AppID and APIKey for ocr, always pass them to an intermediate endpoint (like a proxy middleware) and append the AppID and APIKey header before reaching Verihubs' ocr service in production. Additional data can also be passed to this intermediate endpoint for end user identification.
+    
+    For more information about creating a Proxy Middleware, refer to [Proxy Middleware](/docs/ocr-fastapi)
+    .
+    
+    For API documentation of the Builder, refer to [`Builder`](/docs/ocr-builder)
+    .
+    
+    </Warning>
+6.  Add import for `React` in `App.js`.
+    
+    ```src/app.js src/app.js
+    import React from 'react';
+    
+    ```
+    
+7.  Populate the `App` component logic by the code below:
+    
+    ```src/app.js src/app.js
+    function App() {
+        const [image, setImage] = React.useState('');
+        const [data, setData] = React.useState('');
+    
+        React.useEffect(() => {
+            const ocrMessageListener = ({ data: { data, subject } }) => {
+                switch (subject) {
+                    case "OCR.Verbose":
+                        alert(data.message);
+                        break;
+                    case "Internal.Error":
+                        switch (data.message) {
+                            case "SANDBOX_ID_NOT_ALLOWED":
+                                alert("Invalid sandbox image code");
+                                global.OCRSDK.onDestroy();
+                                break;
+                            case "INSUFFICIENT_QUOTA":
+                                alert("Insufficient quota");
+                                global.OCRSDK.onDestroy();
+                                break;
+                            case "INTERNAL_SERVER_ERROR":
+                                alert("Internal server error occured.");
+                                break;
+                            case "PROCESS_TIMEOUT":
+                                alert("KTP Extraction timeout.");
+                                break;
+                            default:
+                                alert("An error occured. Please check the console.");
+                                console.log(data.message);
+                                break;
+                        }
+                        break;
+                    case "OCR.Success":
+                        setImage(data.image.url);
+                        setData(JSON.stringify(data, undefined, 2));
+                        setTimeout(() => {
+                            global.OCRSDK.onDestroy();
+                        }, 3000);
+                        break;
+                    case "OCR.Cancelled":
+                    case "OCR.OutOfChance":
+                        document.getElementById('data-result').innerText = data.message;
+                        global.OCRSDK.onDestroy();
+                        break;
+                    case "Camera.NotFound":
+                    case "Camera.PermissionDenied":
+                        alert("Camera is not detected or permission denied"),
+                        global.OCRSDK.onDestroy();
+                        break;
+                }
+            };
+            window.addEventListener('message', ocrMessageListener);
+    
+            return () => {
+                window.removeEventListener('message', ocrMessageListener);
+            };
+        }, []);
+    
+        const doOCRProcess = React.useCallback(() => {
+            window.OCRSDK.onStart();
+        }, []);
+    
+        return (
+    
+    ```
+    
+    <Warning>
+    
+    ## Info
+    
+    Check [System Messages](/docs/ocr-system-messages)
+     for full system message references.
+    
+    </Warning>
+8.  Replace the jsx component inside `App.js` with the code below:
+    
+    ```src/index.js src/index.js
+    return (
+      <div>
+        <button onClick={doOCRProcess}>
+          Run OCR Process
+        </button>
+        
+        <img src={image} alt="" />
+        <div className="data-result">{data}</div>
+      </div>
+    );
+    
+    ```
+    
+9.  Replace the whole content of `App.css` with the code below:
+    
+    ```src/app.css src/app.css
+    .data-result {
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      background-color: #0002;
+      overflow: auto;
+    }
+    
+    ```
+    
+
+To try the above implementation you can run the following command from the `ocr` project:
+
+```shell shell
+npm run dev
+
+```
