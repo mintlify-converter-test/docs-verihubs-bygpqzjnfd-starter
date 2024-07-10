@@ -1,0 +1,184 @@
+---
+title: "API Request & Response"
+---
+# 🎈Endpoint
+
+| Method | Endpoint |
+| --- | --- |
+| **GET** | `https://api.verihubs.com/data-verification/certificate-electronic/verify` |
+
+# 🎈Headers
+
+| Key | Type | Description |
+| --- | --- | --- |
+| App-ID | String | Application ID that generated from Application Menu in Verihubs Client Dashboard.  To hit in Testing and Live mode you need a Production Application ID. |
+| API-Key | String | API-Key that generated from Application Menu in Verihubs Client Dashboard that related to specific Application ID. |
+
+You can generate your Application ID and API-Key in the [Application page in Verihubs Client Dashboard.](https://app.verihubs.com/cloud/application)
+.
+
+# 🎈Request
+
+## Request Parameter
+
+| Parameter | Type | Description | Example |
+| --- | --- | --- | --- |
+| nik | String | 16 digits of Nomor Induk Kependudukan as stated on the KTP. | 9171022512990011 |
+| name | String | Full name based on the KTP. | John Doe |
+| birth\_date | String | Birth date in DD-MM-YYYY format based on the KTP. | 01-01-1901 |
+| email | String | Email address that must be unique per NIK. | [john.doe@gmail.com](john.doe@gmail.com) |
+| phone | String | Valid phone number, use country code but without plus (+) symbol. Must be unique per NIK. | 62812010101010101 |
+| selfie\_photo | String | Selfie photo in base64 format, minimum size 100KB, maximum size 4MB, and minimum pixel 480px (horizontal) X 640px (vertical). Please check Selfie & ID Card Best Practice check Selfie & ID Card Best Practice for details. | Base64 |
+| ktp\_photo | String | KTP photo in base64 format, minimum size 100KB, maximum size 2MB, minimum pixel 480px (horizontal) X 360px (vertical). Please check Selfie & ID Card Best Practice for details. | Base64 |
+| channel | String | This payload is currently not affecting any output due to inactivity of Electronic Certificate email notification. | VERIHUBS |
+| reference\_id | String | This reference\_id can be used to indicate your company’s transaction and must be unique. If the reference\_id is not inputted, then Verihubs will generate one for you | SERTEL\_123 |
+
+# 🎈Response
+
+## Response
+
+| HTTP Code | Description | Response |
+| --- | --- | --- |
+| 200 | Successful Transaction; Transaction that is considered successful and has been successfully verified by the data source. | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "8e31a91c-7437-4ed1-b086-06cbe247d6e7",  "status": "verified",  "reject\_field": \[\],  "reference\_id": "ref\_certel#e87c8bc2-5d10-455b-98a0-187d60f72873"  }  } |
+| 400 | Invalid Payload; Transaction that is considered failed due to validation errors, an error\_field will appear explaining the error. | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "nik",  "message": "nik length should consist of 16 digit(s)"  }  \]  } |
+| 401 | Authorization Failed; Transaction that unauthorized due to Application ID or API-Key issue. To hit in Testing and Live mode you need a Production Application ID and API-Key. | {  "message": "Authorization Failed",  "error\_code": "UNAUTHORIZED",  "error\_fields": \[\]  } |
+| 403 | Forbidden; The transaction is in Testing mode and not enough remaining quota. Please contact Verihubs Customer Support. | {  "message": "Insufficient testing quota",  "error\_code": "FORBIDDEN",  "error\_fields": \[\]  } |
+| 422 | Access Timeout; The transaction is experiencing timeout in the data source. |     |
+| 422 | Invalid KTP Photo; The KTP used in the transaction is classified as not a real KTP. Please check Selfie & ID Card Best Practice for details. |     |
+| 429 | Too Many Request; Spam Error as the transaction is read as spam, please wait a few seconds before re-performing the hit process. | {  "message": "Too many request in the allowed time frame",  "error\_code": "TOO\_MANY\_REQUEST",  "error\_fields": \[\]  } |
+| 500 | Internal Server Error; The transaction failed due to a server error that could be caused by data source constraints, timeout, internal error. | {  "message": "Internal Server Error",  "error\_code": "INTERNAL\_SERVER\_ERROR",  "error\_fields": \[\]  } |
+
+## List of Reject Field
+
+The reject field indicates if a parameter is returned incorrectly after being checked from the data source side.
+
+| HTTP Code | reject\_field | Definition |
+| --- | --- | --- |
+| 200 | nik | NIK not found in data source. |
+| 200 | name | Full name used to hit is not an exact match to full name registered in data source. |
+| 200 | birth\_date | Birth date used to hit is not an exact match to birth date registered in data source. |
+| 200 | selfie\_photo | Selfie not match |
+| 200 | phone | Phone conflict/already used to other NIK |
+| 200 | email | Email conflict/already used to other NIK |
+| 200 | liveness\_check | Liveness check false |
+
+## Detail for Success and Verified Transaction
+
+This case occurs if all parameters get successful results from the results of checking the data source (all valid data).
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "8e31a91c-7437-4ed1-b086-06cbe247d6e7",  "status": "**verified**",  "reject\_field": \[\],  "reference\_id": "ref\_certel#e87c8bc2-5d10-455b-98a0-187d60f72873"  }  } | Success (verified) |
+
+## Detail for Success and Not Verified Transaction
+
+This is a response that indicates there is an incorrect parameter after checking the data source. Below are also some examples of requests/responses.
+
+### Invalid NIK
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"INVALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "channel":"VALID\_CHANNEL",  "reference\_id":”transaction1”,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "22273b8b-f99c-48be-aeaf-ac5ef9402fea",  "status": "**not\_verified**",  "reject\_field": \[  "nik"  \],  "reference\_id": "transaction1"  }  } | Success (not\_verified)    Note: The transaction has been successfully checked against the data source and obtained some parameters with a value of 'false' which can be seen through the reject\_field in the response |
+
+### Invalid Name
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"INVALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "channel":"VALID\_CHANNEL",  "reference\_id":””,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "22273b8b-f99c-48be-aeaf-ac5ef9402fea",  "status": "**not\_verified**",  "reject\_field": \[  "name"  \],  "reference\_id": "transaction1"  }  } | Success (not\_verified)    Note: The transaction has been successfully checked against the data source and obtained some parameters with a value of 'false' which can be seen through the reject\_field in the response |
+
+### Invalid Birth Date
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"INVALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "channel":"VALID\_CHANNEL",  "reference\_id":””,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "22273b8b-f99c-48be-aeaf-ac5ef9402fea",  "status": "**not\_verified**",  "reject\_field": \[  "birth\_date"  \],  "reference\_id": "transaction1"  }  } | Success (not\_verified)    Note: The transaction has been successfully checked against the data source and obtained some parameters with a value of 'false' which can be seen through the reject\_field in the response |
+
+### Invalid Selfie Photo
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"INVALID\_SELFIE\_PHOTO”,  "ktp\_photo":"base64 format”,  "channel":"VALID\_CHANNEL",  "reference\_id":””,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "22273b8b-f99c-48be-aeaf-ac5ef9402fea",  "status": "**not\_verified**",  "reject\_field": \[  "selfie\_photo"  \],  "reference\_id": "transaction1"  }  } | Success (not\_verified)    Note: The transaction has been successfully checked against the data source and obtained some parameters with a value of 'false' which can be seen through the reject\_field in the response |
+
+### Invalid KTP Photo
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"INVALID\_KTP\_PHOTO”,  "channel":"VALID\_CHANNEL",  "reference\_id":””,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "22273b8b-f99c-48be-aeaf-ac5ef9402fea",  "status": "**not\_verified**",  "reject\_field": \[  "ktp\_photo"  \],  "reference\_id": "transaction1"  }  } | Success (not\_verified)    Note: The transaction has been successfully checked against the data source and obtained some parameters with a value of 'false' which can be seen through the reject\_field in the response |
+
+## Detail for Success and Verified with Reason Transaction
+
+This case occurs where email, phone, or both have been correlated with a certain NIK, causing the status "verified\_with\_reason". If this case occurs, please contact Privy's customer support directly ([helpdesk@privy.id](mailto:helpdesk@privy.id)
+).
+
+### Conflict Email
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"CONFLICT\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "7c5de075-739e-46c8-9aee-487696776c76",  "status": "**verified\_with\_reason**",  "reject\_field": \[  "email"  \],  "reference\_id": "ref\_certel#dfb8b449-4d83-41e8-b2f4-0343ead765f4"  }  } | Success (verified\_with\_reason)    Note: It means that the email, phone number, or both have been used by another NIK (identification number), and the user is advised to contact Privy's customer service |
+
+### Conflict Phone
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"CONFLICT\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "7c5de075-739e-46c8-9aee-487696776c76",  "status": "**verified\_with\_reason**",  "reject\_field": \[  "phone"  \],  "reference\_id": "ref\_certel#dfb8b449-4d83-41e8-b2f4-0343ead765f4"  }  } | Success (verified\_with\_reason)    Note: It means that the email, phone number, or both have been used by another NIK (identification number), and the user is advised to contact Privy's customer service |
+
+### Conflict Email and Phone
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"CONFLICT\_EMAIL",  "phone":"CONFLICT\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "a9b2fd4a-780e-425c-a67b-a52d5febc2c2",  "status": "**verified\_with\_reason**",  "reject\_field": \[  "phone",  "email"  \],  "reference\_id": "ref\_certel#3c42fa6b-c2c9-4705-8117-cf9d08c8d2aa"  }  } | Success (verified\_with\_reason)    Note: It means that the email, phone number, or both have been used by another NIK (identification number), and the user is advised to contact Privy's customer service |
+
+## Detail for Failed Transaction
+
+Here are some examples of cases for validating the format of existing parameters. If validation fails, the transaction will receive a 400 response along with details such as:
+
+*   error\_code
+*   error\_fields
+*   message
+
+### VALIDATION FORMAT NIK
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"INVALID\_FORMAT\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "nik",  "message": "nik length should consist of 16 digit(s)"  }  \]  } | Transaction error    Note: The transaction was not processed and received a code 400 due to a validation error |
+
+### VALIDATION FORMAT BIRTH DATE
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"INVALID\_FORMAT\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "birth\_date",  "message": "birth\_date format is incorrect, should be DD-MM-YYYY"  }  \]  } | Transaction error    Note: The transaction was not processed and received a code 400 due to a validation error |
+
+### VALIDATION FORMAT SELFIE PHOTO
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"INVALID\_FORMAT\_SELFIE\_PHOTO”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "selfie\_photo",  "message": "selfie\_photo format is incorrect in body, should be in a valid base64 or URL format"  }  \]  } | Transaction error    Note: The transaction was not processed and received a code 400 due to a validation error |
+
+### VALIDATION FORMAT SELFIE PHOTO (NO FACE DETECTED)
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"INVALID\_FORMAT\_SELFIE\_PHOTO\_NO\_FACE”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "selfie\_photo",  "message": "No face detected in image"  }  \]  } | Transaction error    Note: The transaction was not processed and received a code 400 due to validation error |
+
+### VALIDATION FORMAT KTP PHOTO
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"INVALID\_FORMAT\_KTP\_PHOTO”,  "reference\_id":””,  } | {  "message": "Invalid payload",  "error\_code"": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "ktp\_photo",  "message": "ktp\_photo format is incorrect in body, should be in a valid base64 or URL format"  }  \]  } | Transaction error    Note: The transaction was not processed and received a code 400 due to validation error |
+
+### VALIDATION FORMAT EMAIL
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"INVALID\_FORMAT\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "email",  "message": "email must be email format"  }  \]  } | Transaction error    Note: The transaction was not processed and received a code 400 due to validation error |
+
+### VALIDATION FORMAT PHONE
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"INVALID\_FORMAT\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "phone",  "message": "phone must be numeric"  }  \]  } | Transaction error    Note: The transaction was not processed and received a code 400 due to validation error |
+
+## Detail for Success Transaction but Liveness Check False/Failed
+
+| Request | Response | Remarks |
+| --- | --- | --- |
+| {  "nik":"VALID\_NIK",  "name":"VALID\_NAME",  "birth\_date":"VALID\_BIRTH\_DATE",  "email":"VALID\_EMAIL",  "phone":"VALID\_PHONE",  "selfie\_photo":"base64 format”,  "ktp\_photo":"base64 format”,  "reference\_id":””,  } | {  "message": "Certificate electronic verification has been done",  "data": {  "id": "a9b2fd4a-780e-425c-a67b-a52d5febc2c2",  "status": "not\_verified",  "reject\_field": \[  "liveness\_check”  \],  "reference\_id": "ref\_certel#3c42fa6b-c2c9-4705-8117-cf9d08c8d2aa"  }  } | Success (not\_verified)    Note: Failed because of liveness check, only liveness will be charged |
