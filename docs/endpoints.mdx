@@ -1,0 +1,44 @@
+---
+title: "Endpoints"
+---
+# Endpoints
+
+| Method | Path |
+| --- | --- |
+| POST | [https://api.verihubs.com/income/verify](https://api.verihubs.com/income/verify) |
+
+# Headers
+
+| Key | Types | Notes | Description |
+| --- | --- | --- | --- |
+| App-ID | string | Required | Application ID |
+| API-Key | string | Required | API-Key |
+
+# Body Params
+
+| Key | Type | Example | Description |
+| --- | --- | --- | --- |
+| nik | string | 3520000000000 | Identity number. 16 digits, number only. |
+| name | string | John Doe | Full name, based on ID card. |
+| gender | string | M   | Gender of the person \[M/F\] |
+| dob | string | 23-12-1976 | Date of birth \[dd-mm-yyyy\] |
+| email | string | [johndoe@email.com](mailto:johndoe@email.com) | Valid email registered on BPJSTK |
+| phone | string | 08123456789 | Valid phone registered on BPJSTK |
+| company\_name | string | PT ABCD | Latest company registered on BPJSTK |
+| income\_range | string | 5000000 | Latest salary registered on BPJSTK |
+| reference\_id | string | ref#001-abcd | The optional payload if there’s additional need for create unique id, must be unique (this can be used for reconciliation purpose) Note: If the reference\_id is empty or did not include to the request, Verihubs will generate the unique reference\_id |
+
+# Response
+
+| Field | Type | Decription |
+| --- | --- | --- |
+| id  | string | Verihubs id, generate string that can be used for reconciliation purpose (unique for every transaction) |
+| reference\_id | string | The optional payload if there’s additional need for create unique id, must be unique (this can be used for reconciliation purpose) |
+| nik | boolean | Identity number.    True : NIK is registered in BPJSTK  False : NIK is not registered in BPJSTK |
+| name | boolean | Name based on identity card.    True : name match  False : name not match |
+| gender | boolean | Gender based on identity card.    True : gender match  False : gender not match |
+| dob | boolean | Birthdate based on identity card. \[dd-mm-yyyy\]    True : dob match  False : dob not match |
+| company\_name | string | Latest company registered on BPJSTK |
+| income\_range | string | Range of salary from the latest company. |
+| email | boolean | Valid email registered on BPJSTK    True : email match  False : email not match |
+| phone | boolean | Valid phone registered on BPJSTK    True : phone number match  False : phone number not match |
