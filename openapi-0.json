@@ -1,0 +1,1062 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "https://api.verihubs.com/"
+        }
+    ],
+    "info": {
+        "title": "SMS API Documentation",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "SMS OTP",
+            "description": "Get information about SMS OTP API"
+        },
+        {
+            "name": "SMS Notifications and Promotions",
+            "description": "Get information about SMS Notifications and Promotions API"
+        },
+        {
+            "name": "SMS & OTP",
+            "description": "Get information about SMS OTP & SMS Notifications and Promotions API"
+        }
+    ],
+    "paths": {
+        "/v1/otp/send": {
+            "post": {
+                "tags": [
+                    "SMS OTP"
+                ],
+                "summary": "Send OTP",
+                "description": "This method helps you to generate and send sms containing one-time password to destination number<br>\nRate limit of 50 RPS is applied to SMS service. Verihubs also apply rate limit divided into several categories based on product. More explanation [link](https://docs.verihubs.com/docs/rate-limit)<br>\n\n#### Callback Description\nWhen you want to use callback_url payload, you only need to put for example \n```\nyour-callback-url.com/callback\n```\nExample callback that we'll send\n```\nyour-callback-url.com/callback?session_id=d0f5fb5c-2d50-4d3f-aea7-20018ab15806&status=1\n```\n\nPayload       | Description          |\n-----------|:---------------------|\nsession_id        | ID of the specific message            | \nstatus        | Latest status of the request             |\n\n#### Status Description\n\nStatus       | Description          | Condition |\n-----------|:---------------------|:-------------------------- |\n0        | Requested            | SMS OTP has been requested. |\n1        | Delivered            | SMS OTP has been delivered to destination number. This status will be charged. |\n2        | Verified            | SMS OTP has been verified using verify OTP API. This status will be charged. |\n3        | Not Verified            | SMS OTP has not been verified after the time limit. This status will be charged. |\n4        | Failed            | Operator cannot send SMS OTP to destination number |\n5        | Request Error            | Verihubs cannot reach Operator |\n7        | Undelivered             | SMS OTP has not been delivered to destination number (response received from Operator). This status will be charged.                |\n8        | No Delivery Report               | Delivered without Delivery Report from Operator after certain period. This status will be charged.          |\n9        | Blocked             | Destination Number has been blocked by Verihubs's system          |\n",
+                "operationId": "send_otp_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendOtp"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendOTP"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend403"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend409"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/otp/verify": {
+            "post": {
+                "tags": [
+                    "SMS OTP"
+                ],
+                "summary": "Verify OTP",
+                "description": "This method helps you to verify one-time password to destination number<br>",
+                "operationId": "verify_otp_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyOtp"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerifyOTP"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerify404"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerify422"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sms/send": {
+            "post": {
+                "tags": [
+                    "SMS Notifications and Promotions"
+                ],
+                "summary": "Send SMS",
+                "description": "This method helps you to send sms containing desired text to destination number<br>\nRate limit of 50 RPS is applied to SMS service. Verihubs also apply rate limit divided into several categories based on product. More explanation [link](https://docs.verihubs.com/docs/rate-limit)<br>\n#### Callback Description\nWhen you want to use callback_url payload, you only need to put for example \n```\nyour-callback-url.com/callback\n```\nExample callback that we'll send\n```\nyour-callback-url.com/callback?session_id=d0f5fb5c-2d50-4d3f-aea7-20018ab15806&status=1\n```\n\nPayload       | Description          |\n-----------|:---------------------|\nsession_id        | ID of the specific message            | \nstatus        | Latest status of the request             | \n\n#### Callback Status Description\nStatus       | Name          | Description |\n-----------|:---------------------|:-------------------------- |\n0        | Requested            | SMS has been requested. |\n1        | Delivered            | SMS has been delivered to destination number. This status will be charged. |\n4        | Failed            | Operator cannot send SMS to destination number |\n5        | Request Error            | Verihubs cannot reach Operator |\n7        | Undelivered             | SMS has not been delivered to destination number (response received from Operator). This status will be charged.                |\n8        | No Delivery Report               | Delivered without Delivery Report from operator after certain period. This status will be charged.          |\n9        | Blocked             | Destination Number has been blocked by Verihubs's system          |\n",
+                "operationId": "send_sms_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendSms"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendSms"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend403"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend409"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sms/bulk": {
+            "post": {
+                "tags": [
+                    "SMS Notifications and Promotions"
+                ],
+                "summary": "Send Bulk SMS",
+                "description": "This method helps you to send sms containing desired text to destination number<br>\nRate limit of 50 RPS is applied to SMS service. Verihubs also apply rate limit divided into several categories based on product.  More explanation [link](https://docs.verihubs.com/docs/rate-limit)<br>\n#### Callback Description\nWhen you want to use callback_url payload, you only need to put for example \n```\nyour-callback-url.com/callback\n```\nExample callback that we'll send\n```\nyour-callback-url.com/callback?session_id=d0f5fb5c-2d50-4d3f-aea7-20018ab15806&status=1\n```\n\nPayload       | Description          |\n-----------|:---------------------|\nsession_id        | ID of the specific message            | \nstatus        | Latest status of the request             | \n\n#### Callback Status Description\nStatus       | Name          | Description |\n-----------|:---------------------|:-------------------------- |\n0        | Requested            | SMS has been requested. |\n1        | Delivered            | SMS has been delivered to destination number. This status will be charged. |\n4        | Failed            | Operator cannot send SMS to destination number |\n5        | Request Error            | Verihubs cannot reach Operator |\n7        | Undelivered             | SMS has not been delivered to destination number (response received from Operator). This status will be charged.                |\n8        | No Delivery Report               | Delivered without Delivery Report from operator after certain period. This status will be charged.          |\n9        | Blocked             | Destination Number has been blocked by Verihubs's system          |\n",
+                "operationId": "send_sms_bulk_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendBulkSms"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendBulkSms"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend403"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend409"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sms-otp/blocked-numbers": {
+            "post": {
+                "tags": [
+                    "SMS & OTP"
+                ],
+                "summary": "Block Number",
+                "description": "This method helps you to block phone numbers to not be able to receive message from SMS OTP & SMS Notifications and Promotions services",
+                "operationId": "post_otp_blocked",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostBlockedNumber"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePostBlockedNumber"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePost400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "SMS & OTP"
+                ],
+                "summary": "Delete Blocked Number",
+                "description": "This method helps you to delete blocked number from list",
+                "operationId": "delete_otp_blocked",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "msisdn",
+                            "type": "string"
+                        },
+                        "name": "msisdn",
+                        "description": "Destination number that wants to be deleted form blocked number list",
+                        "example": 62812634439,
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDeleteBlockedNumber"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePost400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SendOtp": {
+                "title": "SendOtp",
+                "required": [
+                    "msisdn"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include the international prefix number and also find your local prefix number [here.](https://docs.verihubs.com/docs/supported-local-operator-prefix)",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "template": {
+                        "description": "Optional.Template to be send to destination number. Include $OTP in template for generated OTP.",
+                        "type": "string",
+                        "example": "This is your Verihubs OTP $OTP."
+                    },
+                    "otp": {
+                        "description": "Optional. Code generated by client.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "time_limit": {
+                        "description": "Optional. Expiration time for verify OTP in seconds.",
+                        "type": "string",
+                        "example": "300"
+                    },
+                    "challenge": {
+                        "description": "This value is a category. You can verify OTP based on the same challenge.",
+                        "type": "string",
+                        "example": "update_account"
+                    },
+                    "callback_url": {
+                        "description": "Optional.  This URL will be called by the server when the desired event will occur.",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "SendSms": {
+                "title": "SendSms",
+                "required": [
+                    "msisdn",
+                    "text"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include the international prefix number and also find your local prefix number [here.](https://docs.verihubs.com/docs/supported-local-operator-prefix)",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "text": {
+                        "description": "SMS Body",
+                        "type": "string",
+                        "example": "This is text example"
+                    },
+                    "premium": {
+                        "description": "used for Transactional SMS (Text Message from Business to Customer that provides valuable information about their product, service or processes).",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "callback_url": {
+                        "description": "Optional. This URL will be called by the server when the desired event will occur. Callback will work if you use premium route",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "SendBulkSms": {
+                "title": "SendBulkSms",
+                "required": [
+                    "msisdn",
+                    "text"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include the international prefix number and also find your local prefix number [here.](https://docs.verihubs.com/docs/supported-local-operator-prefix)",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": [
+                                "62839102839",
+                                "6281324578954"
+                            ]
+                        }
+                    },
+                    "text": {
+                        "description": "SMS Body. If list is used, please make sure text list equal to msisdn list because the text will be sent based on the same row as msisdn.",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": [
+                                "This is your Verihubs text example",
+                                "This is Verihubs promotional text"
+                            ]
+                        }
+                    },
+                    "premium": {
+                        "description": "used for Transactional SMS (Text Message from Business to Customer that provides valuable information about their product, service or processes).",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "callback_url": {
+                        "description": "Optional. This URL will be called by the server when the desired event will occur. Callback will work if you use premium route",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "VerifyOtp": {
+                "title": "VerifyOtp",
+                "required": [
+                    "msisdn",
+                    "otp"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "This value is destination number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "otp": {
+                        "description": "Code received by destination number.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "challenge": {
+                        "description": "This value is a category. You can verify OTP based on the same challenge.",
+                        "type": "string",
+                        "example": "update_account"
+                    }
+                }
+            },
+            "PostBlockedNumber": {
+                "title": "SendOtp",
+                "required": [
+                    "msisdn",
+                    "description"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include the international prefix number and also find your local prefix number [here.](https://docs.verihubs.com/docs/supported-local-operator-prefix)",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "description": {
+                        "description": "Describe reason for blocking specific phone number.",
+                        "type": "string",
+                        "example": "Fake number"
+                    }
+                }
+            },
+            "ResponsePostBlockedNumber": {
+                "title": "PostBlockedNumbers",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Number successfully added to block list"
+                    }
+                }
+            },
+            "ResponseDeleteBlockedNumber": {
+                "title": "DeleteBlockedNumbers",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Succesfully deleted msisdn from blocked list"
+                    }
+                }
+            },
+            "ResponseVerifyOTP": {
+                "title": "ResponseVerifyOTP",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP has been verified"
+                    }
+                }
+            },
+            "ResponseSendSms": {
+                "title": "ResponseSendSms",
+                "required": [
+                    "message",
+                    "msisdn",
+                    "session_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "SMS sent successfully"
+                    },
+                    "msisdn": {
+                        "description": "Destination number with international prefix country code.",
+                        "example": 628212312533
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request.",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    },
+                    "segment_count": {
+                        "description": "Segment Count is the number of SMS segmentation which is calculated by the GSM-7 and UTF-16 encoding system based on the SMS content sent. This segment count becomes a reference for calculating the cost of using SMS services. More explanation [link](https://docs.verihubs.com/docs/sms-segment-count-explanation)",
+                        "type": "integer",
+                        "example": 2
+                    }
+                }
+            },
+            "ResponseSendBulkSms": {
+                "title": "ResponseSendBulkSms",
+                "required": [
+                    "message",
+                    "msisdn"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Bulk SMS sent successfully"
+                    },
+                    "msisdn": {
+                        "description": "Destination number with international prefix country code.",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": [
+                                "628212312533",
+                                "628132346835"
+                            ]
+                        }
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request.",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    }
+                }
+            },
+            "ResponseSendOTP": {
+                "title": "ResponseSendOTP",
+                "required": [
+                    "message",
+                    "otp",
+                    "msisdn",
+                    "session_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP sent successfully"
+                    },
+                    "otp": {
+                        "description": "Code received by destination number.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "msisdn": {
+                        "description": "Destination number with international prefix country code.",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request.",
+                        "type": "string",
+                        "example": "adwaww-wdwa-fegr-wrwr"
+                    },
+                    "segment_count": {
+                        "description": "Segment Count is the number of SMS segmentation which is calculated by the GSM-7 and UTF-16 encoding system based on the SMS content sent. This segment count becomes a reference for calculating the cost of using SMS services. More explanation [link](https://docs.verihubs.com/docs/sms-segment-count-explanation)",
+                        "type": "integer",
+                        "example": 2
+                    }
+                }
+            },
+            "ResponseSend400": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Msisdn invalid: msisdn length should between 4-16 characters"
+                    }
+                }
+            },
+            "ResponsePost400": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Invalid payload: Msisdn missing"
+                    }
+                }
+            },
+            "ResponseSend401": {
+                "title": "Error Validation",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "example": 401
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Authorization failed"
+                    }
+                }
+            },
+            "ResponseSend403": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "OTP testing usage has exceed OTP testing quota"
+                    }
+                }
+            },
+            "ResponseVerify404": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "OTP not found"
+                    }
+                }
+            },
+            "ResponseSend409": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Msisdn invalid: msisdn has been blocked"
+                    }
+                }
+            },
+            "ResponseVerify422": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "OTP cannot be verified because it has already reached the time limit."
+                    }
+                }
+            },
+            "ResponseSend429": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Too many request in the allowed time frame"
+                    }
+                }
+            },
+            "ResponseSend500": {
+                "title": "Error Validation",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    }
+}
