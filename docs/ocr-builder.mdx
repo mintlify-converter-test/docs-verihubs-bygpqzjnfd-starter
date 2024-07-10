@@ -1,0 +1,156 @@
+---
+title: "Builder"
+---
+# Builder
+
+OCR WebSDK instance builder for using OCR WebSDK
+
+## build
+
+Builds the SDK interface that can be started and destroyed.
+
+```declaration declaration
+build(): OCRSDK;
+
+```
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`OCRSDK`](ocr-types#ocrsdk) | the SDK interface |
+
+## inspect
+
+Inspects the passed configuration for debugging.
+
+```declaration declaration
+inspect(): void;
+
+```
+
+## setAttemptCount
+
+Sets the maximum attempt for the OCR extraction while the SDK is running
+
+```declaration declaration
+setAttemptCount(count: number): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| count | `number` | the maximum attempt for the OCR extraction |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setContent
+
+Sets the text content of the SDK to the desired text. Usually used for translation.
+
+```declaration declaration
+setContent(content: OCRContentConfiguration): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| content | [`OCRContentConfiguration`](ocr-types#ocrcontentconfiguration) | the text and image content to replace |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setProxyMiddleware
+
+Sets the endpoint url proxy collection to be used for the SDK.
+
+```declaration declaration
+setProxyMiddleware(proxy: ProxyMiddleware): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| proxy | [`ProxyMiddleware`](ocr-types#proxymiddleware) | endpoint proxy collection to be used |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setTheme
+
+Sets the theme configuration for the SDK.
+
+```declaration declaration
+setTheme(theme: OCRThemeConfiguration): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| theme | [`OCRThemeConfiguration`](ocr-types#ocrthemeconfiguration) | theme configurations |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setURL
+
+Sets the SDK base path for starting the SDK.
+
+```declaration declaration
+setURL(url: string): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| url | `string` | the SDK base path |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setProcessingFlow
+
+Sets SDK processing flow whether async or async
+
+```declaration declaration
+setProcessingFlow(processingFlow: number): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| processingFlow | [`ProcessingFlow`](ocr-types#processingflow) | processing flow configuration |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
