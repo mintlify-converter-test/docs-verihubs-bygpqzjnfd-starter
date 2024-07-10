@@ -1,0 +1,2644 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "https://api.verihubs.com"
+        }
+    ],
+    "info": {
+        "title": "AI API Documentation",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "Face",
+            "description": "Get information about Face API"
+        },
+        {
+            "name": "KTP - Synchronous",
+            "description": "Get information about KTP Synchronous API"
+        },
+        {
+            "name": "KTP - Asynchronous",
+            "description": "Get information about KTP Asynchronous API"
+        }
+    ],
+    "paths": {
+        "/v1/face/enroll": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Enroll Face",
+                "description": "\nThis method helps you to enroll image containing face. \n<br>\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes. </br>\n\n| Error status                    | Error code          | Description                                  |\n|-----------------------------|---------------------------------------------|---------------------------------------------|\n|200   | FAIL_ON_1                      | fail on liveness                          |\n|200   | FAIL_ON_2                      | fail on attribute                         |\n|200   | FAIL_ON_3                      | fail on liveness and attribute            |\n|200   | FAIL_ON_4                      | fail on quality                           |\n|200   | FAIL_ON_5                      | fail on liveness and quality              |\n|200   | FAIL_ON_6                      | fail on attribute and quality             |\n|200   | FAIL_ON_7                      | fail on liveness, attribute, and quality  |\n|200   | FAIL_ON_8                  | fail on number of face (nface)  |\n|200   | FAIL_ON_9                   | fail on  number of face (nface) and liveness  |\n|200   | FAIL_ON_10                   | fail on  number of face (nface) and attribute |\n|200   | FAIL_ON_11                   | fail on  number of face (nface), attribute, and liveness  |\n|200   | FAIL_ON_12                   | fail on  number of face (nface) and quality|\n|200   | FAIL_ON_13                   | fail on  number of face (nface), quality, and liveness |\n|200   | FAIL_ON_14                  | fail on  number of face (nface), quality, and attribute |\n|200   | FAIL_ON_15                | fail on  number of face (nface), quality, attribute, and liveness |\n| 400  | INVALID_PAYLOAD                | no value in payload or empty string more than 1  |\n|400   | INVALID_PAYLOAD_IMAGE_MISSING  | invalid payload image not a standard b64/url or image empty string |\n|400   | INVALID_PAYLOAD_SUBJECT_ID_MISSING | invalid payload subject id is empty string |\n|400   | INVALID_PAYLOAD_IMAGE_SIZE    | invalid payload image size too large |\n|400   | MISSING_PAYLOAD_IMAGE         |  missing payload image                       |\n|400   | INVALID_PAYLOAD_IMAGE_TIMEOUT  | timeout getting image from url in 15 seconds                |\n|400   | INVALID_PAYLOAD_IMAGE_FORMAT   | image unable to be decoded/got from url OR invalid image extension |\n|400   | FACE_NOT_DETECTED              | face not detected from image              |\n|400   | INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY  | is_quality must be true if validate_quality true |\n|400   | INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true |\n|400   | INVALID_PAYLOAD_LIVENESS_VALIDATION_DEPENDENCY  | is_liveness must be true if validate_liveness true |\n|403   | INSUFFICIENT_QUOTA_ENROLL     | usage reach it quota limit for enroll (only appears on testing mode)|\n|403   | INSUFFICIENT_QUOTA_LIVENESS   | usage reach it quota limit for liveness (only appears on testing mode)  |\n|500   | INTERNAL_SERVER_ERROR         | internal server error | <br>\n",
+                "operationId": "enroll_face_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EnrollFace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseEnrollFace"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Successful Response (Insert New)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseEnrollFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Delete Enrolled Face",
+                "description": "\nThis method helps you to delete enrolled image.\n<br> \nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error status                                  | Error code                    | Description                                  |\n| -----------------------------|:---------------------------------------------|:---------------------------------------------|\n| 400 | INVALID_PAYLOAD_SUBJECT_ID_MISSING | Subject id payload is empty/null  |\n| 400 | MISSING_PAYLOAD_SUBJECT_ID    | Subject id payload is missing   |\n| 404 | INVALID_PAYLOAD_SUBJECT_ID    | subject id not valid / subject id is not found |\n| 500 | INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "enroll_face_delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "subject_id",
+                            "type": "string"
+                        },
+                        "name": "subject_id",
+                        "description": "Subject ID to be deleted",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDeleteEnrollFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Subject ID is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNotFoundDeleteEnrollFace"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/face/compare": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Compare Face",
+                "description": "This method helps you to compare face between 2 images\n<br>\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error status                                  | Error code                    | Description                                  |\n| -----------------------------|:---------------------------------------------|:---------------------------------------------|\n| 200 | FAIL_ON_1                      | fail on liveness                          |\n| 200 | FAIL_ON_2                      | fail on attribute                         |\n| 200 | FAIL_ON_3                      | fail on liveness and attribute            |\n| 200 | FAIL_ON_4                      | fail on quality                           |\n| 200 | FAIL_ON_5                      | fail on liveness and quality              |\n| 200 | FAIL_ON_6                      | fail on attribute and quality             |\n| 200 | FAIL_ON_7                      | fail on liveness, attribute, and quality  |\n|200   | FAIL_ON_8                  | fail on number of face (nface)  |\n|200   | FAIL_ON_9                   | fail on  number of face (nface) and liveness  |\n|200   | FAIL_ON_10                   | fail on  number of face (nface) and attribute |\n|200   | FAIL_ON_11                  | fail on  number of face (nface), attribute, and liveness  |\n|200   | FAIL_ON_12                   | fail on  number of face (nface) and quality|\n|200   | FAIL_ON_13                  | fail on  number of face (nface), quality, and liveness |\n|200   | FAIL_ON_14                   | fail on  number of face (nface), quality, and attribute |\n|200   | FAIL_ON_15                  | fail on  number of face (nface), quality, attribute, and liveness |\n| 400 | INVALID_PAYLOAD                | no value in payload or empty string more than 1  |\n| 400 | INVALID_PAYLOAD_IMAGE_1_MISSING  | invalid payload image 1 not a standard b64/url or image empty string |\n| 400 | INVALID_PAYLOAD_IMAGE_2_MISSING  | invalid payload image 2 not a standard b64/url or image empty string |\n| 400 | INVALID_PAYLOAD_IMAGE_1_SIZE    | invalid payload image 1 size too large |\n| 400 | INVALID_PAYLOAD_IMAGE_2_SIZE    | invalid payload image 2 size too large |\n| 400 | MISSING_PAYLOAD_IMAGE_1         |  missing payload image 1                      |\n| 400 | MISSING_PAYLOAD_IMAGE_2        |  missing payload image 2                    |\n| 400 | INVALID_PAYLOAD_IMAGE_1_TIMEOUT  | timeout getting image 1 from url in 15 seconds                |\n| 400 | INVALID_PAYLOAD_IMAGE_2_TIMEOUT  | timeout getting image 2 from url in 15 seconds                |\n| 400 | INVALID_PAYLOAD_IMAGE_1_FORMAT   | image unable to be decoded/got from url OR invalid image 1 extension |\n| 400 | INVALID_PAYLOAD_IMAGE_2_FORMAT   | image unable to be decoded/got from url OR invalid image 2 extension |\n| 400 | FACE_NOT_DETECTED              | face not detected from image              |\n| 400 | INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY  | is_quality must be true if validate_quality true |\n| 400 | INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true |\n| 400 | INVALID_PAYLOAD_LIVENESS_VALIDATION_DEPENDENCY  | is_liveness must be true if validate_liveness true |\n| 400 |  INVALID_PAYLOAD_THRESHOLD_MISSING  | threshold must be basic/moderate/high                 |\n| 403 | INSUFFICIENT_QUOTA_COMPARE    | usage reach it quota limit for compare (only appears on testing mode)|\n| 403 | INSUFFICIENT_QUOTA_LIVENESS   | usage reach it quota limit for liveness (only appears on testing mode)  |\n| 500 | INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "compare_face_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CompareFace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCompareFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/face/verify": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Verify Face",
+                "description": "\nThis method helps you verify face with specific image\n<br>\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error Status                                 | Error code                    | Description                                  |\n| -----------------------------|:---------------------------------------------|:---------------------------------------------|\n| 200 | FAIL_ON_1                      | fail on liveness                          |\n| 200 | FAIL_ON_2                      | fail on attribute                         |\n| 200 | FAIL_ON_3                      | fail on liveness and attribute            |\n| 200 | FAIL_ON_4                      | fail on quality                           |\n| 200 | FAIL_ON_5                      | fail on liveness and quality              |\n| 200 | FAIL_ON_6                      | fail on attribute and quality             |\n| 200 | FAIL_ON_7                      | fail on liveness, attribute, and quality  |\n|200   | FAIL_ON_8                   | fail on number of face (nface)  |\n|200   | FAIL_ON_9                   | fail on  number of face (nface) and liveness  |\n|200   | FAIL_ON_10                   | fail on  number of face (nface) and attribute |\n|200   | FAIL_ON_11                  | fail on  number of face (nface), attribute, and liveness  |\n|200   | FAIL_ON_12                   | fail on  number of face (nface) and quality|\n|200   | FAIL_ON_13                  | fail on  number of face (nface), quality, and liveness |\n|200   | FAIL_ON_14                 | fail on  number of face (nface), quality, and attribute |\n|200   | FAIL_ON_15                 | fail on  number of face (nface), quality, attribute, and liveness |\n| 400 | INVALID_PAYLOAD                | no value in payload or empty string more than 1  |\n| 400 |INVALID_PAYLOAD_IMAGE_MISSING  | invalid payload image not a standard b64/url or image empty string |\n| 400 | INVALID_PAYLOAD_IMAGE_SIZE    | invalid payload image size too large |\n| 400 | MISSING_PAYLOAD_IMAGE         |  missing payload image                       |\n| 400 | MISSING_PAYLOAD_SUBJECT_ID       |  missing payload subject id                       |\n| 400 | INVALID_PAYLOAD_IMAGE_TIMEOUT  | timeout getting image from url in 15 seconds                |\n| 400 | INVALID_PAYLOAD_IMAGE_FORMAT   | image unable to be decoded/got from url OR invalid image extension |\n| 400 | FACE_NOT_DETECTED              | face not detected from image              |\n| 400 | INVALID_PAYLOAD_SUBJECT_ID    | subject id not valid / subject id is not found |\n| 400 | INVALID_PAYLOAD_SUBJECT_ID_MISSING | subject_id payload is empty / null |\n| 400 | INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY  | is_quality must be true if validate_quality true |\n| 400 | INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true |\n| 400 | INVALID_PAYLOAD_LIVENESS_VALIDATION_DEPENDENCY  | is_liveness must be true if validate_liveness true |\n| 400 | INVALID_PAYLOAD_THRESHOLD_MISSING  | threshold must be basic/moderate/high                 |\n| 403 | INSUFFICIENT_QUOTA_VERIFY     | usage reach it quota limit for verify (only appears on testing mode)|\n| 403 | INSUFFICIENT_QUOTA_LIVENESS   | usage reach it quota limit for liveness (only appears on testing mode)  |\n| 500 | INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "verify_face_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyFace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerifyFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/face/search": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Search Face",
+                "description": "This method helps you search similar faces with specific image\n<br>\n\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error Status                                 | Error code                    | Description                                  |\n| -----------------------------|:---------------------------------------------|:---------------------------------------------|\n| 200 | FAIL_ON_1                      | fail on liveness                          |\n| 200 | FAIL_ON_2                      | fail on attribute                         |\n| 200 | FAIL_ON_3                      | fail on liveness and attribute            |\n| 200 | FAIL_ON_4                      | fail on quality                           |\n| 200 | FAIL_ON_5                      | fail on liveness and quality              |\n| 200 | FAIL_ON_6                      | fail on attribute and quality             |\n| 200 | FAIL_ON_7                      | fail on liveness, attribute, and quality  |\n|200   | FAIL_ON_8                    | fail on number of face (nface)  |\n|200   | FAIL_ON_9                    | fail on  number of face (nface) and liveness  |\n|200   | FAIL_ON_10                   | fail on  number of face (nface) and attribute |\n|200   | FAIL_ON_11                    | fail on  number of face (nface), attribute, and liveness  |\n|200   | FAIL_ON_12                    | fail on  number of face (nface) and quality|\n|200   | FAIL_ON_13                   | fail on  number of face (nface), quality, and liveness |\n|200   | FAIL_ON_14                    | fail on  number of face (nface), quality, and attribute |\n|200   | FAIL_ON_15                  | fail on  number of face (nface), quality, attribute, and liveness |\n| 400 | INVALID_PAYLOAD                | no value in payload or empty string more than 1  |\n| 400 | INVALID_PAYLOAD_IMAGE_MISSING  | invalid payload image not a standard b64/url or image empty string |\n| 400 | INVALID_PAYLOAD_IMAGE_SIZE    | invalid payload image size too large |\n| 400 | MISSING_PAYLOAD_IMAGE         |  missing payload image                       |\n| 400 | INVALID_PAYLOAD_IMAGE_TIMEOUT  | timeout getting image from url in 15 seconds                |\n| 400 | INVALID_PAYLOAD_IMAGE_FORMAT   | image unable to be decoded/got from url OR invalid image extension|\n| 400 | INVALID_PAYLOAD_THRESHOLD     | threshold cannot lower than 0 or more than 100 |\n| 400 | INVALID_PAYLOAD_LIMIT         | limit cannot lower than 1 or more than 10 |\n| 400 | FACE_NOT_DETECTED              | face not detected from image              |\n| 400 | INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY  | is_quality must be true if validate_quality true |\n| 400 | INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY  | is_attribute must be true if validate_attribute true |\n| 400 | INVALID_PAYLOAD_LIVENESS_VALIDATION_DEPENDENCY  | is_liveness must be true if validate_liveness true |\n| 403 | INSUFFICIENT_QUOTA_SEARCH     | usage reach it quota limit for search (only appears on testing mode)|\n| 403 | INSUFFICIENT_QUOTA_LIVENESS   | usage reach it quota limit for liveness (only appears on testing mode)  |\n| 403 | UNABLE_TO_RETRIEVE_IMAGE | unable to retrieve image when the flag to return base64 image is set to true |\n| 500 | INTERNAL_SERVER_ERROR         | internal server error |\n",
+                "operationId": "search_face_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchFace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSearchFace"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/face/liveness": {
+            "post": {
+                "tags": [
+                    "Face"
+                ],
+                "summary": "Detect Face Liveness",
+                "description": "This method helps you to detect liveness from a face image <br>\n\nRecommendation  <br>\n1. Only one face exist in the image sent (Holding an identity card is not recommended).<br>\n2. The face in the image must not be blocked by anything, i.e. take off masks <br>\n3. No editing on the image. <br>\n- prioritize for users to directly capture face image from mobile phone camera <br>\n- do not compress or crop the image <br>\n- do not add any elements to the image, i.e. padding <br>\n4. Make sure the image have good quality (avoid blur & dark). <br>\n5. Avoid backlight. <br>\n6. Avoid taking image in a dark environment.<br>\n  <br> \n  \nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n  \n| Error Status                                  |Error Code                                      | Description                                                            |\n| ------------------------------------------------|----------------------------------------------------------------------- |----------------------------------------------------------------------- |\n  | 200 | FAIL_ON_2                                       | fail on attribute                                                      |\n| 200 | FAIL_ON_4                                       | fail on quality                                                        |\n| 200 | FAIL_ON_6                                       | fail on attribute and quality                                          |\n| 200 | FAIL_ON_8                                     | fail on fail on number of face (nface)                                          |\n| 200 | FAIL_ON_10                                      | fail on fail on number of face (nface) and attribute                                          |\n| 200 | FAIL_ON_12                                    | fail on fail on number of face (nface) and quality                                          |\n| 200 | FAIL_ON_14                                    | fail on fail on number of face (nface), quality, and attribute                                         |\n| 400 | INVALID PAYLOAD                                 | no value in payload or empty string more than 1                        |\n| 400 | INVALID_PAYLOAD_IMAGE_MISSING                   | invalid payload image not a standard b64/url or image empty string     |\n| 400 | INVALID_PAYLOAD_IMAGE_SIZE                      | invalid payload image size too large                                   |\n| 400 |  MISSING_PAYLOAD_IMAGE                           | missing payload image                                                  |\n| 400 |  INVALID_PAYLOAD_IMAGE_TIMEOUT                   | timeout getting image from url in 15 seconds                           |\n| 400 | INVALID_PAYLOAD_IMAGE_FORMAT   | image unable to be decoded/got from url OR invalid image extension |\n| 400 | FACE_NOT_DETECTED                               | face not detected from image                                           |\n| 400 | INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY   | is_quality must be true if validate_quality true                       |\n| 400 | INVALID_PAYLOAD_ATTRIBUTE_VALIDATION_DEPENDENCY | is_attribute must be true if validate_attribute true                   |\n| 403 | INSUFFICIENT_QUOTA_LIVENESS                     | usage reach it quota limit for liveness (only appears on testing mode) |\n| 500 | INTERNAL_SERVER_ERROR                           | internal server error                                                  |\n\n\n  \n",
+                "operationId": "detect_face_liveness_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DetectFaceLiveness"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDetectFaceLiveness"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/ktp/extract": {
+            "post": {
+                "tags": [
+                    "KTP - Synchronous"
+                ],
+                "summary": "Extract KTP (Synchronous)",
+                "description": "Synchronous KTP method helps you to recognize text in KTP image and the extraction result will be processed and returned immediately.\n\nThe detection of KTP quality is always checked in this Extract KTP Synchronous, but you can set whether you want to validate your KTP quality photo by using validate_quality request.\n\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error status                                  | Error code                    | Description                                  |\n| ------------------------------|----------------------------------------------|----------------------------------------------|\n| 400 | INVALID_PAYLOAD                | No value in payload or empty string more than 1  |\n| 400 | INVALID_PAYLOAD_IMAGE_MISSING  | Image empty string |\n| 400 | INVALID_PAYLOAD_IMAGE_SIZE    | Image size too big/too small |\n| 400 | INVALID_PAYLOAD_IMAGE_FORMAT           | Image unable to be decoded/got from url OR invalid image extension|\n| 400 | MISSING_PAYLOAD_IMAGE         |  Missing payload image                       |\n| 400 | KTP_NOT_DETECTED | KTP not detected from image |\n| 400 | INVALID_PAYLOAD_REFERENCE_ID | reference_id is too short/too long |\n| 400 | INVALID_PAYLOAD_REFERENCE_ID_EXISTS | reference_id already exists (not unique) |\n| 400 | INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY | is_quality must be true if validate_quality true|\n| 403 | INSUFFICIENT_QUOTA    | Quota for extract/quality is not sufficient to further continue the request (Only appears on testing mode) |\n| 500 | INTERNAL_SERVER_ERROR         | Internal server error |\n",
+                "operationId": "extract_sync_text_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExtractKTPSync"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseExtractKTPSync"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ktp/id/extract-async": {
+            "post": {
+                "tags": [
+                    "KTP - Asynchronous"
+                ],
+                "summary": "Extract KTP (Asynchronous)",
+                "description": "Asynchronous KTP method helps you to recognize text in KTP image and the response is returned immediately while the request continues to be processed. There is an option to provide a callback URL, so once the process is complete the result will be returned to the given URL. Otherwise, you can call the get result method to pull the result. <br>\n\nIf you use a callback URL, we also provide extra authentication using HTTP basic authentication. This allows you to check whether the request sent to your URL is sent by our backend by looking at the Authorization HTTP header. The username and password can be set to an application ID in Verihubs Client dashboard (https://app.verihubs.com/). Please refer to the documentation in https://docs.verihubs.com/docs/ocr. \n\n\nThe detection of KTP quality is always checked in this Extract KTP Asynchronous, but you can set whether you want to validate your KTP quality photo by using validate_quality request.  </br>\n\nYou will receive a response consists of message and an error code if the request fails to process. The following is a list of error codes.\n<br>\n\n| Error status                                  | Error code                    | Description                                  |\n| ------------------------------|----------------------------------------------|----------------------------------------------|\n| 400 | INVALID_PAYLOAD                | No value in payload or empty string more than 1  |\n| 400 | INVALID_PAYLOAD_IMAGE_MISSING  | Image empty string |\n| 400 | INVALID_PAYLOAD_IMAGE_SIZE    | Image size too big/too small |\n| 400 | INVALID_PAYLOAD_IMAGE_FORMAT           | Image unable to be decoded/got from url OR invalid image extension|\n| 400 | MISSING_PAYLOAD_IMAGE         |  Missing payload image                       |\n| 400 | INVALID_PAYLOAD_CALLBACK_URL | Callback url payload is empty/null/ not url format (https://) |\n| 400 | INVALID_PAYLOAD_REFERENCE_ID | reference_id is too short/too long |\n| 400 | INVALID_PAYLOAD_REFERENCE_ID_EXISTS | reference_id already exists (not unique) |\n| 400 | INVALID_PAYLOAD_QUALITY_VALIDATION_DEPENDENCY | is_quality must be true if validate_quality true|\n| 403 | INSUFFICIENT_QUOTA    | Quota for extract/quality is not sufficient to further continue the request (Only appears on testing mode) |\n| 500 | INTERNAL_SERVER_ERROR         | Internal server error |\n",
+                "operationId": "extract_async_text_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExtractKTPAsync"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseExtractKTPAsync"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ktp/id/extract-async/result": {
+            "get": {
+                "tags": [
+                    "KTP - Asynchronous"
+                ],
+                "summary": "Get KTP Extraction Result",
+                "description": "This method helps you to get the recognition result of extract KTP asynchronous.  </br>\n  \n\n\nYou will receive a response of your payload request which consists of message and an error code if the request fails to process. The following is a list of error codes of get KTP extraction payload request.\n<br>\n\n|Error status| Error code                    | Description                                  |\n|----------| ------------------------------|----------------------------------------------|\n|400| INVALID_PAYLOAD_REFERENCE_ID | reference_id is too short/too long |\n|404| INVALID_PAYLOAD_REFERENCE_ID_NOT_FOUND | reference_id is not found / reference_id payload is missing|\n|500| INTERNAL_SERVER_ERROR         | Internal server error |\n\nBut, you can also received error_code in your successful request. This error_code indicates an error that appeared in processing the request from the extract-async method. The following is a list of error_code you might get. <br>\n\n| Error code                    | Description                                  |\n|----------------------------------------------|----------------------------------------------|\n| FAIL_ON_1 | Fail on quality |\n| KTP_NOT_DETECTED              | KTP not detected from image              |\n| INTERNAL_SERVER_ERROR         | Internal server error |\n<b> Effective 1 Sep 2023 </b>\n* Remove response: \"blur_score\" and \"dark_score\"\n",
+                "operationId": "extract_async_result_text_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "reference_id",
+                            "type": "string"
+                        },
+                        "name": "reference_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseExtractKTPAsyncResult"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ocr/sim": {
+            "post": {
+                "tags": [
+                    "SIM"
+                ],
+                "summary": "Extract SIM",
+                "description": "The purpose of OCR is to extract information from SIM image. The result will be in “text” format. All the data inside SIM will be extracted.\n\n  You will receive a response consists of message and an error code if the\nrequest fails to process. The following is a list of error codes.\n<br>\n\n| Error status                                  | Error code                    | Description                                  |\n| ------------------------------|----------------------------------------------|----------------------------------------------|\n| 200 | SIM_NOT_DETECTED  | Image is not detected as SIM |\n| 400 | INVALID_PAYLOAD                | No value in payload   |\n| 400 | INVALID_PAYLOAD_IMAGE_FORMAT        |  Invalid  image format                      |\n| 400 | INSUFFICIENT_QUOTA         |  Quota is not sufficient to continue                       |\n| 500 | INTERNAL_SERVER_ERROR         | Internal server error |\n",
+                "operationId": "extract_sim_text_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExtractSIM"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseExtractSIM"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ocr/npwp": {
+            "post": {
+                "tags": [
+                    "NPWP"
+                ],
+                "summary": "Extract NPWP",
+                "description": "The purpose of OCR is to extract information from NPWP image. The result will be in “text” format. All the data inside NPWP  will be extracted.\n\n  You will receive a response consists of message and an error code if the\nrequest fails to process. The following is a list of error codes.\n<br>\n\n| Error status                                  | Error code                    | Description                                  |\n| ------------------------------|----------------------------------------------|----------------------------------------------|\n| 200 | NPWP_NOT_DETECTED  | Image is not detected as NPWP |\n| 400 | INVALID_PAYLOAD                | No value in payload |\n| 400 | INVALID_PAYLOAD_IMAGE_FORMAT        |  Invalid  image format                     |\n| 400 | INSUFFICIENT_QUOTA         |  Quota is not sufficient to continue                       |\n| 500 | INTERNAL_SERVER_ERROR         | Internal server error |\n",
+                "operationId": "extract_npwp_text_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExtractNPWP"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseExtractNPWP"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationUnauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "message",
+                    "error_code"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "error_code": {
+                        "title": "Error_code",
+                        "type": "string"
+                    }
+                }
+            },
+            "ValidationUnauthorized": {
+                "title": "ValidationUnauthorized",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Authorization failed"
+                    }
+                }
+            },
+            "EnrollFace": {
+                "title": "EnrollFace",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "A base64 or URL image file.",
+                        "type": "string"
+                    },
+                    "subject_id": {
+                        "description": "used to update enrolled photo.",
+                        "type": "string"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_liveness": {
+                        "description": "A flag to determine whether Passive Liveness will be computed and return as result",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold, and also checking whether the image is a black & white image (grayscale is true). When is_liveness is set to true, it is best that validate_quality is set to true, as liveness is influenced by Quality.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_liveness": {
+                        "description": "Determines whether Liveness validation will be executed. The validation checks whether input image is live / spoof.",
+                        "type": "boolean",
+                        "default": null
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face.",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "CompareFace": {
+                "title": "CompareFace",
+                "required": [
+                    "image_1",
+                    "image_2"
+                ],
+                "type": "object",
+                "properties": {
+                    "image_1": {
+                        "description": "An image file, base64 or URL of the first person.",
+                        "type": "string"
+                    },
+                    "image_2": {
+                        "description": "An image file, base64 or URL of the second person.",
+                        "type": "string"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result. Quality will be computed for both image_1 and image_2 when set as true",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result. Attribute will be computed for both image_1 and image_2 when set as true",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_liveness": {
+                        "description": "A flag to determine whether Passive Liveness will be computed and return as result. Liveness will be computed for both image_1 and image_2 when set as true. When is_liveness is set to true, it is best that validate_quality is set to true, as liveness is influenced by Quality.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold, and also checking whether the image is a black & white image (grayscale is true).",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_liveness": {
+                        "description": "Determines whether Liveness validation will be executed. The validation checks whether input image is live / spoof.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "threshold": {
+                        "description": "Determines which threshold level will be used. The threshold either basic/moderate/high",
+                        "type": "string"
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face.",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "VerifyFace": {
+                "title": "VerifyFace",
+                "required": [
+                    "image",
+                    "subject_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "A base64 or URL image file.",
+                        "type": "string"
+                    },
+                    "subject_id": {
+                        "description": "Subject ID.",
+                        "type": "string"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_liveness": {
+                        "description": "A flag to determine whether Passive Liveness will be computed and return as result. When is_liveness is set to true, it is best that validate_quality is set to true, as liveness is influenced by Quality.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold, and also checking whether the image is a black & white image (grayscale is true).",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_liveness": {
+                        "description": "Determines whether Liveness validation will be executed. The validation checks whether input image is live / spoof.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "threshold": {
+                        "description": "Determines which threshold level will be used. The threshold either basic/moderate/high",
+                        "type": "string"
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face. (Will be released at 1 Sep 2023)",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "SearchFace": {
+                "title": "SearchFace",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "A base64 or URL image file.",
+                        "type": "string"
+                    },
+                    "limit": {
+                        "description": "A number indicating search limit (1 to 10)",
+                        "type": "number",
+                        "default": 1
+                    },
+                    "return_image": {
+                        "type": "boolean",
+                        "description": "A flag to return base64 image in matches",
+                        "default": false
+                    },
+                    "threshold": {
+                        "type": "number",
+                        "description": "A number indicating threshold for confidence (0 to 100)",
+                        "default": 82
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_liveness": {
+                        "description": "A flag to determine whether Passive Liveness will be computed and return as result. When is_liveness is set to true, it is best that validate_quality is set to true, as liveness is influenced by Quality.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold, and also checking whether the image is a black & white image (grayscale is true)",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_liveness": {
+                        "description": "Determines whether Liveness validation will be executed. The validation checks whether input image is live / spoof.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face.",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "DetectFaceLiveness": {
+                "title": "DetectFaceLiveness",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "A base64 or URL image file.",
+                        "type": "string"
+                    },
+                    "is_quality": {
+                        "description": "A flag to determine whether Image Quality (blur, dark, grayscale) will be computed and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_attribute": {
+                        "description": "A flag to determine whether Image Attribute (sunglasses, mask, veil) will be detected and return as result",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "validate_quality": {
+                        "description": "Determines whether Quality validation will be executed. The validation consists of checking blur and dark with threshold, and also checking whether the image is a black & white image (grayscale is true). It is highly recommended to set validate_quality to true as Liveness is influenced by Quality.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_attribute": {
+                        "description": "Determines whether Attribute validation will be executed. The validation consists of checking whether sunglasses or mask is detected in the input image.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "validate_nface": {
+                        "description": "Determines whether the number of faces validation will be executed. The validation checks whether the input image consists of more than one face.",
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "ResponseEnrollFace": {
+                "title": "ResponseEnrollFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face enrolled successfully"
+                    },
+                    "subject_id": {
+                        "description": "Subject ID",
+                        "type": "string"
+                    },
+                    "session_id": {
+                        "description": "unique id to represent transaction record",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "sunglasses_on": {
+                                "type": "boolean"
+                            },
+                            "mask_on": {
+                                "type": "boolean"
+                            },
+                            "veil_on": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "liveness": {
+                        "description": "Liveness attribute",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "boolean"
+                            },
+                            "probability": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "image_quality": {
+                        "description": "Shows quality of image",
+                        "type": "object",
+                        "properties": {
+                            "blur": {
+                                "type": "boolean"
+                            },
+                            "dark": {
+                                "type": "boolean"
+                            },
+                            "grayscale": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "rotation": {
+                        "description": "Shows how many rotations need to be done to detect face in image",
+                        "type": "integer"
+                    },
+                    "bounding_box": {
+                        "description": "Shows result of bounding box",
+                        "type": "object",
+                        "properties": {
+                            "TopLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "TopLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Width": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Height": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "face_landmark": {
+                        "description": "Shows result of face landmark",
+                        "type": "object",
+                        "properties": {
+                            "LeftEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "LeftEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face enrolled successfully",
+                        "type": "number"
+                    }
+                }
+            },
+            "ResponseDeleteEnrollFace": {
+                "title": "ResponseDeleteEnrollFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Collection subject id xxx from collection successfuly deleted"
+                    }
+                }
+            },
+            "ResponseNotFoundDeleteEnrollFace": {
+                "title": "ResponseNotFoundDeleteEnrollFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Subject ID is not found"
+                    }
+                }
+            },
+            "ResponseCompareFace": {
+                "title": "ResponseCompareFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face compared successfully"
+                    },
+                    "session_id": {
+                        "description": "unique id to represent transaction record",
+                        "type": "string"
+                    },
+                    "image_1": {
+                        "description": "Image 1",
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "type": "object",
+                                "properties": {
+                                    "sunglasses_on": {
+                                        "type": "boolean"
+                                    },
+                                    "mask_on": {
+                                        "type": "boolean"
+                                    },
+                                    "veil_on": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "liveness": {
+                                "description": "Liveness attribute",
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "boolean"
+                                    },
+                                    "probability": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            },
+                            "image_quality": {
+                                "description": "Shows quality of image",
+                                "type": "object",
+                                "properties": {
+                                    "blur": {
+                                        "type": "boolean"
+                                    },
+                                    "dark": {
+                                        "type": "boolean"
+                                    },
+                                    "grayscale": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "rotation": {
+                                "description": "Shows how many rotations need to be done to detect face in image",
+                                "type": "integer"
+                            },
+                            "nface": {
+                                "description": "Shows how many faces are detected in the input image.",
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "bounding_box": {
+                                "description": "Shows result of bounding box",
+                                "type": "object",
+                                "properties": {
+                                    "TopLeftX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "TopLeftY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "BottomRightX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "BottomRightY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "Width": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "Height": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            },
+                            "face_landmark": {
+                                "description": "Shows result of face landmark",
+                                "type": "object",
+                                "properties": {
+                                    "LeftEyeX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "LeftEyeY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "RightEyeX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "RightEyeY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "NoseX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "NoseY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthLeftX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthLeftY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthRightX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthRightY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "image_2": {
+                        "description": "Image 1",
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "type": "object",
+                                "properties": {
+                                    "sunglasses_on": {
+                                        "type": "boolean"
+                                    },
+                                    "mask_on": {
+                                        "type": "boolean"
+                                    },
+                                    "veil_on": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "liveness": {
+                                "description": "Liveness attribute",
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "boolean"
+                                    },
+                                    "probability": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            },
+                            "image_quality": {
+                                "description": "Shows quality of image",
+                                "type": "object",
+                                "properties": {
+                                    "blur": {
+                                        "type": "boolean"
+                                    },
+                                    "dark": {
+                                        "type": "boolean"
+                                    },
+                                    "grayscale": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "rotation": {
+                                "description": "Shows how many rotations need to be done to detect face in image",
+                                "type": "integer"
+                            },
+                            "nface": {
+                                "description": "Shows how many faces are detected in the input image.",
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "bounding_box": {
+                                "description": "Shows result of bounding box",
+                                "type": "object",
+                                "properties": {
+                                    "TopLeftX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "TopLeftY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "BottomRightX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "BottomRightY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "Width": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "Height": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            },
+                            "face_landmark": {
+                                "description": "Shows result of face landmark",
+                                "type": "object",
+                                "properties": {
+                                    "LeftEyeX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "LeftEyeY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "RightEyeX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "RightEyeY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "NoseX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "NoseY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthLeftX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthLeftY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthRightX": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    },
+                                    "MouthRightY": {
+                                        "type": "string",
+                                        "example": "0.9"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "similarity_status": {
+                        "description": "Shows similarity result",
+                        "type": "boolean"
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face compared successfully",
+                        "type": "number"
+                    }
+                }
+            },
+            "ResponseVerifyFace": {
+                "title": "ResponseVerifyFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face verified successfully"
+                    },
+                    "subject_id": {
+                        "description": "Subject ID",
+                        "type": "string"
+                    },
+                    "session_id": {
+                        "description": "unique id to represent transaction record",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "sunglasses_on": {
+                                "type": "boolean"
+                            },
+                            "mask_on": {
+                                "type": "boolean"
+                            },
+                            "veil_on": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "liveness": {
+                        "description": "Liveness attribute",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "boolean"
+                            },
+                            "probability": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "image_quality": {
+                        "description": "Shows quality of image",
+                        "type": "object",
+                        "properties": {
+                            "blur": {
+                                "type": "boolean"
+                            },
+                            "dark": {
+                                "type": "boolean"
+                            },
+                            "grayscale": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "rotation": {
+                        "description": "Shows how many rotations need to be done to detect face in image",
+                        "type": "integer"
+                    },
+                    "bounding_box": {
+                        "description": "Shows result bounding box",
+                        "type": "object",
+                        "properties": {
+                            "TopLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "TopLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Width": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Height": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "face_landmark": {
+                        "description": "Shows result of face landmark",
+                        "type": "object",
+                        "properties": {
+                            "LeftEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "LeftEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "similarity_status": {
+                        "description": "Shows similarity result",
+                        "type": "boolean"
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face verified successfully",
+                        "type": "number"
+                    }
+                }
+            },
+            "ResponseSearchFace": {
+                "title": "ResponseSearchFace",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-1"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face search is successful"
+                    },
+                    "session_id": {
+                        "description": "unique id to represent transaction record",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "sunglasses_on": {
+                                "type": "boolean"
+                            },
+                            "mask_on": {
+                                "type": "boolean"
+                            },
+                            "veil_on": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "liveness": {
+                        "description": "Liveness attribute",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "boolean"
+                            },
+                            "probability": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "image_quality": {
+                        "description": "Shows quality of image",
+                        "type": "object",
+                        "properties": {
+                            "blur": {
+                                "type": "boolean"
+                            },
+                            "dark": {
+                                "type": "boolean"
+                            },
+                            "grayscale": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "bounding_box": {
+                        "description": "Shows result of bounding box",
+                        "type": "object",
+                        "properties": {
+                            "TopLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "TopLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Width": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Height": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "face_landmark": {
+                        "description": "Shows result of face landmark",
+                        "type": "object",
+                        "properties": {
+                            "LeftEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "LeftEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "rotation": {
+                        "description": "Shows how many rotations need to be done to detect face in image",
+                        "type": "integer"
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face enrolled successfully",
+                        "type": "number"
+                    },
+                    "matches": {
+                        "description": "Shows similar face matches as limit (defaults to 1)",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "subject_id": {
+                                    "description": "Shows respected subject_id of similar matches",
+                                    "type": "string"
+                                },
+                                "similarity_status": {
+                                    "description": "Shows similarity result",
+                                    "type": "boolean"
+                                },
+                                "image": {
+                                    "description": "Shows respected image of similar matches in base64 format",
+                                    "type": "string",
+                                    "example": "<base64 image>"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseDetectFaceLiveness": {
+                "title": "ResponseDetectFaceLiveness",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "description": "Status Code",
+                        "type": "string",
+                        "example": "FACE-2"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Face liveness is detected successfully"
+                    },
+                    "session_id": {
+                        "description": "unique id to represent transaction record",
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "sunglasses_on": {
+                                "type": "boolean"
+                            },
+                            "mask_on": {
+                                "type": "boolean"
+                            },
+                            "veil_on": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "image_quality": {
+                        "description": "Shows quality of image",
+                        "type": "object",
+                        "properties": {
+                            "blur": {
+                                "type": "boolean"
+                            },
+                            "dark": {
+                                "type": "boolean"
+                            },
+                            "grayscale": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "liveness": {
+                        "description": "Liveness attribute",
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "boolean"
+                            },
+                            "probability": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "rotation": {
+                        "description": "Shows how many rotations need to be done to detect face in image",
+                        "type": "integer"
+                    },
+                    "bounding_box": {
+                        "description": "Shows result of bounding box",
+                        "type": "object",
+                        "properties": {
+                            "TopLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "TopLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "BottomRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Width": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "Height": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "face_landmark": {
+                        "description": "Shows result of face landmark",
+                        "type": "object",
+                        "properties": {
+                            "LeftEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "LeftEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "RightEyeY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "NoseY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthLeftY": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightX": {
+                                "type": "string",
+                                "example": "0.9"
+                            },
+                            "MouthRightY": {
+                                "type": "string",
+                                "example": "0.9"
+                            }
+                        }
+                    },
+                    "nface": {
+                        "description": "Shows how many faces are detected in the input image.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "timestamp": {
+                        "description": "Shows time which face enrolled successfully",
+                        "type": "number"
+                    }
+                }
+            },
+            "ExtractKTPSync": {
+                "title": "ExtractKTPSync",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "A base64 image file",
+                        "type": "string"
+                    },
+                    "validate_quality": {
+                        "description": "A flag to determine whether quality validation will be executed. The validation consists of checking blur and dark with threshold.",
+                        "default": false,
+                        "type": "boolean"
+                    }
+                }
+            },
+            "ResponseExtractKTPSync": {
+                "title": "ResponseExtractKTPSync",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "Message": {
+                        "description": "Message indicating the status of the request to be processed",
+                        "type": "string",
+                        "example": "Success Extract KTP data"
+                    },
+                    "error_code": {
+                        "description": "This error_code indicates an error that appeared in processing the request from the extract-async method",
+                        "type": "string",
+                        "example": "FAIL_ON_1"
+                    },
+                    "data": {
+                        "description": "Show the recognition result",
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "type": "string",
+                                "description": "Shows address from KTP"
+                            },
+                            "administrative_village": {
+                                "type": "string",
+                                "description": "Shows administrative village from KTP"
+                            },
+                            "blood_type": {
+                                "type": "string",
+                                "description": "Shows blood type from KTP"
+                            },
+                            "city": {
+                                "type": "string",
+                                "description": "Shows city from KTP"
+                            },
+                            "date_of_birth": {
+                                "type": "string",
+                                "description": "Shows date of birth from KTP"
+                            },
+                            "district": {
+                                "type": "string",
+                                "description": "Shows district from KTP"
+                            },
+                            "full_name": {
+                                "description": "Shows full name from KTP",
+                                "type": "string"
+                            },
+                            "gender": {
+                                "description": "Shows gender from KTP",
+                                "type": "string"
+                            },
+                            "marital_status": {
+                                "description": "Shows marital status from KTP",
+                                "type": "string"
+                            },
+                            "nationality": {
+                                "description": "Shows nationality from KTP",
+                                "type": "string"
+                            },
+                            "nik": {
+                                "description": "Shows NIK from KTP",
+                                "type": "string"
+                            },
+                            "occupation": {
+                                "description": "Shows occupation from KTP",
+                                "type": "string"
+                            },
+                            "place_of_birth": {
+                                "description": "Shows place of birth from KTP",
+                                "type": "string"
+                            },
+                            "religion": {
+                                "description": "Shows religion from KTP",
+                                "type": "string"
+                            },
+                            "rt_rw": {
+                                "description": "Shows RT/ RW from KTP",
+                                "type": "string"
+                            },
+                            "state": {
+                                "description": "Shows state from KTP",
+                                "type": "string"
+                            },
+                            "image_quality": {
+                                "description": "Shows quality of image",
+                                "type": "object",
+                                "properties": {
+                                    "blur": {
+                                        "type": "boolean"
+                                    },
+                                    "dark": {
+                                        "type": "boolean"
+                                    },
+                                    "flashlight": {
+                                        "type": "boolean"
+                                    },
+                                    "grayscale": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ExtractKTPAsync": {
+                "title": "ExtractKTPAsync",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "A base64 image file.",
+                        "type": "string"
+                    },
+                    "validate_quality": {
+                        "description": "A flag to determine whether quality validation will be executed. The validation consists of checking blur and dark with threshold.",
+                        "default": false,
+                        "type": "boolean"
+                    },
+                    "reference_id": {
+                        "description": "used as the identity of the recognition result",
+                        "type": "string"
+                    },
+                    "callback_url": {
+                        "description": "used to send recognition results to a specific url",
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseExtractKTPAsync": {
+                "title": "ResponseExtractKTPAsync",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message indicating the status of the request to be processed",
+                        "type": "string",
+                        "example": "Accepted"
+                    },
+                    "data": {
+                        "description": "Shows the id used to pull the recognition result",
+                        "type": "object",
+                        "properties": {
+                            "reference_id": {
+                                "type": "string",
+                                "example": "98a708d2-3dad-42e8-8a7d-52ae45c17463"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseExtractKTPAsyncResult": {
+                "title": "ResponseExtractKTPAsyncResult",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Success Extract KTP Data"
+                    },
+                    "error_code": {
+                        "description": "This error_code indicates an error that appeared in processing the request from the extract-async method",
+                        "type": "string",
+                        "example": "FAIL_ON_1"
+                    },
+                    "data": {
+                        "description": "Show the recognition result",
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "type": "string",
+                                "description": "Shows address from KTP"
+                            },
+                            "administrative_village": {
+                                "type": "string",
+                                "description": "Shows administrative village from KTP"
+                            },
+                            "blood_type": {
+                                "type": "string",
+                                "description": "Shows blood type from KTP"
+                            },
+                            "city": {
+                                "type": "string",
+                                "description": "Shows city from KTP"
+                            },
+                            "date_of_birth": {
+                                "type": "string",
+                                "description": "Shows date of birth from KTP"
+                            },
+                            "district": {
+                                "type": "string",
+                                "description": "Shows district from KTP"
+                            },
+                            "full_name": {
+                                "description": "Shows full name from KTP",
+                                "type": "string"
+                            },
+                            "gender": {
+                                "description": "Shows gender from KTP",
+                                "type": "string"
+                            },
+                            "marital_status": {
+                                "description": "Shows marital status from KTP",
+                                "type": "string"
+                            },
+                            "nationality": {
+                                "description": "Shows nationality from KTP",
+                                "type": "string"
+                            },
+                            "nik": {
+                                "description": "Shows NIK from KTP",
+                                "type": "string"
+                            },
+                            "occupation": {
+                                "description": "Shows occupation from KTP",
+                                "type": "string"
+                            },
+                            "place_of_birth": {
+                                "description": "Shows place of birth from KTP",
+                                "type": "string"
+                            },
+                            "religion": {
+                                "description": "Shows religion from KTP",
+                                "type": "string"
+                            },
+                            "rt_rw": {
+                                "description": "Shows RT/ RW from KTP",
+                                "type": "string"
+                            },
+                            "state": {
+                                "description": "Shows state from KTP",
+                                "type": "string"
+                            },
+                            "image_quality": {
+                                "description": "Shows quality of image",
+                                "type": "object",
+                                "properties": {
+                                    "blur": {
+                                        "type": "boolean"
+                                    },
+                                    "dark": {
+                                        "type": "boolean"
+                                    },
+                                    "flashlight": {
+                                        "type": "boolean"
+                                    },
+                                    "grayscale": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ExtractNPWP": {
+                "title": "ExtractNPWP",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "NPWP image file",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "ResponseExtractNPWP": {
+                "title": "ResponseExtractNPWP",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "Message": {
+                        "description": "Message indicating the status of the request to be processed",
+                        "type": "string",
+                        "example": "Success Extract NPWP data"
+                    },
+                    "data": {
+                        "description": "Show the recognition result",
+                        "type": "object",
+                        "properties": {
+                            "npwp": {
+                                "type": "string",
+                                "description": "Shows npwp number"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Shows name from NPWP"
+                            },
+                            "nik": {
+                                "type": "string",
+                                "description": "Shows nik number from NPWP"
+                            },
+                            "address": {
+                                "type": "string",
+                                "description": "Shows address from NPWP"
+                            }
+                        }
+                    }
+                }
+            },
+            "ExtractSIM": {
+                "title": "ExtractSIM",
+                "required": [
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "description": "SIM image file",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "ResponseExtractSIM": {
+                "title": "ResponseExtractSIM",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "Message": {
+                        "description": "Message indicating the status of the request to be processed",
+                        "type": "string",
+                        "example": "Success Extract SIM data"
+                    },
+                    "data": {
+                        "description": "Show the recognition result",
+                        "type": "object",
+                        "properties": {
+                            "sim_number": {
+                                "type": "string",
+                                "description": "Shows SIM number"
+                            },
+                            "sim_type": {
+                                "type": "string",
+                                "description": "Shows type of SIM"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Shows name from SIM"
+                            },
+                            "address": {
+                                "type": "string",
+                                "description": "Shows address from SIM"
+                            },
+                            "occupation": {
+                                "type": "string",
+                                "description": "Shows occupation from SIM"
+                            },
+                            "gender": {
+                                "type": "string",
+                                "description": "Shows gender from SIM"
+                            },
+                            "domain": {
+                                "type": "string",
+                                "description": "Shows domain of SIM"
+                            },
+                            "blood_type": {
+                                "type": "string",
+                                "description": "Shows blood type from SIM"
+                            },
+                            "birth_date": {
+                                "type": "string",
+                                "description": "Shows birth date from SIM"
+                            },
+                            "birth_place": {
+                                "type": "string",
+                                "description": "Shows birth place from SIM"
+                            },
+                            "height": {
+                                "type": "string",
+                                "description": "Shows height from SIM"
+                            },
+                            "valid_until": {
+                                "type": "string",
+                                "description": "Shows expiry date of SIM"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
