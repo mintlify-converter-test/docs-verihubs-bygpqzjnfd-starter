@@ -1,0 +1,50 @@
+---
+title: "Liveness-Certel"
+---
+Liveness detection is the ability of a system to detect if a face is real or fake. Here are some examples of performing liveness:
+
+1.  Only one face exists in the image sent
+2.  The face in the image must not be blocked by anything, i.e., take off masks, sunglasses/light reflection on glasses, hat
+3.  Make sure the image has good quality (avoid blur & dark)
+4.  The minimum resolution of the image is Height: 640 x Width: 480
+5.  Minimum size for each image: it’s recommended to be 200kb with minimum quality is JPEG 90%
+6.  Avoid backlight
+7.  Avoid taking images in a dark environment
+8.  No editing on the image
+    *   prioritize for users to directly capture face images from mobile phone camera
+    *   do not compress or crop the image
+    *   do not add any elements to the image, i.e., padding
+
+Case examples:
+
+1.  Look straight (face should be looking straight)
+
+<img className="block" src="images/files_readme_io/_69071dc_small_Screenshot_2023_02_22_at_13.47.59.png" alt="" />
+
+2.  Lighting condition (avoid taking images in backlight or low light conditions. It may reduce the visibility of the facial features)
+
+<img className="block" src="images/files_readme_io/_db63c54_small_Screenshot_2023_02_22_at_13.49.01.png" alt="" />
+
+3.  Orientation (the orientation of the face should be portrait with the correct orientation)
+
+<img className="block" src="images/files_readme_io/_51c959f_small_Screenshot_2023_02_22_at_13.49.48.png" alt="" />
+
+4.  Face in the center (the face should be in the center to avoid half-face images which might lead to no face detected)
+
+<img className="block" src="images/files_readme_io/_169d6cd_small_Screenshot_2023_02_22_at_13.50.21.png" alt="" />
+
+5.  Background condition (avoid taking the image in a crowded background as it might affect the result)
+
+<img className="block" src="images/files_readme_io/_330443f_small_Screenshot_2023_02_22_at_13.50.53.png" alt="" />
+
+6.  No attributes covering the face (avoid wearing attributes or anything that cover your faces such as sunglasses/glasses with light reflection, face masks, hat, and hair)
+
+<img className="block" src="images/files_readme_io/_c35c1c6_small_Screenshot_2023_02_22_at_13.51.23.png" alt="" /> <img className="block" src="images/files_readme_io/_28704c7_small_Screenshot_2023_02_22_at_13.56.32.png" alt="" />
+
+7.  No blur (the blurrier the face photo, the less liveness accuracy)
+
+<img className="block" src="images/files_readme_io/_12c83db_small_Screenshot_2023_02_22_at_13.57.05.png" alt="" />
+
+8.  Not holding any identity card.
+
+<img className="block" src="images/files_readme_io/_7f9b5ec_small_Screenshot_2023_02_22_at_13.58.07.png" alt="" />
