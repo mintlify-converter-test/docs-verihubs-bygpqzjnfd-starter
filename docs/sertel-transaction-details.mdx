@@ -1,0 +1,43 @@
+---
+title: "Transaction Details"
+---
+# 🎈Transaction Details
+
+<img className="block" src="images/files_readme_io/_d7948c7_image.png" alt="" />  
+
+The transaction details menu will show every detail of your transaction in the table. The table will consist of the following data:
+
+| Column | Definition |
+| --- | --- |
+| Transaction ID | Verihubs auto-generated Electronic Certificate transaction ID. |
+| Liveness ID | Verihubs auto-generated Passive Liveness transaction ID that mandatory in the Electronic Certificate service flow. |
+| Application Name | Application Name used to hit Verihubs API. |
+| Reference ID | Client generated ID to indicate your company's transaction. Must be unique per transaction. Verihubs will auto generate this ID if it left empty/non-exist. |
+| Date Sent | Transaction date & time. |
+| Status | Transaction status; Success transaction will be charged while Failed transaction will not be charged. |
+| Mode | Your transaction mode:    1\. **Testing** mode is when you use your testing quota. This mode is quota based.  2. **Live** mode is not limited by quota. Live mode is usually used when you are ready to use our service. |
+| Charged Service | On Certificate Electronic service you will be charged for 2 services: E-Cert & liveness (mandatory) with following scenario:    1\. If your liveness is successful & e-cert is successful then the charged service will be: E-Cert, Liveness  2\. If your liveness is successful & e-cert is failed, then the charged service will be: Liveness  [Here is for more details.](/docs/electronic-certificate-issuance#transaction-status) |
+
+You can also filter the transaction based on the following data:
+
+| Data | Definition |
+| --- | --- |
+| Send Date | Range of Date to limit the transactions shown on the table. Selectable transaction period 31 days. Maximum account transaction up to 90 days ago. |
+| Application Name | Select Application Name which you want to filter |
+| Status | Select transactions based on selected status (**SUCCESS** or **FAILED**) |
+| Mode | Select transactions based on selected mode (**TESTING**or **LIVE**) |
+
+Don't forget to click on the **Apply** button to view transactions based on the selected filter.
+
+The transactions can be exported into CSV or XLSX by clicking **Export as CSV** button or **Export as XLSX** button.
+
+# 🎈Transaction Status
+
+All transactions with response code 200 will be charged, with further explanations:
+
+| Liveness | E-cert | Liveness Charged | E-Cert Charged |
+| --- | --- | --- | --- |
+| executed, passed | success | v   | v   |
+| executed, passed | failed to execute | x   | x   |
+| executed, **failed** | will not be forwarded to e-cert | v   | x   |
+| **failed to execute** | will not be forwarded to e-cert | x   | x   |
