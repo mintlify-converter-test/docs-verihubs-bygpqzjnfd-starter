@@ -1,0 +1,175 @@
+---
+title: "WhatsApp Webhook"
+---
+By subscribing to our webhooks, our services will hit the subscribing webhooks URL with `POST` request which contains JSON body payload. Do note that only WABA that's owned by your company can subscribe to the webhook.
+
+## Events Available for Subscription:
+
+*   Message Created : "message\_created"
+    *   this event will be triggered when a user or the WABA created a message
+*   Message Updated : "message\_updated"
+    *   this event will be triggered when there's an update to a message, usually a status update
+    *   e.g. a message just changed its status to read
+
+> **DEVELOPER NOTE:** : The webhook events will not instantly reflect the changes of unsubscribing an event
+
+## Webhook Request Payload
+
+**The webhook JSON body will consist of:**
+
+*   event : event string
+    
+*   contact : contact object
+    
+    *   id : contact id
+    *   display\_name: WA display name or the msisdn, WA display name will mostly appear if the user sent a message to the WA first.
+    *   msisdn : the msisdn with dial code
+*   conversation : conversation object
+    
+    *   id : conversation id
+    *   created\_at : when did the conversation first started
+*   message : message object
+    
+    *   id : message id
+        
+    *   channel\_id : channel id (tied to your business WA number)
+        
+    *   direction : "received" or "sent", depends whether the message is inbound or outbound
+        
+    *   from : the msisdn string of sender
+        
+    *   to : the msisdn string of recipient
+        
+    *   whatsapp\_status : the whatsapp status of the message
+        
+        *   for inbound message the status will be mostly "received" or "deleted" (message deleted by sender)
+        *   for outbound message it'll follow whatsapp status of "pending", "sent", "delivered", "read", "failed", "rejected", "deleted"
+    *   type : type of the message
+        
+        *   text
+        *   hsm (only for outbound messages)
+        *   image
+        *   video
+        *   audio
+        *   file
+        *   location
+    *   content : content of the message
+        
+        *   text content:
+            
+            ```json json
+            {
+              "text": "Hello"
+            }
+            ```
+            
+        *   image content (contains download url):
+            
+            ```json json
+            {
+              "image": {
+                "url": "https://media.test.com/v1/54317df2-2eb8-42f3-be15-32ef877c3942"
+              }
+            }
+            ```
+            
+        *   audio content (contains download url):
+            
+            ```json json
+            {
+              "audio": {
+                "url": "https://media.test.com/v1/54317df2-2eb8-42f3-be15-32ef877c3942"
+              }
+            }
+            ```
+            
+        *   video content (contains download url):
+            
+            ```json json
+            {
+              "video": {
+                "url": "https://media.test.com/v1/54317df2-2eb8-42f3-be15-32ef877c3942"
+              }
+            }
+            ```
+            
+        *   file content (contains download url):
+            
+            ```json json
+            {
+              "file": {
+                "url": "https://media.test.com/v1/54317df2-2eb8-42f3-be15-32ef877c3942",
+                "caption": "original-file-name.pdf"
+              }
+            }
+            ```
+            
+        *   location content:
+            
+            ```json json
+            {
+              "location": {
+                "latitude": -6.174095,
+                "longitude": 106.87536
+              }
+            }
+            ```
+            
+
+## JSON Payload Example for message\_created
+
+```json json
+{
+  "event": "message_created",
+  "contact": {
+    "id": "cfea5c38774d4a4fb5bb9253e1daef26",
+    "display_name": "6282246831616",
+    "msisdn": "6282246831616"
+  },
+  "conversation": {
+    "id": "b3fa001696ff430d8d4d1cea072dd61e",
+    "created_at": "2022-01-13T14:11:17.409880+00:00"
+  },
+  "message": {
+    "id": "ed1324fa42d94b449dg66234873b36fa",
+    "channel_id": "6480d228-esv4-46ac-a75d-7d531a096962",
+    "direction": "sent",
+    "from": "6282246456875",
+    "to": "6282246831616",
+    "whatsapp_status": "pending",
+    "type": "text",
+    "content": {
+      "text": "hello, this is a test for session message"
+    }
+  }
+}
+```
+
+## JSON Payload Example for message\_updated
+
+```json json
+{
+  "event": "message_updated",
+  "contact": {
+    "id": "cfea5c387s4d4a4db5bb9253e1daef26",
+    "display_name": "6282246831616",
+    "msisdn": "6282246831616"
+  },
+  "conversation": {
+    "id": "b37a00169dff43078s4d1cea072dd61e",
+    "created_at": "2022-01-13T14:11:17.409880+00:00"
+  },
+  "message": {
+    "id": "ed1324fs42594k4d9d836234873b36fa",
+    "channel_id": "6480j228-ed74-h6ac-a75k-7d532a096962",
+    "direction": "sent",
+    "from": "6282246456875",
+    "to": "6282246831616",
+    "whatsapp_status": "sent",
+    "type": "text",
+    "content": {
+      "text": "hello, this is a test for session message"
+    }
+  }
+}
+```
