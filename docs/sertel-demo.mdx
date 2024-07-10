@@ -1,0 +1,43 @@
+---
+title: "Demo Page"
+---
+# 🎈Step by Step Guide on Using the Dashboard
+
+## 1\. Composing the Request
+
+<img className="block" src="images/files_readme_io/_4d0cb3d_image.png" alt="Demo Page - Composing the Request" />
+
+Demo Page - Composing the Request
+
+  
+
+Access [Verihubs Dashboard](https://app.verihubs.com)
+, and click on `Identity` -> `Electronic Certificate Issuance` ->`Demo` on the sidebar menu and follow these steps:
+
+1.  Select the Application ID. Make sure you have created one and it has been set by Verihubs.
+2.  Check your remaining quota. You can only perform the transaction if you have remaining quota.
+3.  Input the exact 16 digits of NIK as listed on the KTP.
+4.  Input the date of birth as listed on the KTP (DD-MM-YYYY format).
+5.  Input the full name as listed on KTP (string).  
+    Allowed strings: Alphabet \[a-z\]\[A-Z\], dot (.), comma (,), single quote ('), slash (/), dash (-).  
+    Minimum length: 2 character alphabet
+6.  Input the email. Must be in email format and unique per NIK.
+7.  Input the phone number. Must be unique for each NIK and a valid phone number. Use the country code but without the plus (+) symbol.
+8.  Upload or drag & drop the selfie photo. Size must be 100KB - 4MB and 480px (horizontal) x 640px (vertical). Allowed file types are jpg., jpeg., and png.
+9.  Upload or drag & drop the KTP photo. Size must be 100KB - 2MB and 480px (horizontal) x 360px (vertical). Allowed file types are jpg., jpeg., and png.
+10.  Click on the `Check Now` button to process the transaction.
+
+## 2\. Receiving the Response
+
+<img className="block" src="images/files_readme_io/_b31fb73_image.png" alt="Demo Page - Response" />
+
+Demo Page - Response
+
+You will receive a response that consist of:
+
+  
+
+| Parameter | Expected Value | Notes |
+| --- | --- | --- |
+| Results | 1\. Verified  2\. Not Verified  3\. Verified with Reason | Verified: All data is verified.  Not Verified: One ore more data is not a match.  Verified with Reason: The phone number or email has been used by another NIK. |
+| Reject Field | 1\. NIK  2\. Name  3\. DoB  4\. Selfie  5\. Phone  6\. Email | The reject field can be singular o combination of the list. |
