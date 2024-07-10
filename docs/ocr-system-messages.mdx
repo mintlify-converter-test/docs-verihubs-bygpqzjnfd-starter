@@ -1,0 +1,116 @@
+---
+title: "System Messages"
+---
+These messages are posted via [`postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
+ to the parent of the SDK iframe. The best practice to classify these messages are only through `subject` of each message.
+
+## Camera.NotFound
+
+This message will be posted when the browser doesn't detect any video input.
+
+```message message
+{
+  "subject": "Camera.NotFound",
+  "data": {
+    "message": "Camera not Found"
+  }
+}
+
+```
+
+## Camera.PermissionDenied
+
+This message will be posted when the user denies a camera permission request.
+
+```message message
+{
+  "subject": "Camera.PermissionDenied",
+  "data": {
+    "message": "Please allow camera permission to continue the process."
+  }
+}
+
+```
+
+## Internal.\*
+
+This message will be posted when there is any exception thrown internally by the SDK.
+
+```message message
+{
+  "subject": "Internal.${EXCEPTION_NAME}",
+  "data": {
+    "message": EXCEPTION_MESSAGE
+  }
+}
+
+```
+
+<Info>
+
+## Note
+
+*   `${EXCEPTION_NAME}` is the exception name thrown internally.
+*   `EXCEPTION_MESSAGE` is the exception message thrown internally.
+
+</Info>
+
+## OCR.Cancelled
+
+This message will be posted when OCR process cancelled by user.
+
+```message message
+{
+  "subject": "OCR.Cancelled",
+  "data": {
+    "message": "User cancelled the OCR process."
+  }
+}
+
+```
+
+## OCR.OutOfChance
+
+This message will be posted when OCR process reached maximum amount of attempt.
+
+```message message
+{
+  "subject": "OCR.OutOfChance",
+  "data": {
+    "message": "User reached the maximum amount of attempt."
+  }
+}
+
+```
+
+## Verification.Success
+
+This message will be posted when the whole liveness process is finished.
+
+```message message
+{
+  "subject": "Verification.Success",
+  "data": {
+    "image": {
+      "url": string,
+    },
+    "city": string,
+    "nik": string,
+    "full_name": string,
+    "place_of_birth": string,
+    "date_of_birth": string,
+    "gender": string,
+    "blood_type": string,
+    "religion": string,
+    "address": string,
+    "rt_rw": string,
+    "district": string,
+    "administrative_village": string,
+    "marital_status": string,
+    "occupation": string,
+    "nationality": string,
+    "province": string,
+  }
+}
+
+```
