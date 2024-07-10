@@ -1,0 +1,938 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "https://api.verihubs.com/"
+        }
+    ],
+    "info": {
+        "title": "Sandbox - Data API Documentation",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "National ID Service",
+            "description": "Get information about National ID"
+        },
+        {
+            "name": "Sandbox - Electronic Certificate Issuance Service",
+            "description": "Get information about Electronic Certificate Issuance"
+        },
+        {
+            "name": "Sandbox - NPWP Verification",
+            "description": "Get Information about individual or company NPWP"
+        }
+    ],
+    "paths": {
+        "/v1/id/check": {
+            "post": {
+                "tags": [
+                    "Sandbox - National ID Service"
+                ],
+                "summary": "Sandbox - National ID Service",
+                "description": "This method helps you to perform identity checking that shows legal subjects in order to issue an Electronic Certificate with the purpose of doing verification of citizenship data through legal sources.\n  \n  #### Scenario Description\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User input all valid data | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID | Data inputted based on rules & registered in Dukcapil based on NIK|\n  User input real valid NIK integers format | 16 DIGITS NUMERIC <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID | NIK with the following suffix will give effect to the given image <br> \"003\" :\"IMAGE_NO_FACE\" <br> \"004\" :\"IMAGE_INVALID\" <br> \"005\" :\"IMAGE_INVALID_2\" <br> \"006\" :\"IMAGE_INVALID_3\" <br> \"007\" :\"IMAGE_EXCEED_LIMIT_SIZE\" <br> \"008\" :\"IMAGE_UNDER_LIMIT_SIZE\" |\n   User input invalid NIK format | NIK_INVALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID | Inputted invalid NIK format |\n  User inputs NIK more than 16 digit numbers   | NIK_INVALID_2 <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID | NIK > 16 digits numeric |\n  User inputs NIK less than 16 digit numbers  | NIK_INVALID_3 <br> NAME_VALID <br> BIRTH_DATE_VALID  <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID   | NIK < 16 digits numeric |\n  User inputs NIK with special characters  | NIK_INVALID_4 <br> NAME_VALID <br> BIRTH_DATE_VALID  <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID   | Inputted NIK is not in numeric format |\n  User did not input NIK  | NIK_EMPTY <br> NAME_VALID <br> BIRTH_DATE_VALID  <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID | Did not input only NIK |\n  User did not input payload NIK  | NIK_NONE <br> NAME_VALID <br> BIRTH_DATE_VALID  <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID | Did not input payload NIK |\n  User inputs invalid name   | NIK_VALID <br> NAME_INVALID  <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br>  IMAGE_VALID   | Name inputted is not registered in Dukcapil accordance NIK |\n  User did not input name     | NIK_VALID <br> NAME_EMPTY <br> BIRTH_DATE_VALID  <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID | Did not input only name |\n  User did not input payload name   | NIK_VALID <br> NAME_NONE<br> BIRTH_DATE_VALID  <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID  | Did not input payload name |\n  User inputs invalid birth date    | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_INVALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID  | Birth date inputted is not registered in Dukcapil accordance NIK |\n  User inputs valid birth date with other format    | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_INVALID_2 <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID  | Birth date inputted is not accordance with the Birth Date Format, Should be DD-MM-YYYY |\n  User did not input birth date    | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_EMPTY <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID   | Did not input only birth date |\n  User did not input payload birth date   | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_NONE <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_VALID  | Did not input payload birth date |  \n  User inputs invalid email  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_INVALID <br> PHONE_VALID <br> IMAGE_VALID  | Inputted invalid email\n  User did not input email  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_EMPTY <br> PHONE_VALID <br> IMAGE_VALID  | Did not input only email\n  User did not input payload email  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_NONE <br> PHONE_VALID <br> IMAGE_VALID  | Did not input payload email\n  User inputs invalid phone  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_INVALID <br> IMAGE_VALID  | Inputted invalid phone format\n  User did not input phone  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_EMPTY <br> IMAGE_VALID  | Did not input only phone\n  User inputs phone less than 7 digits numbers  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_INVALID_2 <br> IMAGE_VALID  | Phone < 7 digits numeric\n  User inputs phone more than 20 digits numbers  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_INVALID_3 <br> IMAGE_VALID  | Phone > 20 digits numeric\n  User did not input payload phone  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_NONE <br> IMAGE_VALID  | Did not input payload phone\n  User inputs valid image but different person with NIK   | NIK_VALID <br> NAME_VALID <br>  BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_INVALID  | Image inputted with format base64 or identity image URL but different person accordance to NIK | \n  User inputs invalid image format dimension  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_INVALID_2  | Image inputted with another format (not in a vallid base64 or url) |  \n  User inputs invalid image format dimension  | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_INVALID_3  | Image inputted with under 400px*400px dimension |   \n  User inputs image but no face photo    | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_NO_FACE  | Image inputted with format base64 or identity image URL but no face photo |\n  User inputs invalid image with size more than 2 MB    | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_EXCEED_LIMIT_SIZE | Image size > 2 MB with 400px * 400px  |\n  User inputs invalid image with size less than 30 KB  | NIK_VALID <br> NAME_VALID <br>  BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br> IMAGE_UNDER_LIMIT_SIZE | Image size < 30 KB with 400px * 400px  |          \n  User did not input image   | NIK_VALID <br> NAME_VALID <br> BIRTH_PLACE_VALID <br> BIRTH_DATE_VALID <br>  IMAGE_EMPTY | Did not input only image  | \n  User did not put payload image    | NIK_VALID <br> NAME_VALID <br> BIRTH_DATE_VALID <br> EMAIL_VALID <br> PHONE_VALID <br>  IMAGE_NONE | Did not put payload image | \n  \n",
+                "operationId": "extract_id_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IdCheck"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIdCheck"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIdCheck400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIDCheck401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIDCheck403"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIDCheck429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIDCheck500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-verification/npwp/verify": {
+            "post": {
+                "tags": [
+                    "Sandbox - NPWP Verification"
+                ],
+                "summary": "Sandbox - Verify NPWP",
+                "description": "This method helps you to check tax identifier\n\n### Scenario Description\n  Scenario       | Subject ID         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User input all valid data |  \"nik\": \"1000000000000000\", <br> \"purpose\": \"checking npwp\", <br> \"user_consent\": true, <br> \"reference_id\": \"001\" | Data inputted based on rules & NIK registered|\n  User input all valid data |  \"nik\": \"1000000000000001\", <br> \"purpose\": \"checking npwp\", <br> \"user_consent\": true, <br> \"reference_id\": \"001\" | Data inputted based on rules & NIK registered resulted in status_wp is Non Efektif or NE|\n  User input all valid data |  \"nik\": \"1000000000000002\", <br> \"purpose\": \"checking npwp\", <br> \"user_consent\": true, <br> \"reference_id\": \"001\" | Data inputted based on rules & NIK registered resulted in status_wp is Non Efektif or NE and status_spt is INVALID|\n  User input all valid data |  \"nik\": \"1000000000000003\", <br> \"purpose\": \"checking npwp\", <br> \"user_consent\": true, <br> \"reference_id\": \"001\" | Data inputted based on rules & NIK registered resulted in NPWP is not found|\n\n  Scenario       | Subject ID         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User input all valid data |  \"npwp\": \"100000000000000\", <br> \"purpose\": \"checking npwp\", <br> \"user_consent\": true, <br> \"reference_id\": \"001\" | Data inputted based on rules & NPWP registered|\n  User input all valid data |  \"npwp\": \"100000000000001\", <br> \"purpose\": \"checking npwp\", <br> \"user_consent\": true, <br> \"reference_id\": \"001\" | Data inputted based on rules & NPWP registered resulted in status_wp is Non Efektif or NE|\n  User input all valid data |  \"npwp\": \"100000000000002\", <br> \"purpose\": \"checking npwp\", <br> \"user_consent\": true, <br> \"reference_id\": \"001\" | Data inputted based on rules & NPWP registered resulted in status_wp is Non Efektif or NE and status_spt is INVALID|\n  User input all valid data |  \"npwp\": \"100000000000003\", <br> \"purpose\": \"checking npwp\", <br> \"user_consent\": true, <br> \"reference_id\": \"001\" | Data inputted based on rules & NPWP registered resulted in NPWP is not found|\n",
+                "operationId": "post_npwp_check",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/postnpwpcheck"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Responsepostnpwpcheck"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend403"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-verification/certificate-electronic/verify": {
+            "post": {
+                "tags": [
+                    "Sandbox - Electronic Certificate Issuance Service"
+                ],
+                "summary": "Electronic Certificate Issuance Service",
+                "description": "This method helps you to verify identity checking that shows legal subjects in order to issue an Electronic Certificate with the purpose of doing verification of citizenship data through legal sources. Please refer to [Verihubs Documentation](https://docs.verihubs.com/docs/electronic-certificate-issuance) for guidelines and best practice\n\n### Scenario Description\n#### Success Scenario\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User input all valid data | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS | Data inputted based on rules & registered in Dukcapil based on NIK|\n  \n  #### NIK Scenario\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n   User did not input value in NIK payload | <b>NIK_EMPTY</b> <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS | Data inputted missing value in NIK payload |\n  User input NIK not numeric format   | <b>NIK_INVALID_1</b> <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS | Data inputted NIK not numeric format |\n  User input NIK less than 16 characters  | <b>NIK_INVALID_2</b> <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted NIK less than 16 characters |\n  User input NIK more than 16 characters  | <b>NIK_INVALID_3</b> <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted NIK more than 16 characters |\n  User input all valid data  | <b>NIK_LIVENESS_FAILED</b> <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Inputted data and got not_verified status because of liveness check | \n  User input all valid data  | <b>NIK_FAILED</b> <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Inputted data and got not_verified status with reject_field nik |\n   \n   #### Name Scenario\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User did not input value in Name payload  | NIK_SUCCESS <br> <b>NAME_EMPTY</b> <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted missing value in Name payload |\n  User input all valid data  | NIK_SUCCESS <br> <b>NAME_FAILED</b> <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Inputted data and got not_verified status with reject_field name |\n  \n  #### Birth Date Scenario\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User did not input value in Birth Date payload  | NIK_SUCCESS <br> NAME_SUCCESS <br> <b>BIRTH_DATE_EMPTY</b> <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted missing value in Birth Date payload |\n  User did not input Birth Date based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> <b>BIRTH_DATE_INVALID_1</b> <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted Birth Date not in DD-MM-YYYY format |\n  User input all valid data  | NIK_SUCCESS <br> NAME_SUCCESS <br> <b>BIRTH_DATE_FAILED</b> <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Inputted data and got not_verified status with reject_field birth date |\n  \n  #### Selfie Photo Scenario\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User did not input value in Selfie Photo payload  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> <b>SELFIE_PHOTO_EMPTY</b> <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted missing value in Selfie Photo payload |\n  User did not input Selfie Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> <b>SELFIE_PHOTO_INVALID_1</b> <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | User did not input Selfie Photo based on format |\n  User did not input Selfie Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> <b>SELFIE_PHOTO_INVALID_2</b> <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted not in 640x480 px format |\n  User did not input Selfie Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> <b>SELFIE_PHOTO_INVALID_3</b> <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted Selfie Photo below 100 kb |\n  User did not input Selfie Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> <b>SELFIE_PHOTO_INVALID_4</b> <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted Selfie Photo above 4096 kb |\n  User did not input Selfie Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> <b>SELFIE_PHOTO_FAILED</b> <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Inputted data and got not_verified status with reject_field Selfie Photo |\n  User did not input Selfie Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> <b>SELFIE_PHOTO_NO_FACE</b> <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Inputted data and got invalid_payload status with reject_field Selfie Photo (No Face Detected) |\n  User did not input Selfie Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> <b>SELFIE_PHOTO_CANT_PROCESSED</b> <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Inputted data and got invalid_payload status with reject_field Selfie Photo |\n  \n  #### KTP Photo Scenario\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User did not input value in KTP Photo payload  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> <b>KTP_PHOTO_EMPTY</b> <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted missing value in KTP Photo payload |\n  User did not input KTP Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> <b>KTP_PHOTO_INVALID_1</b> <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted not a valid Base64 format |\n  User did not input KTP Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> <b>KTP_PHOTO_INVALID_2</b> <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted not in 480x360 px format |\n  User did not input KTP Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> <b>KTP_PHOTO_INVALID_3</b> <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted Selfie Photo below 100 kb | \n  User did not input KTP Photo based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> <b>KTP_PHOTO_INVALID_4</b> <br> EMAIL_SUCCESS <br> PHONE_SUCCESS   | Data inputted Selfie Photo above 2048 kb |  \n  \n  #### Email Scenario\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n User did not input value in Email payload  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> <b>EMAIL_EMPTY</b> <br> PHONE_SUCCESS   | Data inputted missing value in Email payload |\n  User did not input Email based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> <b>EMAIL_INVALID_1</b> <br> PHONE_SUCCESS   | Data inputted not a valid format |\n  User did not input unique email to the Email payload (using the same email for another NIK)  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> <b>EMAIL_CONFLICT</b> <br> PHONE_SUCCESS   | Inputted data and got verified_with_reason status with reject_field Email |\n  \n  #### Phone Scenario\n  Scenario       | Request Payload         | Description |\n  -----------|:---------------------|:-------------------------- |\n  User did not input value in Phone payload  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> <b>PHONE_EMPTY</b>   | Data inputted missing value in Phone payload |  \n  User did not input Phone  based on format  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> <b>PHONE_INVALID_1</b>   | Data inputted is not based on format |\n  User did not input unique Phone to the Phone payload (using the same phone for another NIK)  | NIK_SUCCESS <br> NAME_SUCCESS <br> BIRTH_DATE_SUCCESS <br> SELFIE_PHOTO_SUCCESS <br> KTP_PHOTO_SUCCESS <br> EMAIL_SUCCESS <br> <b>PHONE_CONFLICT</b>   | Inputted data and got verified_with_reason status with reject_field Phone | \n",
+                "operationId": "extract_sertel_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sertel"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel403"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "IdCheck": {
+                "title": "ElectronicCertificateIssuance",
+                "required": [
+                    "nik",
+                    "name",
+                    "birth_date",
+                    "email",
+                    "phone",
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "nik": {
+                        "description": "16 digit numeric Identifier Number from ID.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Full name from ID.",
+                        "type": "string"
+                    },
+                    "birth_date": {
+                        "description": "Date of birth from ID in DD-MM-YYYY format.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email address (must be unique per nik).",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Valid phone number, use country code but without symbol (+), (must be unique per nik).",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "Selfie photo in base64 format, size min. 30 kB max. 2 MB, min pixel 400px x 400px",
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseIdCheck": {
+                "title": "ResponseElectronicCertificateIssuance",
+                "required": [
+                    "code",
+                    "message",
+                    "status",
+                    "results"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "type": "integer"
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "ID has been checked"
+                    },
+                    "results": {
+                        "description": "Shows results of ID",
+                        "type": "object",
+                        "properties": {
+                            "nik": {
+                                "description": "it will return \"Registered or Not Registered\". if Nik is not registered all the key; name, birthdate, birthplace, address will return null",
+                                "type": "string"
+                            },
+                            "name": {
+                                "description": "it will return 'true' or 'false'based on individual name that registered on ektp.",
+                                "type": "boolean"
+                            },
+                            "birth_date": {
+                                "description": "it will return 'true' or 'false'based on individual birth date that registered on ektp.",
+                                "type": "boolean"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "phone": {
+                                "type": "string"
+                            },
+                            "similarity": {
+                                "description": "it will return a percentage of similarity '0-100'",
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseIdCheck400": {
+                "title": "Bad Request",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 400
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "NIK length invalid"
+                    }
+                }
+            },
+            "ResponseIDCheck401": {
+                "title": "Unauthorized",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 401
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Missing App_ID in header"
+                    }
+                }
+            },
+            "ResponseIDCheck403": {
+                "title": "Forbidden",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 403
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Insufficient testing quota"
+                    }
+                }
+            },
+            "ResponseIDCheck429": {
+                "title": "Error Validation",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 429
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too many request in the allowed time frame"
+                    }
+                }
+            },
+            "ResponseIDCheck500": {
+                "title": "Internal Server Error",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    }
+                }
+            },
+            "postnpwpcheck": {
+                "title": "postnpwpcheck",
+                "type": "object",
+                "properties": {
+                    "npwp": {
+                        "description": "Personal tax number.",
+                        "type": "string",
+                        "example": "927135756xxxxxx"
+                    },
+                    "nik": {
+                        "description": "Personal ID from KTP.",
+                        "type": "string",
+                        "example": "327135756xxxxxx"
+                    },
+                    "user_consent": {
+                        "description": "User consent will be needed with NIK to ensure user's data.",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "purpose": {
+                        "description": "Purpose of doing the verification.",
+                        "type": "string",
+                        "example": "check personal npwp"
+                    },
+                    "reference_id": {
+                        "description": "unique number of each transaction",
+                        "type": "string",
+                        "example": "001"
+                    }
+                }
+            },
+            "Responsepostnpwpcheck": {
+                "title": "Responsepostnpwpcheck",
+                "required": [
+                    "message",
+                    "id",
+                    "reference_id",
+                    "npwp",
+                    "nama",
+                    "alamat",
+                    "status_wp",
+                    "status_spt"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Successfully check NPWP."
+                    },
+                    "data": {
+                        "description": "Shows result of NPWP Verification",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "id",
+                                "type": "string",
+                                "example": "238fc15d-5f3c-4a72-8d59-63bd8d4288e2"
+                            },
+                            "reference_id": {
+                                "description": "reference_id",
+                                "type": "string",
+                                "example": "ref_npwp#72708413-4bd5-4d2e-982f-da9d7085b010"
+                            },
+                            "npwp": {
+                                "description": "tax identier of person or company",
+                                "type": "string",
+                                "example": 3289240192847582
+                            },
+                            "name": {
+                                "description": "name of the tax identifier",
+                                "type": "string",
+                                "example": "J*hn D**"
+                            },
+                            "alamat": {
+                                "description": "address in the tax identifier",
+                                "type": "string",
+                                "example": "J*k*rt* B*r*t"
+                            },
+                            "status_wp": {
+                                "description": "status of Wajib Pajak",
+                                "type": "string",
+                                "example": "AKTIF"
+                            },
+                            "status_spt": {
+                                "description": "status of SPT",
+                                "type": "string",
+                                "example": "VALID"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseNPWPSend400": {
+                "title": "Bad Request",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Invalid Payload"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INVALID_PAYLOAD"
+                    },
+                    "error_fields": {
+                        "type": "object",
+                        "properties": {
+                            "field": {
+                                "type": "string"
+                            },
+                            "message": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseNPWPSend401": {
+                "title": "Unauthorized Request",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Authorization failed"
+                    }
+                }
+            },
+            "ResponseNPWPSend403": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "NPWP testing usage has exceed quota"
+                    }
+                }
+            },
+            "ResponseNPWPSend429": {
+                "title": "Too Many Request",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too many request in a period of time"
+                    }
+                }
+            },
+            "ResponseNPWPSend500": {
+                "title": "Internal Server Error",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    }
+                }
+            },
+            "Sertel": {
+                "title": "ElectronicCertificateIssuance",
+                "required": [
+                    "nik",
+                    "name",
+                    "birth_date",
+                    "email",
+                    "phone",
+                    "selfie_photo",
+                    "ktp_photo"
+                ],
+                "type": "object",
+                "properties": {
+                    "nik": {
+                        "description": "16 digit numeric Identifier Number from ID.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Full name from ID.",
+                        "type": "string"
+                    },
+                    "birth_date": {
+                        "description": "Date of birth from ID in DD-MM-YYYY format.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email address (must be unique per nik).",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Valid phone number, use country code but without symbol (+), (must be unique per nik).",
+                        "type": "string"
+                    },
+                    "selfie_photo": {
+                        "description": "Selfie photo in base64 format, size min. 100 kB max. 4 MB, min pixel 640px x 480px.",
+                        "type": "string"
+                    },
+                    "ktp_photo": {
+                        "description": "KTP photo in base64 format, size min. 100 kB max. 2 MB, min pixel 480px x 360px.",
+                        "type": "string"
+                    },
+                    "channel": {
+                        "description": "Brand's name (will be used in email).",
+                        "type": "string"
+                    },
+                    "reference_id": {
+                        "description": "Use to indicate your company's transaction (must be unique).",
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseSertel": {
+                "title": "ResponseElectronicCertificateIssuance",
+                "required": [
+                    "message",
+                    "data",
+                    "reject_field",
+                    "reference_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Shows message of the response",
+                        "type": "string",
+                        "example": "Certificate Electronic has been done"
+                    },
+                    "data": {
+                        "description": "Shows results of verification",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Verihubs ID, generate string that are unique for every transactions",
+                                "type": "string",
+                                "example": "8e31a91c-7437-4ed1-b086-06cbe247d6e7"
+                            },
+                            "status": {
+                                "description": "Identifier of the transactions. It will return verified, verified_with_reason, or not_verified",
+                                "type": "string",
+                                "example": "verified"
+                            },
+                            "reject_field": {
+                                "description": "Indicator if there’s a \"false\" response to a or any parameter, example if nik detected as not found in data source, then the reject_filed will state [“nik”, “name”], and so on",
+                                "type": "object"
+                            },
+                            "reference_id": {
+                                "type": "string",
+                                "example": "ref_certel#e87c8bc2-5d10-455b-98a0-187d60f72873"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseSertel400": {
+                "title": "Bad Request",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Invalid Payload"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INVALID_PAYLOAD"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object",
+                        "properties": {
+                            "field": {
+                                "description": "shows payload that are having a problem or error",
+                                "example": "nik"
+                            },
+                            "message": {
+                                "description": "shows error description that happened to the payload",
+                                "example": "nik length should consist of 16 digit(s)"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseSertel401": {
+                "title": "Authorization Failed",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Authorization Failed"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "UNAUTHORIZED"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseSertel403": {
+                "title": "Quota Insufficient",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Insufficient Testing Quota"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "FORBIDDEN"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseSertel429": {
+                "title": "Spam Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too Many Request in allowed time frame"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "TOO_MANY_REQUEST"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseSertel500": {
+                "title": "Internal Server Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INTERNAL_SERVER_ERROR"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    }
+}
