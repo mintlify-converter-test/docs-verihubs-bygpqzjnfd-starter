@@ -1,0 +1,748 @@
+---
+title: "Types"
+---
+## CameraConfig
+
+The camera configuration for virtual camera detection
+
+```declaration declaration
+type CameraConfig = {
+  virtualLabel: string[];
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| virtualLabel | `string[]` | An array of substrings for virtual camera detection to test against |
+
+## CompressionAlgorithm
+
+Image compression algorithm parameters
+
+```declaration declaration
+type CompressionAlgorithm = {
+  dimension: ImageDimension,
+  fileSizeThreshold: number,
+  qualityThreshold?: number,
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| dimension | [`ImageDimension`](#imagedimension) | The preffered photo dimension |
+| fileSizeThreshold | `number` | Maximum photo size |
+| qualityThreshold | `number \| undefined` | Minimum photo quality in percentage |
+
+## Credential
+
+The credential configuration for generating image hash for authenticity check
+
+```declaration declaration
+type Credential = {
+  clientId: string;
+  secret: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| clientId | `string` | The client id to be included for image hashing |
+| secret | `string` | The secret for image hashing |
+
+## Endpoint
+
+An endpoint specification
+
+```declaration declaration
+type Endpoint = {
+  headers: Record<any, any>;
+  params: Record<any, any>;
+  url: Url;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| headers | `Record<any, any>` | The custom header field to be sent together |
+| params | `Record<any, any>` | The query parameter field to be sent together |
+| url | [`Url`](#url) | The url destination |
+
+## ImageDimension
+
+Image dimension array of 2 numbers, width and height respectively
+
+```declaration declaration
+type ImageDimension = [number, number];
+
+```
+
+## Instruction
+
+The instruction type
+
+```declaration declaration
+type Instruction =
+  | 'look_left'
+  | 'look_right'
+  | 'open_mouth'
+  | 'see_straight';
+
+```
+
+**Values:**
+
+| Value | Description |
+| --- | --- |
+| look\_left | Look left instruction |
+| look\_right | Look right instruction |
+| open\_mouth | Open mouth instruction |
+| see\_straight | See straight instruction |
+
+<Info>
+
+## Info
+
+For content of running verification screen illustration, please check [`Builder.setInstruction`](./builder#setinstruction)
+.
+
+</Info>
+
+## InstructionOptions
+
+Active liveness parameters
+
+```declaration declaration
+type InstructionOptions = {
+  commands: Instruction[];
+  seedLimit: number;
+  translator: Record<Instruction, string>;
+  illustrator: Record<Instruction, string>;
+  isShowInstruction: boolean;
+  isSoundLooping: boolean;
+  isUseSound: boolean;
+  speaker: Record<Instruction, string>;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| commands | [`Instruction[]`](#instruction) | Instructions to be appended at the end of random generated instructions |
+| seedLimit | `number` | Random instruction count to be generated |
+| translator | [`Record<Instruction, string>`](#instruction) | Instruction text to be shown according to each instructions |
+| illustrator | [`Record<Instruction, string>`](#instruction) | Instruction image to be shown according to each instructions |
+| isShowInstruction | `boolean` | Hide instruction text if `true` |
+| isSoundLooping | `boolean` | Loop instruction sound if `true` |
+| isUseSound | `boolean` | Play instruction sound if `true` |
+| speaker | [`Record<Instruction, string>`](#instruction) | Instruction sound to be played according to each instructions |
+
+<Info>
+
+## Info
+
+For content of running verification screen illustration, please check [`Builder.setInstruction`](./builder#setinstruction)
+.
+
+</Info>
+
+## InstructionPageContent
+
+Instruction page content configuration
+
+```declaration declaration
+type InstructionPageContent = {
+  title: string;
+  subtitle: string;
+  instructions: Array<{
+    caption: string;
+    image: string;
+  }>;
+  action: {
+    backIcon: string;
+    start: string;
+    next: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| title | `string` | The title text |
+| subtitle | `string` | The subtitle text below the title text |
+| instructions | `object[]` | The instruction contents on the instruction page |
+| instructions\[number\].caption | `string` | The instruction image caption |
+| instructions\[number\].image | `string` | The instruction image url |
+| action | `object` | The instruction page action button content configurations |
+| action.backIcon | `string` | The back icon image url |
+| action.start | `string` | The start button text |
+| action.next | `string` | The next button text |
+
+**Images:**
+
+<img className="block" src="images/files_readme_io/_ee23a19_instruction_content_1.png" alt="Instruction content names/paths on first instruction" />
+
+Instruction content names/paths on first instruction
+
+<img className="block" src="images/files_readme_io/_92c4cda_instruction_content_2.png" alt="Instruction content names/paths on last instruction" />
+
+Instruction content names/paths on last instruction
+
+<Info>
+
+## Note
+
+*   The back icon is only visible on the second to the last instruction of the  
+    instruction page.
+*   The next button is only visible on the first to the second last instruction,  
+    while the start button is only visible on the last instruction.
+
+</Info>
+
+## InstructionPageTheme
+
+Instruction page theme configuration
+
+```declaration declaration
+type InstructionPageTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  title: {
+    color: string;
+    fontSize: string;
+  };
+  subtitle: {
+    color: string;
+    fontSize: string;
+  };
+  figcaption: {
+    color: string;
+    fontSize: string;
+  };
+  action: {
+    start: {
+      color: string;
+      fontSize: string;
+      backgroundColor: string;
+      hover: {
+        backgroundColor: string;
+      };
+    };
+    next: {
+      color: string;
+      fontSize: string;
+      backgroundColor: string;
+      hover: {
+        backgroundColor: string;
+      };
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The page frame container style |
+| frameContainer.backgroundColor | `string` | The page frame container background color |
+| title | `object` | The title style |
+| title.color | `string` | The title font color |
+| title.fontSize | `string` | The title font size |
+| subtitle | `object` | The subtitle style |
+| subtitle.color | `string` | The subtitle font color |
+| subtitle.fontSize | `string` | The subtitle font size |
+| figcaption | `object` | The figcaption style |
+| figcaption.color | `string` | The figcaption font color |
+| figcaption.fontSize | `string` | The figcaption font size |
+| action | `object` | The action styles |
+| action.start | `object` | The start action button style |
+| action.start.color | `string` | The start action button font color |
+| action.start.fontSize | `string` | The start action button font size |
+| action.start.backgroundColor | `string` | The start action button background color |
+| action.start.hover | `object` | The start action button hover style |
+| action.start.hover.backgroundColor | `string` | The start action button background color when hovered |
+| action.next | `object` | The next action button style |
+| action.next.color | `string` | The next action button font color |
+| action.next.fontSize | `string` | The next action button font size |
+| action.next.backgroundColor | `string` | The next action button background color |
+| action.next.hover | `object` | The next action button hover style |
+| action.next.hover.backgroundColor | `string` | The next action button background color when hovered |
+
+**Images:**
+
+<img className="block" src="images/files_readme_io/_25ccf41_instruction_theme_1.png" alt="Instruction theme names/paths on first instruction" />
+
+Instruction theme names/paths on first instruction
+
+<img className="block" src="images/files_readme_io/_f196950_instruction_theme_2.png" alt="Instruction theme names/paths on first instruction" />
+
+Instruction theme names/paths on first instruction
+
+<Info>
+
+## Note
+
+*   The back icon is only visible on the second to the last instruction of the  
+    instruction page.
+*   The next button is only visible on the first to the second last instruction,  
+    while the start button is only visible on the last instruction.
+
+</Info>
+
+## LivenessContentConfiguration
+
+The Liveness WebSDK content configuration
+
+```declaration declaration
+type ContentConfiguration = {
+  Instruction: InstructionPageContent;
+  Verification: VerificationPageContent;
+  Result: ResultPageContent;
+};
+
+```
+
+**Properties:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| Instruction | [`InstructionPageContent`](#instructionpagecontent) | Instruction page content configuration |
+| Verification | [`VerificationPageContent`](#verificationpagecontent) | Verification page content configuration |
+| Result | [`ResultPageContent`](#resultpagecontent) | Result page content configuration |
+
+## LivenessSDK
+
+The Liveness WebSDK instance
+
+```declaration declaration
+type LivenessSDK = {
+  onStart: (hideFrame?: boolean) => void;
+  onDestroy: () => void;
+};
+
+```
+
+**Methods:**
+
+| Name/Path | Type Signature | Description |
+| --- | --- | --- |
+| onStart | `(hideFrame?: boolean) => void` | Shows and starts the Liveness WebSDK |
+| onDestroy | `() => void` | Stops and remove the Liveness WebSDK |
+
+### onStart
+
+Shows and starts the Liveness WebSDK
+
+```declaration declaration
+onStart(hideFrame?: boolean): void;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| hideFrame | `boolean \| undefined` | Hides the Liveness WebSDK if `true`. |
+
+### onDestroy
+
+Stops and remove the Liveness WebSDK
+
+```declaration declaration
+onDestroy(): void;
+
+```
+
+## LivenessThemeConfiguration
+
+The Liveness WebSDK theme configuration
+
+```declaration declaration
+type LivenessThemeConfiguration = {
+  Component: {
+    Instruction: InstructionPageTheme;
+    Verification: VerificationPageTheme;
+    Result: ResultPageTheme;
+  };
+  Palette: ThemePalette;
+  Typography: TypographyPalette;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| Component | `object` | All page theme configurations |
+| Component.Instructon | [`InstructionPageTheme`](#instructionpagetheme) | Instruction page theme configuration |
+| Component.Verification | [`VerificationPageTheme`](#verificationpagetheme) | Verification page theme configuration |
+| Component.Result | [`ResultPageTheme`](#resultpagetheme) | Result page theme configuration |
+| Palette | [`PaletteTheme`](#palettetheme) | Global palette configuration |
+| Typography | [`TypographyTheme`](#typographytheme) | Global typography configuration |
+
+## Palette
+
+A color palette for theming
+
+```declaration declaration
+type Palette = {
+  contrastText: string;
+  default: string;
+  LIGHT: string;
+  DARK: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| contrastText | `string` | Usually for button text color |
+| default | `string` | Primary color for the palette |
+| LIGHT | `string` | Lighter version of the default color |
+| DARK | `string` | Lightest version of the default color |
+
+## PaletteTheme
+
+Global palette configuration
+
+```declaration declaration
+type PaletteTheme = {
+  primary: Palette;
+  secondary: Palette;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| primary | [`Palette`](#palette) | The primary palette |
+| secondary | [`Palette`](#palette) | The secondary palette |
+
+## ProxyMiddleware
+
+Endpoint specification collection for the Liveness WebSDK
+
+```declaration declaration
+type ProxyMiddleware = {
+  License: Endpoint;
+  PassiveLiveness: Endpoint;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| License | [`Endpoint`](#endpoint) | The license endpoint specification |
+| PassiveLiveness | [`Endpoint`](#endpoint) | The passive liveness endpoint specification |
+
+## ResultPageContent
+
+Result page content configuration
+
+```declaration declaration
+type ResultPageContent = {
+  icon: string;
+  description: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| icon | `string` | The result icon image url |
+| description | `string` | The result description text |
+
+**Images:**
+
+<img className="block" src="images/files_readme_io/_0ac5e4b_result_content_1.png" alt="Result content names/paths" />
+
+Result content names/paths
+
+## ResultPageTheme
+
+Result page theme configuration
+
+```declaration declaration
+type ResultPageTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  description: {
+    color: string;
+    fontSize: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The page frame container style |
+| frameContainer.backgroundColor | `string` | The page frame container background color |
+| description | `object` | The description style |
+| description.color | `string` | The description font color |
+| description.fontSize | `string` | The description font size |
+
+**Images:**
+
+<img className="block" src="images/files_readme_io/_03c792f_result_theme_1.png" alt="Result theme names/paths" />
+
+Result theme names/paths
+
+## ScreenOrientation
+
+The orientation for photo output
+
+```declaration declaration
+type ScreenOrientation =
+  | 'auto'
+  | 'landscape'
+  | 'portrait';
+
+```
+
+**Values:**
+
+| Value | Description |
+| --- | --- |
+| auto | Automatically detect current screen orientation |
+| landscape | Force landscape |
+| portrait | Force portrait |
+
+## Url
+
+Url string
+
+```declaration declaration
+type Url = string;
+
+```
+
+## VerificationPageContent
+
+Verification page content configuration
+
+```declaration declaration
+type VerificationPageContent = {
+  title: string;
+  action: {
+    backIcon: string;
+  };
+  instruction: {
+    loading: {
+      caption: string;
+      image: string;
+      sound: string;
+    };
+    processing: {
+      caption: string;
+      image: string;
+      sound: string;
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| title | `string` | The title text |
+| action | `object` | The verification page action button content configurations |
+| action.backIcon | `string` | The back icon image url |
+| instruction | `object` | The status content configurations |
+| instruction.loading | `object` | The loading status content configuration |
+| instruction.loading.caption | `string` | The loading status caption |
+| instruction.loading.image | `string` | The loading status image url |
+| instruction.loading.sound | `string` | The loading status sound url |
+| instruction.processing | `object` | The processing status content configuration |
+| instruction.processing.caption | `string` | The processing status caption |
+| instruction.processing.image | `string` | The processing status image url |
+| instruction.processing.sound | `string` | The processing status sound url |
+
+**Images:**
+
+<img className="block" src="images/files_readme_io/_68c663d_verification_content_1.png" alt="Verification content names/paths on loading verification" />
+
+Verification content names/paths on loading verification
+
+<img className="block" src="images/files_readme_io/_d916781_verification_content_2.png" alt="Verification content names/paths on processing/final verification" />
+
+Verification content names/paths on processing/final verification
+
+<Info>
+
+## Note
+
+*   The loading verification screen will only be shown when the active  
+    liveness model is loading.
+*   The processing/final verification screen will only be shown when the  
+    active liveness model is finished and the passive liveness model is  
+    running.
+
+</Info><Info>
+
+## Info
+
+For content of running verification screen illustration, please check [`Builder.setInstruction`](./builder#setinstruction)
+.
+
+</Info>
+
+## VerificationPageTheme
+
+Verification page theme configuration
+
+```declaration declaration
+type VerificationPageTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  title: {
+    color: string;
+    fontSize: string;
+  };
+  camera: {
+    initial: {
+      borderColor: string;
+    };
+    undetected: {
+      borderColor: string;
+    };
+    detected: {
+      borderColor: string;
+    };
+  };
+  instruction: {
+    backgroundColor: string;
+    color: string;
+    fontSize: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The page frame container style |
+| frameContainer.backgroundColor | `string` | The page frame container background color |
+| title | `object` | The title style |
+| title.color | `string` | The title font color |
+| title.fontSize | `string` | The title font size |
+| camera | `object` | The camera preview style |
+| camera.initial | `object` | The camera preview initial style |
+| camera.initial.borderColor | `string` | The camera preview initial border color |
+| camera.undetected | `object` | The camera preview style when face is undetected |
+| camera.undetected.borderColor | `string` | The camera preview border color when face is undetected |
+| camera.detected | `object` | The camera preview style when face is detected |
+| camera.detected.borderColor | `string` | The camera preview border color when face is detected |
+| instruction | `object` | The instruction section style |
+| instruction.backgroundColor | `string` | The instruction section background color |
+| instruction.color | `string` | The instruction section font color |
+| instruction.fontSize | `string` | The instruction section font size |
+
+**Images:**
+
+<img className="block" src="images/files_readme_io/_17f4cea_verification_theme_1.png" alt="Verification theme names/paths on loading verification with initial border color" />
+
+Verification theme names/paths on loading verification with initial border color
+
+<img className="block" src="images/files_readme_io/_1ae41e6_verification_theme_2.png" alt="Verification theme names/paths on processing/final verification with face detected border color" />
+
+Verification theme names/paths on processing/final verification with face detected border color
+
+<img className="block" src="images/files_readme_io/_1c5f258_verification_theme_3.png" alt="Verification theme names/paths on running verification with undetected face border color" />
+
+Verification theme names/paths on running verification with undetected face border color
+
+<Info>
+
+## Note
+
+*   The loading verification screen will only be shown when the active liveness model is loading.
+    
+*   The processing/final verification screen will only be shown when the active liveness model is finished and the passive liveness model is running.
+    
+*   The running verification screen will only be shown when the active liveness model is running.
+    
+*   The initial border color will only be shown when the active liveness model is loading.
+    
+*   The detected border color will only be shown when the face is fully detected by the active liveness.
+    
+*   The undetected border color will only show when:
+    
+    1.  the full face is not detected after the full face was detected (i.e the full face was detected, then pulled out) within 3 seconds after the model is loaded, or
+    2.  the full face was never detected after the model is loaded.
+    
+    When the full face is not detected after a successful full face detection and 3 seconds after the model is loaded, message [`Verification.Disrupted`](./messages#verificationdisrupted)
+    
+
+</Info><Info>
+
+## Info
+
+For content of running verification screen illustration, please check [`Builder.setInstruction`](./builder#setinstruction)
+.
+
+</Info>
+
+## TypographyTheme
+
+Global typography configuration
+
+```declaration declaration
+type TypographyTheme = {
+  fontFamily: string[];
+  fontSize: {
+    title: string;
+    body: string;
+    caption: string;
+    button: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| fontFamily | `string[]` | An array of font family. Uses the first one. If not available, uses the next one. |
+| fontSize | `object` | Text font size variations |
+| fontSize.title | `string` | Title text font size |
+| fontSize.body | `string` | Body text font size |
+| fontSize.caption | `string` | Caption text font size |
+| fontSize.button | `string` | Button text font size |
