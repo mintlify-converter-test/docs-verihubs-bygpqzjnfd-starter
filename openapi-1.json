@@ -1,0 +1,2148 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "https://api.verihubs.com/"
+        }
+    ],
+    "info": {
+        "title": "Whatsapp API Documentation",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "Whatsapp OTP"
+        }
+    ],
+    "paths": {
+        "/v1/whatsapp/template": {
+            "get": {
+                "tags": [
+                    "Whatsapp Templates"
+                ],
+                "summary": "Get Whatsapp Templates",
+                "description": "This method allows you to obtain the list of Whatsapp templates",
+                "operationId": "template_whatsapp_get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Page",
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Limit",
+                            "type": "integer",
+                            "default": 10
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Template Name",
+                            "type": "string"
+                        },
+                        "name": "template_name",
+                        "in": "query"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string",
+                            "default": null
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseGetWhatsappTemplates"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/whatsapp/otp/send": {
+            "post": {
+                "tags": [
+                    "Whatsapp OTP"
+                ],
+                "summary": "Send Whatsapp OTP",
+                "description": "This method helps you to generate and send Whatsapp message containing one-time password to destination number\n\n#### Callback Description\nWhen you want to use callback_url payload you only need to put for example \n```\nyour-callback-url.com/callback\n```\nExample callback that we'll send\n```\nyour-callback-url.com/callback?session_id=d0f5fb5c-2d50-4d3f-aea7-20018ab15806&status=1\n```\n\nPayload       | Description          |\n-----------|:---------------------|\nsession_id    | ID of the specific message            | \nstatus        | Latest status of the request          |\n\n#### Callback Status Description\n\nStatus       | Description          | Condition |\n-----------|:---------------------|:-------------------------- |\n0        | Requested       | OTP has been requested. This status will be charged. |\n1        | Sent            | OTP has been sent to Whatsapp server. This status will be charged. |\n2        | Delivered       | OTP has been delivered to destination number. This status will be charged. |\n3        | Read            | OTP has been read by user. This status will be charged. |\n4        | Verified        | OTP has been verified by user. This status will be charged. |\n5        | Unverified      | OTP has reached time limit. This status will be charged. |\n6        | Failed          | Whatsapp cannot send OTP to destination number. This status will be charged. |\n7        | Request Error   | Verihubs cannot reach WhatsApp |\n10       | Tier Limit Exceeded   | Exceeding channel tier limit |\n",
+                "operationId": "send_whatsapp_otp_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendWhatsappOtp"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendWhatsappOTP"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/whatsapp/otp/verify": {
+            "post": {
+                "tags": [
+                    "Whatsapp OTP"
+                ],
+                "summary": "Verify Whatsapp OTP",
+                "description": "This method helps you to verify one-time password to destination number",
+                "operationId": "verify_whatsapp_otp_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyWhatsappOtp"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerifyWhatsappOTP"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/whatsapp/message/send": {
+            "post": {
+                "tags": [
+                    "Whatsapp Message"
+                ],
+                "summary": "Send Whatsapp Message",
+                "description": "This method helps you to generate and send Whatsapp message to destination number\n\n#### Callback Description\nWhen you want to use callback_url payload, you only need to put for example \n```\nyour-callback-url.com/callback\n```\nExample callback that we'll send\n```\nyour-callback-url.com/callback?session_id=d0f5fb5c-2d50-4d3f-aea7-20018ab15806&status=1\n```\n\nPayload       | Description          |\n-----------|:---------------------|\nsession_id        | ID of the specific message            | \nstatus        | Latest status of the request             |\n\n#### Callback Status Description\n\nStatus       | Description          | Condition |\n-----------|:---------------------|:-------------------------- |\n1        | Sent            | Message has been sent to Whatsapp server. This status will be charged. |\n2        | Delivered            | Message has been delivered to destination number. This status will be charged.  |\n3        | Read            | Message has been read by the destination number. This status will be charged. |\n6        | Failed            | Whatsapp cannot send Message to destination number. This status will be charged. |\n7        | Request Error    | Verihubs cannot reach WhatsApp |\n10       | Tier Limit Exceeded   | Exceeding channel tier limit |\n11       | Invalid Data | Message is not processed further by Verihubs because it doesn’t pass Verihubs validation. |\n",
+                "operationId": "send_whatsapp_msg_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendWhatsappMessage"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendWhatsappMessage"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/whatsapp/session-message/send": {
+            "post": {
+                "tags": [
+                    "Whatsapp Session Message"
+                ],
+                "summary": "Send Whatsapp Session Message",
+                "description": "This method allows you to reply to contacts’ messages within a 24-hour window.\n\n#### Callback Description\nWhen you want to use callback_url payload, you only need to put for example \n```\nyour-callback-url.com/callback\n```\nExample callback that we'll send\n```\nyour-callback-url.com/callback?session_id=d0f5fb5c-2d50-4d3f-aea7-20018ab15806&status=1\n```\n\nPayload       | Description          |\n-----------|:---------------------|\nsession_id        | ID of the specific message            | \nstatus        | Latest status of the request             |\n\n#### Callback Status Description\n\nStatus       | Description          | Condition |\n-----------|:---------------------|:-------------------------- |\n0        | Requested              | Message has been requested |\n1        | Sent                   | Message has been sent to Whatsapp server |\n2        | Delivered              | Message has been delivered to user  |\n3        | Read                   | Message has been read by user |\n6        | Failed                 | Whatsapp cannot send Message to destination number |\n7        | Request Error          | Verihubs cannot reach WhatsApp |\n10       |  Tier Limit Exceeded   | Exceeding channel tier limit |\n",
+                "operationId": "send_whatsapp_session_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendWhatsappSession"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendWhatsappSession"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/whatsapp/message/bulk": {
+            "post": {
+                "tags": [
+                    "WhatsApp Bulk Message"
+                ],
+                "summary": "Send Bulk Message",
+                "description": "This method allows you to broadcast Whatsapp message to multiple destination numbers.  Maximum 5000 msisdn per bulk send.",
+                "operationId": "send_bulk_message_v1_whatsapp_message_bulk_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendBulkMessage"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/message__http__public_api__schema__response__SuccessBulk"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response 400 Send Bulk Message V1 Whatsapp Message Bulk Post",
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/message__http__public_api__schema__response__ExceededLimit"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/InvalidBulkContent"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/MessageBulkChannelNotAllowedOnProdMode"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/BodyErrorResponse"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response 403 Send Bulk Message V1 Whatsapp Message Bulk Post",
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SandboxForbidden"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/message__http__public_api__schema__response__MessageTestingQuotaInsufficient"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/message__http__public_api__schema__response__BlockedMsisdn"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageBulkChannelTierLimitWillBeExceeded"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/whatsapp/blocked-numbers": {
+            "get": {
+                "tags": [
+                    "Blocked Numbers"
+                ],
+                "summary": "Get Blocked Number List",
+                "description": "This method helps you to get list of blocked numbers from WhatsApp OTP & Message services",
+                "operationId": "get_otp_blocked",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseGetBlockedNumber"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Blocked Numbers"
+                ],
+                "summary": "Block Number",
+                "description": "This method helps you to block phone numbers to not be able to receive message from WhatsApp OTP & Message services",
+                "operationId": "post_otp_blocked",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostBlockedNumber"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePostBlockedNumber"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePost400"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Blocked Numbers"
+                ],
+                "summary": "Delete Blocked Number",
+                "description": "This method helps you to delete blocked number from list",
+                "operationId": "delete_otp_blocked",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "msisdn",
+                            "type": "string"
+                        },
+                        "name": "msisdn",
+                        "description": "destination number that wants to be deleted form blocked number list",
+                        "example": 62812634439,
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDeleteBlockedNumber"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePost400"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string"
+                    }
+                }
+            },
+            "SendWhatsappOtp": {
+                "title": "SendWhatsappOtp",
+                "required": [
+                    "msisdn",
+                    "lang_code"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "628391028399"
+                    },
+                    "otp": {
+                        "description": "Optional. Code generated by client.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "challenge": {
+                        "description": "This value is a category. You can verify OTP based on the same challenge.",
+                        "type": "string",
+                        "example": "update_account"
+                    },
+                    "time_limit": {
+                        "description": "Optional. Expiration time for verify OTP in seconds.",
+                        "type": "string",
+                        "example": "300"
+                    },
+                    "lang_code": {
+                        "description": "Language code to send in a different language. Use this optional payload to switch template easily if you have multiple language template with the same name. (need to be approved first by Facebook)",
+                        "type": "string",
+                        "example": "en"
+                    },
+                    "template_name": {
+                        "description": "Optional. Name of the template that will be use (need to be approved first by Facebook)  If you're going to use a template with different language than your original template on the setting, you must include 'lang_code' payload too.",
+                        "type": "string",
+                        "example": "send_otp_template"
+                    },
+                    "otp_length": {
+                        "description": "Optional. Length of the OTP, do not send alongside self generated OTP code payload (payload otp)",
+                        "type": "string",
+                        "example": "5"
+                    },
+                    "callback_url": {
+                        "description": "Optional.  This URL will be called by the server when the desired event will occur.",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "VerifyWhatsappOtp": {
+                "title": "VerifyWhatsappOtp",
+                "required": [
+                    "msisdn",
+                    "otp"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "This value is destination number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "628391028399"
+                    },
+                    "otp": {
+                        "description": "Code received by destination number.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "challenge": {
+                        "description": "This value is a category. You can verify OTP based on the same challenge.",
+                        "type": "string",
+                        "example": "update_account"
+                    }
+                }
+            },
+            "SendWhatsappMessage": {
+                "title": "SendWhatsappMessage",
+                "required": [
+                    "msisdn"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "title": "msisdn",
+                        "description": "Destination Phone Number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "content": {
+                        "title": "Content",
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ComponentParams"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        ],
+                        "description": "Object params (`ComponentParams`) or list of string that will fill variable(s) from template. For templates which only have variable(s) on body text, you can use list of string. For example, `'Hello {{1}}, thank you for your purchase'`, if you put 'John' in payload array 1, it will change variable {{1}} to 'John'. `ComponentParams` is only usable for V2 template (media templates). Fill in `ComponentParams` object according to your template. For example, to use a template with an image header and button text you will need to fill content with: `{\"header_params\": [\"https://mystoragebucket.com/image.png\"], \"button_param\": {\"url_param\": \"content/promotion/244\"}}`. This field becomes mandatory if the template you're using has at least 1 variable (on header, body, or button).",
+                        "default": []
+                    },
+                    "lang_code": {
+                        "title": "Lang Code",
+                        "description": "Language code to send in a different language. Use this optional payload to switch template easily if you have multiple language template with the same name. (need to be approved first by Facebook)",
+                        "type": "string",
+                        "example": "en"
+                    },
+                    "template_name": {
+                        "title": "Template Name",
+                        "description": "Optional. Name of the template that will be use (need to be approved first by Facebook)  If you're going to use a template with different language than your original template on the setting, you must include 'lang_code' payload too.",
+                        "type": "string",
+                        "example": "product_thankyou"
+                    },
+                    "callback_url": {
+                        "description": "Optional.  This URL will be called by the server when the desired event will occur.",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "SendWhatsappSession": {
+                "title": "SendWhatsappSession",
+                "required": [
+                    "msisdn",
+                    "content"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "628391028399"
+                    },
+                    "content": {
+                        "description": "Message that wants to be sent. The content must be a minimum length of 1 character to a maximum length of 4096 characters.",
+                        "type": "string",
+                        "example": "Hello welcome to Verihubs Apps"
+                    },
+                    "callback_url": {
+                        "description": "Optional.  This URL will be called by the server when the desired event will occur.",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "GetWhatsappTemplates": {
+                "title": "GetWhatsappTemplates",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "description": "message",
+                        "type": "string",
+                        "default": "OK"
+                    },
+                    "data": {
+                        "description": "template data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/setting__http__public_api__schema__response__Template"
+                        },
+                        "default": []
+                    },
+                    "total_records": {
+                        "description": "total amount of record",
+                        "type": "integer",
+                        "default": 0
+                    },
+                    "max_page": {
+                        "description": "max page",
+                        "type": "integer",
+                        "default": 1
+                    }
+                }
+            },
+            "ResponseGetWhatsappTemplates": {
+                "title": "TemplatesResponse",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "type": "integer",
+                        "description": "status code",
+                        "default": 200
+                    },
+                    "status": {
+                        "title": "Status",
+                        "type": "integer",
+                        "description": "status code",
+                        "default": 200
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "message",
+                        "default": "OK"
+                    },
+                    "data": {
+                        "title": "Data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GetWhatsappTemplates"
+                        },
+                        "description": "template data",
+                        "default": []
+                    },
+                    "total_records": {
+                        "title": "Total Records",
+                        "type": "integer",
+                        "description": "total amount of record",
+                        "default": 0
+                    },
+                    "max_page": {
+                        "title": "Max Page",
+                        "type": "integer",
+                        "description": "max page",
+                        "default": 1
+                    }
+                },
+                "example": {
+                    "code": 200,
+                    "status": 200,
+                    "message": "Templates are obtained",
+                    "data": {
+                        "id": "7bcf046b-6024-4ff3-b925-0e8b1524ed06",
+                        "name": "testing_tmp",
+                        "category_code": "ALERT_UPDATE",
+                        "lang_code": "en",
+                        "status": "NEW",
+                        "component": {
+                            "body": {
+                                "text": "Hello {{1}}! Thank you for your interest in our product. Currently we have {{2}} which are available for you to use.",
+                                "examples": [
+                                    "Budi",
+                                    "Veri Identity and Veri Check"
+                                ]
+                            },
+                            "header": {
+                                "format": "IMAGE",
+                                "examples": "https://storage.test.com/testfile"
+                            },
+                            "footer": {
+                                "text": "Please don't hesitate to contact us"
+                            },
+                            "button": {
+                                "buttons": {
+                                    "type": "URL",
+                                    "text": "View Products",
+                                    "url": "https://verihubs.com"
+                                }
+                            }
+                        },
+                        "created_at": "2022-09-02T06:53:33.911Z"
+                    },
+                    "total_records": 1,
+                    "max_page": 1
+                }
+            },
+            "ResponseSendWhatsappOTP": {
+                "title": "ResponseSendOTP",
+                "required": [
+                    "message",
+                    "otp",
+                    "msisdn",
+                    "session_id",
+                    "try_count"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP sent successfully"
+                    },
+                    "otp": {
+                        "description": "Code received by destination number",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "msisdn": {
+                        "description": "destination number with international prefix country code",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request",
+                        "type": "string",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    },
+                    "try_count": {
+                        "description": "Shows count of send OTP attempts to destination number in the span of 10 minutes",
+                        "type": "integer",
+                        "example": 2
+                    }
+                }
+            },
+            "ResponseVerifyWhatsappOTP": {
+                "title": "ResponseVerifyOTP",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP has been verified"
+                    }
+                }
+            },
+            "message__http__public_api__schema__response__SuccessSend": {
+                "title": "SuccessSend",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            201
+                        ],
+                        "type": "integer",
+                        "default": 201
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            201
+                        ],
+                        "type": "integer",
+                        "default": 201
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "default": "Message sent successfully"
+                    },
+                    "msisdn": {
+                        "title": "Msisdn",
+                        "type": "string",
+                        "description": "destination number with international prefix country code"
+                    },
+                    "session_id": {
+                        "title": "Session Id",
+                        "type": "string",
+                        "description": "generated ID which associated with message request"
+                    }
+                },
+                "example": {
+                    "code": 201,
+                    "status": 201,
+                    "message": "Message sent successfully",
+                    "msisdn": "6282234567890",
+                    "session_id": "9a76e985-63c8-4d9f-9f57-e20c1716298a"
+                }
+            },
+            "ResponseSendWhatsappMessage": {
+                "title": "ResponseSendMessage",
+                "required": [
+                    "message",
+                    "msisdn",
+                    "session_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Message sent successfully"
+                    },
+                    "msisdn": {
+                        "description": "destination number with international prefix country code",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request",
+                        "type": "string",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    }
+                }
+            },
+            "ComponentParams": {
+                "title": "ComponentParams",
+                "type": "object",
+                "properties": {
+                    "body_params": {
+                        "title": "Body Params",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "header_params": {
+                        "title": "Header Params",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "button_param": {
+                        "$ref": "#/components/schemas/ButtonParam"
+                    }
+                }
+            },
+            "ButtonParam": {
+                "title": "ButtonParam",
+                "type": "object",
+                "properties": {
+                    "url_param": {
+                        "title": "Url Param",
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseSendWhatsappSession": {
+                "title": "ResponseSendWhatsappSession",
+                "required": [
+                    "code",
+                    "message",
+                    "msisdn",
+                    "session_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 201
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Session message sent successfully"
+                    },
+                    "msisdn": {
+                        "description": "destination number with international prefix country code",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request",
+                        "type": "string",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    }
+                }
+            },
+            "SendBulkMessage": {
+                "title": "SendBulkMessage",
+                "required": [
+                    "msisdn",
+                    "template_name",
+                    "lang_code"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "title": "Msisdn",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Destination phone number array, you must include international prefix number."
+                    },
+                    "content": {
+                        "title": "Content",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComponentParams"
+                        },
+                        "description": "Content to fill variables on the tamplate, format must be in array of ComponentParams object or none (if template has no variable). If content is an array with only 1 ComponentParams object and there is more than 1 msisdn, the 1 ComponentParams object will be repeated for all msisdn."
+                    },
+                    "template_name": {
+                        "title": "Template Name",
+                        "type": "string",
+                        "description": "Template name to be used."
+                    },
+                    "lang_code": {
+                        "title": "Lang Code",
+                        "type": "string",
+                        "description": "Language code of the template to be used."
+                    },
+                    "callback_url": {
+                        "title": "Callback Url",
+                        "type": "string",
+                        "description": "This URL will be called by Verihubs' server when an event occurs."
+                    }
+                },
+                "example": {
+                    "msisdn": [
+                        "6282244356345",
+                        "628221253465"
+                    ],
+                    "content": [
+                        {
+                            "header_params": [
+                                "https://mystoragebucket.com/image.png"
+                            ],
+                            "body_params": [
+                                "John",
+                                "Our Website"
+                            ],
+                            "button_param": {
+                                "url_param": "content/promotion/244"
+                            }
+                        },
+                        {
+                            "header_params": [
+                                "https://mystoragebucket.com/image.png"
+                            ],
+                            "body_params": [
+                                "Doe",
+                                "Our Website"
+                            ],
+                            "button_param": {
+                                "url_param": "content/promotion/243"
+                            }
+                        }
+                    ],
+                    "template_name": "transaction_daily_update",
+                    "lang_code": "en",
+                    "callback_url": "http://yourcallbackurl.com"
+                }
+            },
+            "message__http__public_api__schema__response__SuccessBulk": {
+                "title": "SuccessBulk",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            201
+                        ],
+                        "type": "integer",
+                        "default": 201
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            201
+                        ],
+                        "type": "integer",
+                        "default": 201
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "default": "Bulk message sent successfully"
+                    },
+                    "msisdn": {
+                        "title": "Msisdn",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "destination number list with international prefix country code"
+                    }
+                },
+                "example": {
+                    "code": 201,
+                    "status": 201,
+                    "message": "Bulk message sent successfully",
+                    "msisdn": [
+                        "6282244356345",
+                        "628221253465"
+                    ]
+                }
+            },
+            "PostBlockedNumber": {
+                "title": "ValidationError",
+                "required": [
+                    "msisdn",
+                    "description"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "62839102839"
+                    },
+                    "description": {
+                        "description": "Describe reason for blocking specific phone number.",
+                        "type": "string",
+                        "example": "Fake number"
+                    }
+                }
+            },
+            "message__http__public_api__schema__response__ExceededLimit": {
+                "title": "ExceededLimit",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            400
+                        ],
+                        "type": "integer",
+                        "default": 400
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            400
+                        ],
+                        "type": "integer",
+                        "default": 400
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "default": "Exceeded message amount limit per request"
+                    }
+                },
+                "description": "Invalid Body",
+                "example": {
+                    "code": 400,
+                    "status": 400,
+                    "message": "Exceeded message amount limit per request"
+                }
+            },
+            "InvalidBulkContent": {
+                "title": "InvalidBulkContent",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            400
+                        ],
+                        "type": "integer",
+                        "default": 400
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            400
+                        ],
+                        "type": "integer",
+                        "default": 400
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "default": "Invalid bulk message content format, content does not match template variables"
+                    }
+                },
+                "description": "Invalid Body",
+                "example": {
+                    "code": 400,
+                    "status": 400,
+                    "message": "Invalid bulk message content format, content does not match template variables"
+                }
+            },
+            "MessageBulkChannelNotAllowedOnProdMode": {
+                "title": "MessageBulkChannelNotAllowedOnProdMode",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            400
+                        ],
+                        "type": "integer",
+                        "default": 400
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            400
+                        ],
+                        "type": "integer",
+                        "default": 400
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "default": "Not allowed to use this channel for bulk message on production mode"
+                    }
+                },
+                "example": {
+                    "code": 400,
+                    "status": 400,
+                    "message": "Not allowed to use this channel for bulk message on production mode"
+                }
+            },
+            "SandboxForbidden": {
+                "title": "SandboxForbidden",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            403
+                        ],
+                        "type": "integer",
+                        "default": 403
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            403
+                        ],
+                        "type": "integer",
+                        "default": 403
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "default": "Bulk message not allowed on sandbox"
+                    }
+                },
+                "description": "Forbidden",
+                "example": {
+                    "code": 403,
+                    "status": 403,
+                    "message": "Bulk message not allowed on sandbox"
+                }
+            },
+            "message__http__public_api__schema__response__MessageTestingQuotaInsufficient": {
+                "title": "MessageTestingQuotaInsufficient",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            403
+                        ],
+                        "type": "integer",
+                        "default": 403
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            403
+                        ],
+                        "type": "integer",
+                        "default": 403
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "default": "Message testing quota is insufficient"
+                    }
+                },
+                "example": {
+                    "code": 403,
+                    "status": 403,
+                    "message": "Message testing quota is insufficient"
+                }
+            },
+            "message__http__public_api__schema__response__BlockedMsisdn": {
+                "title": "BlockedMsisdn",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            409
+                        ],
+                        "type": "integer",
+                        "default": 409
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            409
+                        ],
+                        "type": "integer",
+                        "default": 409
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "default": "Msisdn invalid: msisdn has been blocked"
+                    }
+                },
+                "example": {
+                    "code": 403,
+                    "status": 403,
+                    "message": "Msisdn invalid: msisdn has been blocked"
+                }
+            },
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                }
+            },
+            "MessageBulkChannelTierLimitWillBeExceeded": {
+                "title": "MessageBulkChannelTierLimitWillBeExceeded",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            429
+                        ],
+                        "type": "integer",
+                        "default": 429
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "enum": [
+                            429
+                        ],
+                        "type": "integer",
+                        "default": 429
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "default": "Channel tier limit will be exceeded"
+                    },
+                    "error_type": {
+                        "title": "Error Type",
+                        "type": "string",
+                        "default": "TIER_LIMIT_EXCEEDED"
+                    }
+                },
+                "example": {
+                    "code": 429,
+                    "status": 429,
+                    "message": "Channel tier limit will be exceeded",
+                    "error_type": "TIER_LIMIT_EXCEEDED"
+                }
+            },
+            "BodyErrorResponse": {
+                "title": "BodyErrorResponse",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "type": "integer",
+                        "description": "code **(to be deleted on November 30, 2022)**",
+                        "default": 400
+                    },
+                    "status": {
+                        "title": "Status",
+                        "type": "integer",
+                        "description": "status code **(to be deleted on November 30, 2022)**",
+                        "default": 400
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "message",
+                        "default": "missing or invalid body"
+                    }
+                },
+                "description": "Invalid Body",
+                "example": {
+                    "code": 400,
+                    "status": 400,
+                    "message": "missing or invalid ... in body"
+                }
+            },
+            "ErrorResponse": {
+                "title": "ErrorResponse",
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "type": "integer",
+                        "description": "code **(to be deleted on November 30, 2022)**",
+                        "default": 400
+                    },
+                    "status": {
+                        "title": "Status",
+                        "type": "integer",
+                        "description": "status code **(to be deleted on November 30, 2022)**",
+                        "default": 400
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "message",
+                        "default": "Validation error"
+                    },
+                    "errors": {
+                        "title": "Errors",
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "description": "Validation Errors",
+                "example": {
+                    "code": 400,
+                    "status": 400,
+                    "message": "Validation error"
+                }
+            },
+            "ResponseGetBlockedNumber": {
+                "title": "GetBlockedNumbers",
+                "required": [
+                    "code",
+                    "message",
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Success"
+                    },
+                    "data": {
+                        "description": "List of Blocked Numbers",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "msisdn": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponsePostBlockedNumber": {
+                "title": "PostBlockedNumbers",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 201
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Number successfully added to block list"
+                    }
+                }
+            },
+            "ResponseDeleteBlockedNumber": {
+                "title": "DeleteBlockedNumbers",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Succesfully deleted msisdn from blocked list"
+                    }
+                }
+            },
+            "setting__http__public_api__schema__response__Template": {
+                "title": "Template",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "category_code": {
+                        "title": "Category Code",
+                        "type": "string"
+                    },
+                    "lang_code": {
+                        "title": "Lang Code",
+                        "type": "string"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/WhatsappTemplateStatus"
+                    },
+                    "component": {
+                        "$ref": "#/components/schemas/TemplateRootComponent"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "WhatsappTemplateStatus": {
+                "title": "WhatsappTemplateStatus",
+                "enum": [
+                    "NEW",
+                    "PENDING",
+                    "APPROVED",
+                    "REJECTED",
+                    "DELETING",
+                    "DELETED"
+                ],
+                "type": "string",
+                "description": "An enumeration"
+            },
+            "TemplateRootComponent": {
+                "title": "TemplateRootComponent",
+                "required": [
+                    "body"
+                ],
+                "type": "object",
+                "properties": {
+                    "body": {
+                        "$ref": "#/components/schemas/setting__http__public_api__schema__response__BodyComponent"
+                    },
+                    "header": {
+                        "$ref": "#/components/schemas/setting__http__public_api__schema__response__HeaderComponent"
+                    },
+                    "footer": {
+                        "$ref": "#/components/schemas/setting__http__public_api__schema__response__FooterComponent"
+                    },
+                    "button": {
+                        "$ref": "#/components/schemas/setting__http__public_api__schema__response__ButtonsComponent"
+                    }
+                }
+            },
+            "setting__http__public_api__schema__response__BodyComponent": {
+                "title": "BodyComponent",
+                "required": [
+                    "text"
+                ],
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "title": "Text",
+                        "type": "string"
+                    },
+                    "examples": {
+                        "title": "Examples",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of variable example if variable exists"
+                    }
+                }
+            },
+            "setting__http__public_api__schema__response__ButtonsComponent": {
+                "title": "ButtonsComponent",
+                "required": [
+                    "buttons"
+                ],
+                "type": "object",
+                "properties": {
+                    "buttons": {
+                        "title": "Buttons",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/setting__http__public_api__schema__response__PhoneButton"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/setting__http__public_api__schema__response__LinkButton"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/setting__http__public_api__schema__response__QuickReplyButton"
+                                }
+                            ]
+                        },
+                        "description": "Button list"
+                    }
+                }
+            },
+            "setting__http__public_api__schema__response__FooterComponent": {
+                "title": "FooterComponent",
+                "required": [
+                    "text"
+                ],
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "title": "Text",
+                        "type": "string"
+                    }
+                }
+            },
+            "setting__http__public_api__schema__response__HeaderComponent": {
+                "title": "HeaderComponent",
+                "required": [
+                    "format"
+                ],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/WhatsappTemplateHeaderFormat"
+                            }
+                        ],
+                        "description": "format of header (type of header)"
+                    },
+                    "text": {
+                        "title": "Text",
+                        "type": "string",
+                        "description": "Text for the header part"
+                    },
+                    "examples": {
+                        "title": "Examples",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of variable example if it uses text variable(s)"
+                    }
+                }
+            },
+            "setting__http__public_api__schema__response__LinkButton": {
+                "title": "LinkButton",
+                "required": [
+                    "text",
+                    "url"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "title": "Type",
+                        "enum": [
+                            "URL"
+                        ],
+                        "type": "string",
+                        "default": "URL"
+                    },
+                    "text": {
+                        "title": "Text",
+                        "type": "string",
+                        "description": "Text displayed on the button"
+                    },
+                    "url": {
+                        "title": "Url",
+                        "type": "string",
+                        "description": "Full URL means it's a static URL meanwhile if there's 1 variable at the end (https://www.youtube.com/watch?v=1) means it's dynamic url"
+                    },
+                    "example": {
+                        "title": "Example",
+                        "type": "string",
+                        "description": "Example for the variable content if you're using variable on url (dynamic url)"
+                    }
+                }
+            },
+            "setting__http__public_api__schema__response__PhoneButton": {
+                "title": "PhoneButton",
+                "required": [
+                    "text",
+                    "phone_number"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "title": "Type",
+                        "enum": [
+                            "PHONE_NUMBER"
+                        ],
+                        "type": "string",
+                        "default": "PHONE_NUMBER"
+                    },
+                    "text": {
+                        "title": "Text",
+                        "type": "string",
+                        "description": "Text displayed on the button"
+                    },
+                    "phone_number": {
+                        "title": "Phone Number",
+                        "type": "string",
+                        "description": "Phone number which will be called on click in country code format. Example: +62 822321234"
+                    }
+                }
+            },
+            "setting__http__public_api__schema__response__QuickReplyButton": {
+                "title": "QuickReplyButton",
+                "required": [
+                    "text"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "title": "Type",
+                        "enum": [
+                            "QUICK_REPLY"
+                        ],
+                        "type": "string",
+                        "default": "QUICK_REPLY"
+                    },
+                    "text": {
+                        "title": "Text",
+                        "type": "string",
+                        "description": "Text displayed on the button"
+                    }
+                }
+            },
+            "WhatsappTemplateHeaderFormat": {
+                "title": "WhatsappTemplateHeaderFormat",
+                "enum": [
+                    "TEXT",
+                    "IMAGE",
+                    "DOCUMENT"
+                ],
+                "type": "string",
+                "description": "An enumeration"
+            },
+            "ResponsePost400": {
+                "title": "Error Validation",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 400
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Invalid payload: Msisdn missing"
+                    }
+                }
+            },
+            "ResponseSend500": {
+                "title": "Error Validation",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    }
+}
