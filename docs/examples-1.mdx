@@ -1,0 +1,35 @@
+---
+title: "Examples"
+---
+# SUCCESS, all data TRUE
+
+| Request | Response |
+| --- | --- |
+| {  "nik": "3520000000000000",  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "success verify income",  "data": {  "id": "abcded9a-508b-453b-9ab7-7d74",  "reference\_id": "this\_is\_ref\_id\_1234",  "nik": true,  "name": true,  "gender": true,  "dob": true,  "company\_name": "PT ABCD",  "income\_range": "4.5-5.5JT",  "email": true,  "phone": true  }  } |
+
+# SUCCESS, some invalid data
+
+| Request | Response |
+| --- | --- |
+| {  "nik": "3520000000000000",  "name": "John Doe",  "gender": "M",  **"dob": "20-01-1976",  "email": "[johndoe123@email.com](mailto:johndoe123@email.com) ",  "phone": "08123450000",**  _"company\_name": "PT ABCDEF"_,  _"income\_range": "7000000"_  } | {  "message": "success verify income",  "data": {  "id": "abcded9a-508b-453b-9ab7-7d74",  "reference_id": "this\_is\_ref\_id\_1234",  _"nik": true,  "name": true,  "gender": true,_  **"dob": false,**  _"company_name": "PT ABCD",  "income\_range": "4.5-5.5JT",_  **"email": false,  "phone": false**  }  } |
+
+# FAILED, nik not found
+
+| Request | Response |
+| --- | --- |
+| {  **"nik": "3520000000000000",**  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  **"message": "income check not found",**  "data": {  "id": "abcded9a-508b-453b-9ab7-7d74",  "reference\_id": "this\_is\_ref\_id\_1234",  "nik": null,  "name": null,  "gender": null,  "dob": null,  "company\_name": null,  "income\_range": null,  "email": null,  "phone": null  }  } |
+
+# INVALID DATA
+
+| Scenario | Request | Response |
+| --- | --- | --- |
+| Unauthorized credentials | {  "nik": "3520000000000000",  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "Authorization failed"  } |
+| “NIK” is empty | {  **"nik": "",**  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "nik",  "message": "nik must be numeric value"  }  \]  } |
+| “NIK” is not 16 digits | {  **"nik": "35200000",**  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "nik",  "message": "nik length should consist of 16 digit(s)"  }  \]  } |
+| Name is empty | {  "nik": "3520000000000000",  **"name": "",**  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "name",  "message": "name must not be empty"  }  \]  } |
+| Gender is empty or not filled with ‘M’ or ‘F’ | {  "nik": "3520000000000000",  "name": "John Doe",  **"gender": "",**  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "gender",  "message": "invalid gender given, only accept \['M','F'\]"  }  \]  } |
+| Dob is empty or not in the correct format | {  "nik": "3520000000000000",  "name": "John Doe",  "gender": "M",  **"dob": "",**  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "dob",  "message": "dob format is incorrect, should be DD-MM-YYYY"  }  \]  } |
+| Email is empty or not in correct format | {  "nik": "3520000000000000",  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  **"email": "",**  "phone": "08123456789",  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "email",  "message": "value is not a valid email address"  }  \]  } |
+| Phone is empty | {  "nik": "3520000000000000",  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  **"phone": "",**  "company\_name": "PT ABCD",  "income\_range": "5000000"  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "phone",  "message": "phone should be numeric value"  }  \]  } |
+| Company name is empty | {  "nik": "3520000000000000",  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  **"company\_name": "",**  "income\_range": "5000000"  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "company\_name",  "message": "company name must not be empty"  }  \]  } |
+| Income range is empty | {  "nik": "3520000000000000",  "name": "John Doe",  "gender": "M",  "dob": "23-12-1976",  "email": "[johndoe@email.com](mailto:johndoe@email.com) ",  "phone": "08123456789",  "company\_name": "PT ABCD",  **"income\_range": ""**  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "income\_range",  "message": "Income range must not be empty"  }  \]  } |
