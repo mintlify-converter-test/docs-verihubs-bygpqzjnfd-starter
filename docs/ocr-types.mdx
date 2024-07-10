@@ -1,0 +1,1348 @@
+---
+title: "Types"
+---
+## CaptureContent
+
+Capture content configuration
+
+```declaration declaration
+type CaptureContent = {
+  description: string;
+  attemptInfo: string;
+  infoIcon: string;
+  infoTooltip: string;
+  action: {
+    backIcon: string;
+    takePhoto: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| description | `string` | The description text |
+| attemptInfo | `string` | The attempt info text |
+| infoIcon | `string` | The info icon url |
+| infoTooltip | `string` | The info tooltip text |
+| action | `object` | The capture action button and configuration |
+| action.backIcon | `string` | The back icon url |
+| action.takePhoto | `string` | The take photo text |
+
+<img className="block" src="images/files_readme_io/_d16f498_Screenshot_2024_07_10_at_10.30.14.jpg" alt="Capture content" />
+
+Capture content
+
+## CaptureTheme
+
+Capture theme configuration
+
+```declaration declaration
+type CaptureTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  description: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  attemptInfo: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  action: {
+    takePhoto: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+      disabled: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The frame container style |
+| frameContainer.backgroundColor | `string` | The frame container background color |
+| description | `object` | The description style |
+| description.color | `string` | The description font color |
+| description.fontSize | `string` | The description font size |
+| description.fontFamily | `string` | The description font family |
+| attemptInfo | `object` | The attempt info style |
+| attemptInfo.color | `string` | The attempt info font color |
+| attemptInfo.fontSize | `string` | The attempt info font size |
+| attemptInfo.fontFamily | `string` | The attempt info font family |
+| action | `object` | The action styles |
+| action.takePhoto | `object` | The take photo action button style |
+| action.takePhoto.backgroundColor | `string` | The take photo action button background color |
+| action.takePhoto.borderColor | `string` | The take photo action button border color |
+| action.takePhoto.color | `string` | The take photo action button font color |
+| action.takePhoto.fontSize | `string` | The take photo action button font size |
+| action.takePhoto.fontFamily | `string` | The take photo action button font family |
+| action.takePhoto.hover | `object` | The take photo action button hover style |
+| action.takePhoto.hover.backgroundColor | `string` | The take photo action button background color when hovered |
+| action.takePhoto.hover.borderColor | `string` | The take photo action button border color when hovered |
+| action.takePhoto.hover.color | `string` | The take photo action button font color when hovered |
+| action.takePhoto.disabled | `object` | The take photo action button disabled style |
+| action.takePhoto.disabled.backgroundColor | `string` | The take photo action button background color when disabled |
+| action.takePhoto.disabled.borderColor | `string` | The take photo action button border color when disabled |
+| action.takePhoto.disabled.color | `string` | The take photo action button font color when disabled |
+
+<img className="block" src="images/files_readme_io/_840e4e7_Screenshot_2024_07_10_at_10.30.14.jpg" alt="Capture theme" />
+
+Capture theme
+
+## CheckContent
+
+Check content configuration
+
+```title="declaration" title="declaration"
+type CheckContent = {
+  title: string;
+  message: string;
+  action: {
+    backIcon: string;
+    continue: string;
+    retake: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| title | `string` | The title text |
+| message | `string` | The message text |
+| action | `object` | The check action button and configuration |
+| action.backIcon | `string` | The back icon url |
+| action.continue | `string` | The continue text |
+| action.retake | `string` | The retake text |
+
+<img className="block" src="images/files_readme_io/_0870288_Screenshot_2024_07_10_at_10.39.49.jpg" alt="Check content" />
+
+Check content
+
+## CheckTheme
+
+Check theme configuration
+
+```declaration declaration
+type CheckTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  title: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  message: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  photoFrame: {
+    borderColor: string;
+  };
+  action: {
+    retake: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+    continue: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The frame container style |
+| frameContainer.backgroundColor | `string` | The frame container background color |
+| title | `object` | The title style |
+| title.color | `string` | The title font color |
+| title.fontSize | `string` | The title font size |
+| title.fontFamily | `string` | The title font family |
+| message | `object` | The message style |
+| message.color | `string` | The message font color |
+| message.fontSize | `string` | The message font size |
+| message.fontFamily | `string` | The message font family |
+| photoFrame | `object` | The photo frame style |
+| photoFrame.borderColor | `object` | The photo frame border color |
+| action | `object` | The action styles |
+| action.retake | `object` | The retake action button style |
+| action.retake.backgroundColor | `string` | The retake action button background color |
+| action.retake.borderColor | `string` | The retake action button border color |
+| action.retake.color | `string` | The retake action button font color |
+| action.retake.fontSize | `string` | The retake action button font size |
+| action.retake.fontFamily | `string` | The retake action button font family |
+| action.retake.hover | `object` | The retake action button hover style |
+| action.retake.hover.backgroundColor | `string` | The retake action button background color when hovered |
+| action.retake.hover.borderColor | `string` | The retake action button border color when hovered |
+| action.retake.hover.color | `string` | The retake action button font color when hovered |
+| action.continue | `object` | The continue action button style |
+| action.continue.backgroundColor | `string` | The continue action button background color |
+| action.continue.borderColor | `string` | The continue action button border color |
+| action.continue.color | `string` | The continue action button font color |
+| action.continue.fontSize | `string` | The continue action button font size |
+| action.continue.fontFamily | `string` | The continue action button font family |
+| action.continue.hover | `object` | The continue action button hover style |
+| action.continue.hover.backgroundColor | `string` | The continue action button background color when hovered |
+| action.continue.hover.borderColor | `string` | The continue action button border color when hovered |
+| action.continue.hover.color | `string` | The continue action button font color when hovered |
+
+<img className="block" src="images/files_readme_io/_dcc4154_Screenshot_2024_07_10_at_10.39.49.jpg" alt="Check theme" />
+
+Check theme
+
+## CheckFailedContent
+
+Check failed content configuration
+
+```declaration declaration
+type CheckFailedContent = {
+  title: string;
+  message: string;
+  action: {
+    backIcon: string;
+    retake: string;
+  };
+  chips: {
+    badQuality: {
+      message: string;
+      icon: string;
+    };
+    notDetected: {
+      message: string;
+      icon: string;
+    };
+  };
+  infoMessage: string;
+  infoIcon: string;
+  End: {
+    message: string;
+    action: {
+      exit: string;
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| title | `string` | The title text |
+| message | `string` | The message text |
+| action | `object` | The check failed action button and configuration |
+| action.backIcon | `string` | The back icon url |
+| action.retake | `string` | The retake text |
+| chips | `object` | The check failed's chip configuration |
+| chip.badQuality | `object` | The chip bad quality configuration |
+| chip.badQuality.message | `string` | The bad quality message text |
+| chip.badQuality.icon | `string` | The bad quality icon url |
+| chip.notDetected | `object` | The chip not detected configuration |
+| chip.notDetected.message | `string` | The not detected message text |
+| chip.notDetected.icon | `string` | The not detected icon url |
+| infoMessage | `string` | The info message text |
+| infoIcon | `string` | The info icon url |
+| End | `object` | The check failed's end configuration |
+| End.message | `string` | The end message text |
+| End.action | `object` | The end's action configuration |
+| End.action.exit | `string` | The end exit text |
+
+<img className="block" src="images/files_readme_io/_79cdbe4_Screenshot_2024_07_10_at_14.11.19.jpg" alt="Check failed theme" />
+
+Check failed theme
+
+## CheckFailedTheme
+
+Check failed theme configuration
+
+```declaration declaration
+type CheckFailedTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  title: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  message: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  photoFrame: {
+    borderColor: string;
+  };
+  action: {
+    retake: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+  };
+  chips: {
+    badQuality: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+    };
+    notDetected: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+    };
+  };
+  infoMessage: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  End: {
+    message: {
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+    };
+    action: {
+      exit: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+        fontSize: string;
+        fontFamily: string;
+        hover: {
+          backgroundColor: string;
+          borderColor: string;
+          color: string;
+        };
+      };
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The frame container style |
+| frameContainer.backgroundColor | `string` | The frame container background color |
+| title | `object` | The title style |
+| title.color | `string` | The title font color |
+| title.fontSize | `string` | The title font size |
+| title.fontFamily | `string` | The title font family |
+| message | `object` | The message style |
+| message.color | `string` | The message font color |
+| message.fontSize | `string` | The message font size |
+| message.fontFamily | `string` | The message font family |
+| photoFrame | `object` | The photo frame style |
+| photoFrame.borderColor | `object` | The photo frame border color |
+| action | `object` | The action styles |
+| action.retake | `object` | The retake action button style |
+| action.retake.backgroundColor | `string` | The retake action button background color |
+| action.retake.borderColor | `string` | The retake action button border color |
+| action.retake.color | `string` | The retake action button font color |
+| action.retake.fontSize | `string` | The retake action button font size |
+| action.retake.fontFamily | `string` | The retake action button font family |
+| action.retake.hover | `object` | The retake action button hover style |
+| action.retake.hover.backgroundColor | `string` | The retake action button background color when hovered |
+| action.retake.hover.borderColor | `string` | The retake action button border color when hovered |
+| action.retake.hover.color | `string` | The retake action button font color when hovered |
+| chips | `object` | The chips styles |
+| chips.badQuality | `object` | The bad quality chips button style |
+| chips.badQuality.backgroundColor | `string` | The bad quality chips button background color |
+| chips.badQuality.borderColor | `string` | The bad quality chips button border color |
+| chips.badQuality.color | `string` | The bad quality chips button font color |
+| chips.badQuality.fontSize | `string` | The bad quality chips button font size |
+| chips.badQuality.fontFamily | `string` | The bad quality chips button font family |
+| chips.notDetected | `object` | The not detected chips button style |
+| chips.notDetected.backgroundColor | `string` | The not detected chips button background color |
+| chips.notDetected.borderColor | `string` | The not detected chips button border color |
+| chips.notDetected.color | `string` | The not detected chips button font color |
+| chips.notDetected.fontSize | `string` | The not detected chips button font size |
+| chips.notDetected.fontFamily | `string` | The not detected chips button font family |
+| infoMessage | `object` | The info message style |
+| infoMessage.color | `string` | The info message font color |
+| infoMessage.fontSize | `string` | The info message font size |
+| infoMessage.fontFamily | `string` | The info message font family |
+| End | `object` | The end styles |
+| End.message | `object` | The end message style |
+| End.message.color | `string` | The end message font color |
+| End.message.fontSize | `string` | The end message font size |
+| End.message.fontFamily | `string` | The end message font family |
+| action | `object` | The action styles |
+| End.action.exit | `object` | The exit end action button style |
+| End.action.exit.backgroundColor | `string` | The exit end action button background color |
+| End.action.exit.borderColor | `string` | The exit end action button border color |
+| End.action.exit.color | `string` | The exit end action button font color |
+| End.action.exit.fontSize | `string` | The exit end action button font size |
+| End.action.exit.fontFamily | `string` | The exit end action button font family |
+| End.action.exit.hover | `object` | The exit end action button hover style |
+| End.action.exit.hover.backgroundColor | `string` | The exit end action button background color when hovered |
+| End.action.exit.hover.borderColor | `string` | The exit end action button border color when hovered |
+| End.action.exit.hover.color | `string` | The exit end action button font color when hovered |
+
+<img className="block" src="images/files_readme_io/_7cd3514_Screenshot_2024_07_10_at_14.11.19.jpg" alt="Check failed theme" />
+
+Check failed theme
+
+## CompletedContent
+
+Completed content configuration
+
+```declaration declaration
+type CompletedContent = {
+  image: string;
+  message: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| image | `string` | The image url |
+| message | `string` | The message text |
+
+## CompletedTheme
+
+Completed theme configuration
+
+```declaration declaration
+type CompletedTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  message: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The frame container style |
+| frameContainer.backgroundColor | `string` | The frame container background color |
+| message | `object` | The message style |
+| message.color | `string` | The message font color |
+| message.fontSize | `string` | The message font size |
+| message.fontFamily | `string` | The message font family |
+
+## ConfirmationDialogTheme
+
+Confirmation dialog theme configuration
+
+```declaration declaration
+type ConfirmationDialogTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  title: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  description: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  photoFrame: {
+    borderColor: string;
+  };
+  action: {
+    cancel: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+    ok: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The frame container style |
+| frameContainer.backgroundColor | `string` | The frame container background color |
+| title | `object` | The title style |
+| title.color | `string` | The title font color |
+| title.fontSize | `string` | The title font size |
+| title.fontFamily | `string` | The title font family |
+| description | `object` | The description style |
+| description.color | `string` | The description font color |
+| description.fontSize | `string` | The description font size |
+| description.fontFamily | `string` | The description font family |
+| photoFrame | `object` | The photo frame style |
+| photoFrame.borderColor | `object` | The photo frame border color |
+| action | `object` | The action styles |
+| action.cancel | `object` | The cancel action button style |
+| action.cancel.backgroundColor | `string` | The cancel action button background color |
+| action.cancel.borderColor | `string` | The cancel action button border color |
+| action.cancel.color | `string` | The cancel action button font color |
+| action.cancel.fontSize | `string` | The cancel action button font size |
+| action.cancel.fontFamily | `string` | The cancel action button font family |
+| action.cancel.hover | `object` | The cancel action button hover style |
+| action.cancel.hover.backgroundColor | `string` | The cancel action button background color when hovered |
+| action.cancel.hover.borderColor | `string` | The cancel action button border color when hovered |
+| action.cancel.hover.color | `string` | The cancel action button font color when hovered |
+| action.ok | `object` | The ok action button style |
+| action.ok.backgroundColor | `string` | The ok action button background color |
+| action.ok.borderColor | `string` | The ok action button border color |
+| action.ok.color | `string` | The ok action button font color |
+| action.ok.fontSize | `string` | The ok action button font size |
+| action.ok.fontFamily | `string` | The ok action button font family |
+| action.ok.hover | `object` | The ok action button hover style |
+| action.ok.hover.backgroundColor | `string` | The ok action button background color when hovered |
+| action.ok.hover.borderColor | `string` | The ok action button border color when hovered |
+| action.ok.hover.color | `string` | The ok action button font color when hovered |
+
+## Endpoint
+
+An endpoint specification
+
+```declaration declaration
+type Endpoint = {
+  headers: Record<any, any>;
+  params: Record<any, any>;
+  url: Url;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| headers | `Record<any, any>` | The custom header field to be sent together |
+| params | `Record<any, any>` | The query parameter field to be sent together |
+| url | [`Url`](#url) | The url destination |
+
+## ErrorDialogContent
+
+Error dialog content configuration
+
+```declaration declaration
+type ErrorDialogContent = {
+  icon: string;
+  title: string;
+  okText: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| icon | `string` | The icon url |
+| title | `string` | The title text |
+| okText | `string` | The ok text |
+
+## ExitDialogContent
+
+Exit dialog content configuration
+
+```declaration declaration
+type ExitDialogContent = {
+  icon: string;
+  title: string;
+  okText: string;
+  cancelText: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| icon | `string` | The icon url |
+| title | `string` | The title text |
+| okText | `string` | The ok text |
+| cancelText | `string` | The cancel text |
+
+## FormContent
+
+Form content configuration
+
+```declaration declaration
+type FormContent = {
+  title: string;
+  subtitle: string;
+  action: {
+    backIcon: string;
+    submit: string;
+  };
+  formLabels: {
+    nik: string;
+    full_name: string;
+    date_of_birth: string;
+    place_of_birth: string;
+    gender: string;
+    blood_type: string;
+    address: string;
+    rt_rw: string;
+    province: string;
+    city: string;
+    administrative_village: string;
+    district: string;
+    religion: string;
+    marital_status: string;
+    occupation: string;
+    nationality: string;
+  };
+  formErrorTexts: {
+    noEmpty: string;
+    nikDigits: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| title | `string` | The title text |
+| subtitle | `string` | The subtitle text |
+| formLabels | `object` | The form label |
+| formLabels.nik | `string` | The nik label |
+| formLabels.full\_name | `string` | The full name label |
+| formLabels.date\_of\_birth | `string` | The date of birth label |
+| formLabels.place\_of\_birth | `string` | The place of birth label |
+| formLabels.gender | `string` | The gender label |
+| formLabels.blood\_type | `string` | The blood type label |
+| formLabels.address | `string` | The address label |
+| formLabels.rt\_rw | `string` | The rt/rw label |
+| formLabels.province | `string` | The province label |
+| formLabels.city | `string` | The city label |
+| formLabels.administrative\_village | `string` | The administrative village label |
+| formLabels.district | `string` | The district label |
+| formLabels.religion | `string` | The religion label |
+| formLabels.marital\_status | `string` | The marital status label |
+| formLabels.occupation | `string` | The occupation label |
+| formLabels.nationality | `string` | The nationality label |
+| formErrorTexts | `object` | The form error text |
+| formErrorTexts.noEmpty | `string` | The form empty error text |
+| formErrorTexts.nikDigits | `string` | The form nik digit error text |
+
+## FormTheme
+
+Form theme configuration
+
+```declaration declaration
+type FormTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  title: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  subtitle: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  action: {
+    submit: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+      disabled: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The frame container style |
+| frameContainer.backgroundColor | `string` | The frame container background color |
+| title | `object` | The title style |
+| title.color | `string` | The title font color |
+| title.fontSize | `string` | The title font size |
+| title.fontFamily | `string` | The title font family |
+| subtitle | `object` | The subtitle info style |
+| subtitle.color | `string` | The subtitle info font color |
+| subtitle.fontSize | `string` | The subtitle info font size |
+| subtitle.fontFamily | `string` | The subtitle info font family |
+| action | `object` | The action styles |
+| action.submit | `object` | The submit action button style |
+| action.submit.backgroundColor | `string` | The submit action button background color |
+| action.submit.borderColor | `string` | The submit action button border color |
+| action.submit.color | `string` | The submit action button font color |
+| action.submit.fontSize | `string` | The submit action button font size |
+| action.submit.fontFamily | `string` | The submit action button font family |
+| action.submit.hover | `object` | The submit action button hover style |
+| action.submit.hover.backgroundColor | `string` | The submit action button background color when hovered |
+| action.submit.hover.borderColor | `string` | The submit action button border color when hovered |
+| action.submit.hover.color | `string` | The submit action button font color when hovered |
+| action.submit.disabled | `object` | The submit action button disabled style |
+| action.submit.disabled.backgroundColor | `string` | The submit action button background color when disabled |
+| action.submit.disabled.borderColor | `string` | The submit action button border color when disabled |
+| action.submit.disabled.color | `string` | The submit action button font color when disabled |
+
+## InputTheme
+
+Input theme configuration
+
+```declaration declaration
+type InputTheme = {
+  message: {
+    color: string;
+    fontFamily: string;
+    error: {
+      color: string;
+      fontFamily: string;
+    };
+  };
+  border: {
+    borderColor: string;
+    error: {
+      borderColor: string;
+    };
+  };
+  errorText: {
+    color: string;
+    fontFamily: string;
+    fontSize: string;
+    fontStyle: string;
+  }
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| label | `object` | The label style |
+| label.color | `string` | The label font color |
+| label.fontFamily | `string` | The label font family |
+| label.error | `object` | The error label style |
+| label.error.color | `string` | The error label font color |
+| label.error.fontFamily | `string` | The error label font family |
+| border | `object` | The border style |
+| border.borderColor | `string` | The border color |
+| border.error | `object` | The error border style |
+| border.error.borderColor | `string` | The error border color |
+| errorText | `object` | The error text style |
+| errorText.color | `string` | The error text font color |
+| errorText.fontFamily | `string` | The error text font family |
+| errorText.fontSize | `string` | The error text font size |
+| errorText.fontStyle | `string` | The error text font style |
+
+## InstructionContent
+
+Instruction content configuration
+
+```declaration declaration
+type InstructionPageContent = {
+  title: string;
+  subtitle: string;
+  instructions: Array<{
+    caption: string;
+    image: string;
+  }>;
+  action: {
+    start: string;
+    continue: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| title | `string` | The title text |
+| subtitle | `string` | The subtitle text below the title text |
+| instructions | `object[]` | The instruction contents on the instruction page |
+| instructions\[number\].caption | `string` | The instruction image caption |
+| instructions\[number\].image | `string` | The instruction image url |
+| action | `object` | The instruction page action button content configurations |
+| action.start | `string` | The start button text |
+| action.continue | `string` | The continue button text |
+
+<img className="block" src="images/files_readme_io/_9859e04_Screenshot_2024_07_10_at_10.08.21.jpg" alt="Instruction content" />
+
+Instruction content
+
+## InstructionTheme
+
+Instruction theme configuration
+
+```declaration declaration
+type InstructionTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  title: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  subtitle: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  figure: {
+    borderColor: string;
+  };
+  figcaption: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  action: {
+    start: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The frame container style |
+| frameContainer.backgroundColor | `string` | The frame container background color |
+| title | `object` | The title style |
+| title.color | `string` | The title font color |
+| title.fontSize | `string` | The title font size |
+| title.fontFamily | `string` | The title font family |
+| subtitle | `object` | The subtitle style |
+| subtitle.color | `string` | The subtitle font color |
+| subtitle.fontSize | `string` | The subtitle font size |
+| subtitle.fontFamily | `string` | The subtitle font family |
+| figure | `object` | The figure style |
+| figure.borderColor | `object` | The figure border color |
+| figcaption | `object` | The figcaption style |
+| figcaption.color | `string` | The figcaption font color |
+| figcaption.fontSize | `string` | The figcaption font size |
+| figcaption.fontFamily | `string` | The figcaption font family |
+| action | `object` | The action styles |
+| action.start | `object` | The start action button style |
+| action.start.backgroundColor | `string` | The start action button background color |
+| action.start.borderColor | `string` | The start action button border color |
+| action.start.color | `string` | The start action button font color |
+| action.start.fontSize | `string` | The start action button font size |
+| action.start.fontFamily | `string` | The start action button font family |
+| action.start.hover | `object` | The start action button hover style |
+| action.start.hover.backgroundColor | `string` | The start action button background color when hovered |
+| action.start.hover.borderColor | `string` | The start action button border color when hovered |
+| action.start.hover.color | `string` | The start action button font color when hovered |
+
+<img className="block" src="images/files_readme_io/_a9b1212_Screenshot_2024_07_10_at_10.08.21.jpg" alt="Instruction theme" />
+
+Instruction theme
+
+## LoaderTheme
+
+Loader theme configuration
+
+```declaration declaration
+type LoaderTheme = {
+  message: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| message | `object` | The message style |
+| message.color | `string` | The message font color |
+| message.fontSize | `string` | The message font size |
+| message.fontFamily | `string` | The message font family |
+
+## NotificationDialogTheme
+
+Notification dialog theme configuration
+
+```declaration declaration
+type NotificationDialogTheme = {
+  frameContainer: {
+    backgroundColor: string;
+  };
+  title: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  description: {
+    color: string;
+    fontSize: string;
+    fontFamily: string;
+  };
+  action: {
+    ok: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+      fontSize: string;
+      fontFamily: string;
+      hover: {
+        backgroundColor: string;
+        borderColor: string;
+        color: string;
+      };
+    };
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| frameContainer | `object` | The frame container style |
+| frameContainer.backgroundColor | `string` | The frame container background color |
+| title | `object` | The title style |
+| title.color | `string` | The title font color |
+| title.fontSize | `string` | The title font size |
+| title.fontFamily | `string` | The title font family |
+| description | `object` | The description style |
+| description.color | `string` | The description font color |
+| description.fontSize | `string` | The description font size |
+| description.fontFamily | `string` | The description font family |
+| action | `object` | The action styles |
+| action.ok | `object` | The ok action button style |
+| action.ok.backgroundColor | `string` | The ok action button background color |
+| action.ok.borderColor | `string` | The ok action button border color |
+| action.ok.color | `string` | The ok action button font color |
+| action.ok.fontSize | `string` | The ok action button font size |
+| action.ok.fontFamily | `string` | The ok action button font family |
+| action.ok.hover | `object` | The ok action button hover style |
+| action.ok.hover.backgroundColor | `string` | The ok action button background color when hovered |
+| action.ok.hover.borderColor | `string` | The ok action button border color when hovered |
+| action.ok.hover.color | `string` | The ok action button font color when hovered |
+
+## OCRContentConfiguration
+
+The OCR WebSDK content configuration
+
+```declaration declaration
+type ContentConfiguration = {
+  Instruction: InstructionContent;
+  Capture: CaptureContent;
+  Check: CheckContent;
+  CheckFailed: CheckFailedContent;
+  Processing: ProcessingContent;
+  ErrorDialog: ErrorDialogContent;
+  Form: FormContent;
+  SubmissionDialog: SubmissionDialogContent;
+  ExitDialog: ExitDialogContent;
+  Completed: CompletedContent;
+};
+
+```
+
+**Properties:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| Instruction | [`InstructionContent`](#instructioncontent) | Instruction content configuration |
+| Capture | [`CaptureContent`](#capturecontent) | Capture content configuration |
+| Check | [`CheckContent`](#checkcontent) | Check content configuration |
+| CheckFailed | [`CheckFailedContent`](#checkfailedcontent) | Check failed content configuration |
+| Processing | [`ProcessingContent`](#processingcontent) | Processing content configuration |
+| ErrorDialog | [`ErrorDialogContent`](#errordialogcontent) | Error dialog content configuration |
+| Form | [`FormContent`](#formcontent) | Form content configuration |
+| SubmissionDialog | [`SubmissionDialogContent`](#submissiondialogcontent) | Submission dialog content configuration |
+| ExitDialog | [`ExitDialogContent`](#exitdialogcontent) | Exit dialog content configuration |
+| Completed | [`CompletedContent`](#completedcontent) | Completed content configuration |
+
+## OCRSDK
+
+The OCR WebSDK instance
+
+```declaration declaration
+type OCRSDK = {
+  onStart: (hideFrame?: boolean) => void;
+  onDestroy: () => void;
+};
+
+```
+
+**Methods:**
+
+| Name/Path | Type Signature | Description |
+| --- | --- | --- |
+| onStart | `(hideFrame?: boolean) => void` | Shows and starts the OCR WebSDK |
+| onDestroy | `() => void` | Stops and remove the OCR WebSDK |
+
+### onStart
+
+Shows and starts the OCR WebSDK
+
+```declaration declaration
+onStart(hideFrame?: boolean): void;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| hideFrame | `boolean \| undefined` | Hides the OCR WebSDK if `true`. |
+
+### onDestroy
+
+Stops and remove the OCR WebSDK
+
+```declaration declaration
+onDestroy(): void;
+
+```
+
+## OCRThemeConfiguration
+
+The OCR WebSDK theme configuration
+
+```declaration declaration
+type OCRThemeConfiguration = {
+  Component: {
+    Instruction: InstructionTheme;
+    Capture: CaptureTheme;
+    Check: CheckTheme;
+    CheckFailed: CheckFailedTheme;
+    NotificationDialog: NotificationDialogTheme;
+    Form: FormTheme;
+    ConfirmationDialog: ConfirmationDialogTheme;
+    Shared: SharedTheme;
+    Completed: CompletedTheme;
+    Loader: LoaderTheme;
+    Input: InputTheme;
+  };
+  Palette: ThemePalette;
+  Typography: TypographyPalette;
+  VendorPlaceholder: boolean;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| Component | `object` | All page theme configurations |
+| Component.Instructon | [`InstructionTheme`](#instructiontheme) | Instruction theme configuration |
+| Component.Capture | [`CaptureTheme`](#capturetheme) | Capture theme configuration |
+| Component.Check | [`CheckTheme`](#checktheme) | Check theme configuration |
+| Component.CheckFailed | [`CheckFailedTheme`](#checkfailedtheme) | Check failed theme configuration |
+| Component.NotificationDialog | [`NotificationDialogTheme`](#notificationdialogtheme) | Notification dialog theme configuration |
+| Component.Form | [`FormTheme`](#formtheme) | Form theme configuration |
+| Component.ConfirmationDialog | [`ConfirmationDialogTheme`](#confirmationdialogtheme) | Confirmation dialog theme configuration |
+| Component.Loader | [`LoaderTheme`](#loadertheme) | Loader theme configuration |
+| Component.Input | [`InputTheme`](#inputtheme) | Input theme configuration |
+| Component.Completed | [`CompletedTheme`](#completedtheme) | Completed theme configuration |
+| Component.Shared | [`SharedTheme`](#sharedtheme) | Shared theme configuration |
+| Palette | [`PaletteTheme`](#palettetheme) | Global palette configuration |
+| Typography | [`TypographyTheme`](#typographytheme) | Global typography configuration |
+| VendorPlaceholder | `boolean` | Global vendor placeholder configuration |
+
+## Palette
+
+A color palette for theming
+
+```declaration declaration
+type Palette = {
+  contrastText: string;
+  default: string;
+  LIGHT: string;
+  DARK: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| contrastText | `string` | Usually for button text color |
+| default | `string` | Primary color for the palette |
+| LIGHT | `string` | Lighter version of the default color |
+| DARK | `string` | Lightest version of the default color |
+
+## PaletteTheme
+
+Global palette configuration
+
+```declaration declaration
+type PaletteTheme = {
+  primary: Palette;
+  secondary: Palette;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| primary | [`Palette`](#palette) | The primary palette |
+| secondary | [`Palette`](#palette) | The secondary palette |
+
+## ProcessingContent
+
+Processing content configuration
+
+```declaration declaration
+type ProcessingContent = {
+  message: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| message | `string` | The message text |
+
+## ProxyMiddleware
+
+Endpoint specification collection for the OCR WebSDK
+
+```declaration declaration
+type ProxyMiddleware = {
+  Extract: Endpoint;
+  ExtractSync: Endpoint;
+  ExtractResult: Endpoint;
+  License: Endpoint;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| Extract | [`Endpoint`](#endpoint) | The extract endpoint specification |
+| ExtractSync | [`Endpoint`](#endpoint) | The extract sync endpoint specification |
+| ExtractResult | [`Endpoint`](#endpoint) | The extract result endpoint specification |
+| License | [`Endpoint`](#endpoint) | The license endpoint specification |
+
+## ProcessingFlow
+
+Processing flow configuration
+
+```declaration declaration
+type SubmissionDialogContent = {
+  isAsync: boolean;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| isAsync | `boolean` | Use async or sync processing flow |
+
+## SharedTheme
+
+Shared theme configuration
+
+```declaration declaration
+type SharedTheme = {
+  background: {
+    backgroundColor: string;
+    backgroundImage: string;
+    backgroundSize: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| background | `object` | The background style |
+| background.backgroundColor | `string` | The background color |
+| background.backgroundImage | `string` | The background image url |
+| background.backgroundSize | `string` | The background size |
+
+## SubmissionDialogContent
+
+Submission dialog content configuration
+
+```declaration declaration
+type SubmissionDialogContent = {
+  icon: string;
+  title: string;
+  okText: string;
+  cancelText: string;
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| icon | `string` | The icon url |
+| title | `string` | The title text |
+| okText | `string` | The ok text |
+| cancelText | `string` | The cancel text |
+
+## TypographyTheme
+
+Global typography configuration
+
+```declaration declaration
+type TypographyTheme = {
+  fontFamily: string[];
+  fontSize: {
+    title: string;
+    body: string;
+    caption: string;
+    button: string;
+  };
+};
+
+```
+
+**Properties:**
+
+| Name/Path | Type | Description |
+| --- | --- | --- |
+| fontFamily | `string[]` | An array of font family. Uses the first one. If not available, uses the next one. |
+| fontSize | `object` | Text font size variations |
+| fontSize.title | `string` | Title text font size |
+| fontSize.body | `string` | Body text font size |
+| fontSize.caption | `string` | Caption text font size |
+| fontSize.button | `string` | Button text font size |
+
+## Url
+
+Url string
+
+```declaration declaration
+type Url = string;
+
+```
