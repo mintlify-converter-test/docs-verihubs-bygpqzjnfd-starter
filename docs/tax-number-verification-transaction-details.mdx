@@ -1,0 +1,30 @@
+---
+title: "Transaction Details"
+---
+# 🎈Transaction Details
+
+<img className="block" src="images/files_readme_io/_da761ee_Client_Dashboard.png" alt="" />
+
+The transaction details menu will show every detail of your transaction in the table. The table will consist of the following data:
+
+| Column | Definition |
+| --- | --- |
+| ID  | Auto-generated Verihubs Transaction ID. |
+| Application Name | Application Name that being used to hit to Verihubs API. |
+| Reference ID | ID that can be generated from your side to indicate your company's transaction. Must be unique per transaction. Verihubs will auto-generate this ID if it left empty/non-exist in the payload. |
+| Date Sent | Date & time of the transaction in UTC+7 timezone. |
+| Method | The endpoint client used to hit the identity; NIK Endpoint or NPWP Endpoint. |
+| Status | The transaction status that will be defined by whether the transaction is **SUCCESS** or **FAILED**. |
+
+You can also filter the transaction based on the following data:
+
+| Data | Definition |
+| --- | --- |
+| Send Date | Range of Date to limit the transactions shown on the table. Selectable transaction period 31 days. Maximum account transaction up to 90 days prior. |
+| Application Name | Select Application Name which you want to filter. |
+| Status | Select transactions based on selected status (**SUCCESS** or **FAILED**). |
+| Method | Select transactions based on used endpoint (**NIK** or **NPWP**) |
+
+Don't forget to click on the **Apply** button to view transactions based on the selected filter.
+
+The transactions can be exported into CSV or XLSX by clicking **Export as CSV** button or **Export as XLSX** button.
