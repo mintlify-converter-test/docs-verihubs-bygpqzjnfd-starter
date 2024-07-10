@@ -1,0 +1,1626 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "https://api.verihubs.com/"
+        }
+    ],
+    "info": {
+        "title": "Data API Documentation",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "National ID Service",
+            "description": "Get information about National ID"
+        },
+        {
+            "name": "Electronic Certificate Issuance Service",
+            "description": "Get information about Electronic Certificate Issuance"
+        },
+        {
+            "name": "NPWP Verification",
+            "description": "Get Information about individual or company NPWP"
+        },
+        {
+            "name": "Tax Number Verification",
+            "description": "Check the registered status of the associated NPWP based on NIK or NPWP."
+        }
+    ],
+    "paths": {
+        "/v1/id/check": {
+            "post": {
+                "tags": [
+                    "National ID Service"
+                ],
+                "summary": "National ID Service",
+                "description": "This method helps you to perform identity checking through legal sources.",
+                "operationId": "extract_id_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IdCheck"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIdCheck"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIdCheck400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIdCheck401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIdCheck403"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIdCheck429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseIdCheck500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-verification/certificate-electronic/verify": {
+            "post": {
+                "tags": [
+                    "Electronic Certificate Issuance Service"
+                ],
+                "summary": "Electronic Certificate Issuance Service",
+                "description": "This method helps you to verify identity checking that shows legal subjects in order to issue an Electronic Certificate with the purpose of doing verification of citizenship data through legal sources. Please refer to [Verihubs Documentation](https://docs.verihubs.com/docs/electronic-certificate-issuance) for guidelines and best practice\n",
+                "operationId": "extract_sertel_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Sertel"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel403"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSertel500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-verification/npwp/verify": {
+            "post": {
+                "tags": [
+                    "NPWP Verification"
+                ],
+                "summary": "Verify NPWP",
+                "description": "This method helps you to check tax identifier. Please check [Verihubs Guidelines](https://docs.verihubs.com/docs/npwp-check) to learn more on how to use this endpoint.\n",
+                "operationId": "post_npwp_check",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/postnpwpcheck"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Responsepostnpwpcheck"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend403"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseNPWPSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-verification/tax/nik/verify": {
+            "post": {
+                "tags": [
+                    "Tax Number Verification"
+                ],
+                "summary": "Tax Number NIK Endpoint",
+                "description": "This method helps you to check tax identifier. Please check Verihubs Guidelines to learn more on how to use this endpoint.\n",
+                "operationId": "post_tax_nik_check",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/taxnikcheck"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNIKSend200"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNIKSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNIKSend401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNIKSend403"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNIKSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNIKSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-verification/tax/npwp/verify": {
+            "post": {
+                "tags": [
+                    "Tax Number Verification"
+                ],
+                "summary": "Tax Number NPWP Endpoint",
+                "description": "This method helps you to check tax identifier. Please check Verihubs Guidelines to learn more on how to use this endpoint.\n",
+                "operationId": "post_tax_npwp_check",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/taxnpwpcheck"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNPWPCheck200"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNPWPSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNPWPSend401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNPWPSend403"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNPWPSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTaxNPWPSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "IdCheck": {
+                "title": "ElectronicCertificateIssuance",
+                "required": [
+                    "nik",
+                    "name",
+                    "birth_date",
+                    "email",
+                    "phone",
+                    "image"
+                ],
+                "type": "object",
+                "properties": {
+                    "nik": {
+                        "description": "16 digit numeric Identifier Number from ID.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Full name from ID.",
+                        "type": "string"
+                    },
+                    "birth_date": {
+                        "description": "Date of birth from ID in DD-MM-YYYY format.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email address (must be unique per nik).",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Valid phone number, use country code but without symbol (+), (must be unique per nik).",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "Selfie photo in base64 format, size min. 30 kB max. 2 MB, min pixel 400px x 400px.",
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseIdCheck": {
+                "title": "ResponseElectronicCertificateIssuance",
+                "required": [
+                    "code",
+                    "message",
+                    "status",
+                    "results"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "status": {
+                        "description": "Status **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "ID has been checked"
+                    },
+                    "results": {
+                        "description": "Shows results of ID",
+                        "type": "object",
+                        "properties": {
+                            "nik": {
+                                "description": "it will return \"Registered or Not Registered\". if Nik is not registered all the key; name, birthdate, birthplace, address will return null",
+                                "type": "string"
+                            },
+                            "name": {
+                                "description": "it will return 'true' or 'false'based on individual name that registered on ektp.",
+                                "type": "boolean"
+                            },
+                            "birth_date": {
+                                "description": "it will return 'true' or 'false'based on individual birth date that registered on ektp.",
+                                "type": "boolean"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "phone": {
+                                "type": "string"
+                            },
+                            "similarity": {
+                                "description": "it will return a percentage of similarity '0-100'",
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseIdCheck400": {
+                "title": "Bad Request",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 400
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "NIK length invalid"
+                    }
+                }
+            },
+            "ResponseIdCheck401": {
+                "title": "Unauthorized",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 401
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "Missing App_ID in header"
+                    }
+                }
+            },
+            "ResponseIdCheck403": {
+                "title": "Forbidden",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 403
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Insufficient testing quota"
+                    }
+                }
+            },
+            "ResponseIdCheck429": {
+                "title": "Error Validation",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 429
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too many request in the allowed time frame"
+                    }
+                }
+            },
+            "ResponseIdCheck500": {
+                "title": "Internal Server Error",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "Code **(to be deleted on November 30, 2022)**",
+                        "type": "integer",
+                        "example": 500
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    }
+                }
+            },
+            "postnpwpcheck": {
+                "title": "postnpwpcheck",
+                "type": "object",
+                "properties": {
+                    "npwp": {
+                        "description": "Personal tax number. Fill this field and left the NIK field empty if you want to hit with NPWP.",
+                        "type": "string",
+                        "example": "927135756xxxxxx"
+                    },
+                    "nik": {
+                        "description": "Personal ID from KTP. Fill this field and left the NPWP field empty if you want to hit with NIK.",
+                        "type": "string",
+                        "example": "327135756xxxxxx"
+                    },
+                    "user_consent": {
+                        "description": "User consent will be needed with NIK to ensure user's data.",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "purpose": {
+                        "description": "Purpose of doing the verification.",
+                        "type": "string",
+                        "example": "check personal npwp"
+                    },
+                    "reference_id": {
+                        "description": "unique number of each transaction.",
+                        "type": "string",
+                        "example": "001"
+                    }
+                }
+            },
+            "Responsepostnpwpcheck": {
+                "title": "Responsepostnpwpcheck",
+                "required": [
+                    "message",
+                    "id",
+                    "reference_id",
+                    "npwp",
+                    "nama",
+                    "alamat",
+                    "status_wp",
+                    "status_spt"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Successfully check NPWP."
+                    },
+                    "data": {
+                        "description": "Shows result of NPWP Verification",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "id",
+                                "type": "string",
+                                "example": "238fc15d-5f3c-4a72-8d59-63bd8d4288e2"
+                            },
+                            "reference_id": {
+                                "description": "reference_id",
+                                "type": "string",
+                                "example": "ref_npwp#72708413-4bd5-4d2e-982f-da9d7085b010"
+                            },
+                            "npwp": {
+                                "description": "tax identier of person or company",
+                                "type": "string",
+                                "example": 3289240192847582
+                            },
+                            "name": {
+                                "description": "name of the tax identifier",
+                                "type": "string",
+                                "example": "J*hn D**"
+                            },
+                            "alamat": {
+                                "description": "address in the tax identifier",
+                                "type": "string",
+                                "example": "J*k*rt* B*r*t"
+                            },
+                            "status_wp": {
+                                "description": "status of Wajib Pajak",
+                                "type": "string",
+                                "example": "AKTIF"
+                            },
+                            "status_spt": {
+                                "description": "status of SPT",
+                                "type": "string",
+                                "example": "VALID"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseNPWPSend400": {
+                "title": "Bad Request",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Invalid Payload"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INVALID_PAYLOAD"
+                    },
+                    "error_fields": {
+                        "type": "object",
+                        "properties": {
+                            "field": {
+                                "type": "string"
+                            },
+                            "message": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseNPWPSend401": {
+                "title": "Authorization Failed",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Authorization Failed"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "UNAUTHORIZED"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseNPWPSend403": {
+                "title": "Quota Insufficient",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Insufficient Testing Quota"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "FORBIDDEN"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseNPWPSend429": {
+                "title": "Spam Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too Many Request in allowed time frame"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "TOO_MANY_REQUEST"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseNPWPSend500": {
+                "title": "Internal Server Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INTERNAL_SERVER_ERROR"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "taxnikcheck": {
+                "title": "post_tax_nik_check",
+                "type": "object",
+                "properties": {
+                    "nik": {
+                        "description": "Personal ID from KTP. Fill this field and left the NPWP field empty if you want to hit with NIK.",
+                        "type": "string",
+                        "example": "327135756xxxxxx"
+                    },
+                    "user_consent": {
+                        "description": "User consent will be needed with NIK to ensure user's data.",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "purpose": {
+                        "description": "Purpose of doing the verification.",
+                        "type": "string",
+                        "example": "check personal npwp"
+                    },
+                    "reference_id": {
+                        "description": "unique number of each transaction.",
+                        "type": "string",
+                        "example": "001"
+                    }
+                }
+            },
+            "ResponseTaxNIKSend200": {
+                "title": "posttaxnikcheck",
+                "required": [
+                    "message",
+                    "id",
+                    "reference_id",
+                    "npwp",
+                    "nama",
+                    "alamat",
+                    "status_wp",
+                    "status_spt"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Successfully check NPWP."
+                    },
+                    "data": {
+                        "description": "Shows result of NPWP Verification",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "id",
+                                "type": "string",
+                                "example": "238fc15d-5f3c-4a72-8d59-63bd8d4288e2"
+                            },
+                            "reference_id": {
+                                "description": "reference_id",
+                                "type": "string",
+                                "example": "ref_tax#72708413-4bd5-4d2e-982f-da9d7085b010"
+                            },
+                            "npwp": {
+                                "description": "tax identier of person or company",
+                                "type": "string",
+                                "example": 3289240192847582
+                            },
+                            "name": {
+                                "description": "name of the tax identifier",
+                                "type": "string",
+                                "example": "J*hn D**"
+                            },
+                            "alamat": {
+                                "description": "address in the tax identifier",
+                                "type": "string",
+                                "example": "J*k*rt* B*r*t"
+                            },
+                            "status_wp": {
+                                "description": "status of Wajib Pajak",
+                                "type": "string",
+                                "example": "AKTIF"
+                            },
+                            "status_spt": {
+                                "description": "status of SPT",
+                                "type": "string",
+                                "example": "VALID"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseTaxNIKSend400": {
+                "title": "Bad Request",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Invalid Payload"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INVALID_PAYLOAD"
+                    },
+                    "error_fields": {
+                        "type": "object",
+                        "properties": {
+                            "field": {
+                                "type": "string"
+                            },
+                            "message": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseTaxNIKSend401": {
+                "title": "Authorization Failed",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Authorization Failed"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "UNAUTHORIZED"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseTaxNIKSend403": {
+                "title": "Quota Insufficient",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Insufficient Testing Quota"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "FORBIDDEN"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseTaxNIKSend429": {
+                "title": "Spam Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too Many Request in allowed time frame"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "TOO_MANY_REQUEST"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseTaxNIKSend500": {
+                "title": "Internal Server Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INTERNAL_SERVER_ERROR"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "taxnpwpcheck": {
+                "title": "post_tax_nik_check",
+                "type": "object",
+                "properties": {
+                    "nik": {
+                        "description": "Personal ID from KTP. Fill this field and left the NPWP field empty if you want to hit with NIK.",
+                        "type": "string",
+                        "example": "327135756xxxxxx"
+                    },
+                    "user_consent": {
+                        "description": "User consent will be needed with NIK to ensure user's data.",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "purpose": {
+                        "description": "Purpose of doing the verification.",
+                        "type": "string",
+                        "example": "check personal npwp"
+                    },
+                    "reference_id": {
+                        "description": "unique number of each transaction.",
+                        "type": "string",
+                        "example": "001"
+                    }
+                }
+            },
+            "ResponseTaxNPWPCheck200": {
+                "title": "posttaxnpwpcheck",
+                "required": [
+                    "message",
+                    "id",
+                    "reference_id",
+                    "npwp",
+                    "nama",
+                    "alamat",
+                    "status_wp",
+                    "status_spt"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Successfully check NPWP."
+                    },
+                    "data": {
+                        "description": "Shows result of NPWP Verification",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "id",
+                                "type": "string",
+                                "example": "238fc15d-5f3c-4a72-8d59-63bd8d4288e2"
+                            },
+                            "reference_id": {
+                                "description": "reference_id",
+                                "type": "string",
+                                "example": "ref_tax#72708413-4bd5-4d2e-982f-da9d7085b010"
+                            },
+                            "name": {
+                                "description": "name of the tax identifier",
+                                "type": "string",
+                                "example": "J*hn D**"
+                            },
+                            "alamat": {
+                                "description": "address in the tax identifier",
+                                "type": "string",
+                                "example": "J*k*rt* B*r*t"
+                            },
+                            "status_wp": {
+                                "description": "status of Wajib Pajak",
+                                "type": "string",
+                                "example": "AKTIF"
+                            },
+                            "status_spt": {
+                                "description": "status of SPT",
+                                "type": "string",
+                                "example": "VALID"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseTaxNPWPSend400": {
+                "title": "Bad Request",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Invalid Payload"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INVALID_PAYLOAD"
+                    },
+                    "error_fields": {
+                        "type": "object",
+                        "properties": {
+                            "field": {
+                                "type": "string"
+                            },
+                            "message": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseTaxNPWPSend401": {
+                "title": "Authorization Failed",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Authorization Failed"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "UNAUTHORIZED"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseTaxNPWPSend403": {
+                "title": "Quota Insufficient",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Insufficient Testing Quota"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "FORBIDDEN"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseTaxNPWPSend429": {
+                "title": "Spam Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too Many Request in allowed time frame"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "TOO_MANY_REQUEST"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseTaxNPWPSend500": {
+                "title": "Internal Server Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INTERNAL_SERVER_ERROR"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "Sertel": {
+                "title": "ElectronicCertificateIssuance",
+                "required": [
+                    "nik",
+                    "name",
+                    "birth_date",
+                    "email",
+                    "phone",
+                    "selfie_photo",
+                    "ktp_photo"
+                ],
+                "type": "object",
+                "properties": {
+                    "nik": {
+                        "description": "16 digit numeric Identifier Number from ID.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Full name from ID.",
+                        "type": "string"
+                    },
+                    "birth_date": {
+                        "description": "Date of birth from ID in DD-MM-YYYY format.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email address (must be unique per nik).",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Valid phone number, use country code but without symbol (+), (must be unique per nik).",
+                        "type": "string"
+                    },
+                    "selfie_photo": {
+                        "description": "Selfie photo in base64 format, size min. 100 kB max. 4 MB, min pixel 480px x 640px.",
+                        "type": "string"
+                    },
+                    "ktp_photo": {
+                        "description": "KTP photo in base64 format, size min. 100 kB max. 2 MB, min pixel 480px x 360px.",
+                        "type": "string"
+                    },
+                    "channel": {
+                        "description": "Brand's name (will be used in email).",
+                        "type": "string"
+                    },
+                    "reference_id": {
+                        "description": "Use to indicate your company's transaction (must be unique).",
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseSertel": {
+                "title": "ResponseElectronicCertificateIssuance",
+                "required": [
+                    "message",
+                    "data",
+                    "reject_field",
+                    "reference_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Shows message of the response",
+                        "type": "string",
+                        "example": "Certificate Electronic has been done"
+                    },
+                    "data": {
+                        "description": "Shows results of verification",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Verihubs ID, generate string that are unique for every transactions",
+                                "type": "string",
+                                "example": "8e31a91c-7437-4ed1-b086-06cbe247d6e7"
+                            },
+                            "status": {
+                                "description": "Identifier of the transactions. It will return verified, verified_with_reason, or not_verified",
+                                "type": "string",
+                                "example": "verified"
+                            },
+                            "reject_field": {
+                                "description": "Indicator if there’s a \"false\" response to a or any parameter, example if nik detected as not found in data source, then the reject_filed will state [“nik”, “name”], and so on",
+                                "type": "object"
+                            },
+                            "reference_id": {
+                                "type": "string",
+                                "example": "ref_certel#e87c8bc2-5d10-455b-98a0-187d60f72873"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseSertel400": {
+                "title": "Bad Request",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Invalid Payload"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INVALID_PAYLOAD"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object",
+                        "properties": {
+                            "field": {
+                                "description": "shows payload that are having a problem or error",
+                                "example": "nik"
+                            },
+                            "message": {
+                                "description": "shows error description that happened to the payload",
+                                "example": "nik length should consist of 16 digit(s)"
+                            }
+                        }
+                    }
+                }
+            },
+            "ResponseSertel401": {
+                "title": "Authorization Failed",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Authorization Failed"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "UNAUTHORIZED"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseSertel403": {
+                "title": "Quota Insufficient",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Insufficient Testing Quota"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "FORBIDDEN"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseSertel429": {
+                "title": "Spam Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too Many Request in allowed time frame"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "TOO_MANY_REQUEST"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            },
+            "ResponseSertel500": {
+                "title": "Internal Server Error",
+                "required": [
+                    "message",
+                    "error_code",
+                    "error_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    },
+                    "error_code": {
+                        "description": "Error Code",
+                        "type": "string",
+                        "example": "INTERNAL_SERVER_ERROR"
+                    },
+                    "error_fields": {
+                        "description": "Error Fields",
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    }
+}
