@@ -1,0 +1,57 @@
+---
+title: "WhatsApp New Authentication Template"
+---
+The latest update that we have released in June 2023 changed the behavior of the `Authentication`template to work in accordance with WhatsApp Business Authentication Template.
+
+# General Information
+
+<img className="block" src="images/files_readme_io/_89b26a1_image.png" alt="Left: Authentication Template with Autofill; Right: Authentication Template with Copy Code" />
+
+Left: Authentication Template with Autofill; Right: Authentication Template with Copy Code
+
+The template content will have a preset content which supports a couple of options which are:
+
+*   Security Disclaimer: For your security, do not share this code.
+*   Expiration Warning: This code expires in `expiration_time` minutes.
+
+And will have a button, either of:
+
+*   Autofill : **When pressed**, automatically fill the authentication code into your app. ( Android only, if the autofill is not available on the end-user device, it will fall back to `Copy Code` button )
+*   Copy Code: **When pressed**, copy the authentication code to end-user's clipboard
+
+The authentication code will still be able to be seen on the message that has been sent to destination number.
+
+# Guide on Creating in Verihubs' Cloud Dashboard
+
+In order to create the latest authentication template, follow these steps:
+
+1.  Open Verihubs Cloud Dashboard and navigate to Manage WhatsApp -> [Template](https://app.verihubs.com/cloud/wa/template)
+    
+
+<img className="block" src="images/files_readme_io/_a54f373_image.png" alt="" />
+
+2.  Select your **WABA ID**, the for the **Category** select **Authentication**
+
+<img className="block" src="images/files_readme_io/_5ae5afa_image.png" alt="" />
+
+3.  Fill the **Message Template** Name, and then select the **Language**, the customization and preview will pop up.  
+    **Currently, the dashboard only preview Indonesia and English, other language will be previewed in English but the template will be delivered to its destination using the selected language**
+    
+4.  Filling the **Code Delivery** form:
+    
+    1.  Autofill:  
+        <img className="block" src="images/files_readme_io/_ecd6d70_image.png" alt="" />
+        1.  Button Text for Autofill: The autofill text that will be shown to the destination number.
+        2.  Button Text for Copy code: the text that will be shown to the destination number if the autofill feature is not available on the device.
+        3.  Package Name: Your Android app's package name.
+        4.  App signature hash: Your app signing key hash. Guide for [App Signature Hash](https://developers.facebook.com/docs/whatsapp/business-management-api/authentication-templates#app-signing-key-hash)
+            
+    2.  Copy Code:  
+        <img className="block" src="images/files_readme_io/_57c195d_image.png" alt="" />
+        1.  Button Text: The text on the button for copying the verification code
+5.  You can select the message content preset that suits your needs. The preview will also adjust to the content that you select.
+    
+
+<img className="block" src="images/files_readme_io/_6eef8a9_image.png" alt="" />
+
+6.  Once you're done you can submit the template.
