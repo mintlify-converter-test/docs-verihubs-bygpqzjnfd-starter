@@ -1,0 +1,567 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "https://api.verihubs.com/"
+        }
+    ],
+    "info": {
+        "title": "Sandbox - SMS API Documentation",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "Sandbox - SMS OTP",
+            "description": "Get information about SMS OTP API"
+        },
+        {
+            "name": "Sandbox - SMS Notifications and Promotions",
+            "description": "Get information about SMS Notifications and Promotions API"
+        }
+    ],
+    "paths": {
+        "/v1/otp/send/sandbox": {
+            "post": {
+                "tags": [
+                    "Sandbox - SMS OTP"
+                ],
+                "summary": "Sandbox - Send OTP",
+                "description": "This method helps you to generate and send sms containing one-time password to destination number<br>\n\nThe following table describes the msisdn option to be used as an input<br>\n\n Msisdn          | Description          | Response |\n---------------- |:---------------------|:-------------------------- |\n6282123060001       | Valid Phone number            | 201 \"OTP sent successfully\" |\n6282123060002        | Msisdn invalid            | 400 \"Msisdn invalid: msisdn length should between 4-16 characters\" |\n6282123060003        | Invalid Header            |  401 \"Authorization failed\" |\n6282123060004        | insufficient quota            |  403 \"SMS testing usage has exceed OTP testing quota\" |\n6282123060005        | Blocked Msisdn            | 409 \"Msisdn invalid: msisdn has been blocked\" |\n6282123060006        | Too Many Request            | 429 \"Too many request in the allowed time frame\" |\n",
+                "operationId": "send_otp_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendOtp"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendOTP"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/otp/verify/sandbox": {
+            "post": {
+                "tags": [
+                    "Sandbox - SMS OTP"
+                ],
+                "summary": "Sandbox - Verify OTP",
+                "description": "This method helps you to verify one-time password to destination number<br>\n\nThe following table describes the msisdn option to be used as an input<br>\n\n Msisdn          | Description          | Response |\n---------------- |:---------------------|:-------------------------- |\n6282123060007       | Verify OTP Success           | 201 \"OTP has been verified\" |\n6282123060008        |   Invalid OTP           | 404 \"OTP Not Found\" |\n6282123060009        | Exceeded time limit           |  422 \"OTP cannot be verified because it has already reached the time limit\" |\n6282123060010        | Invalid OTP            |  400 \"Invalid OTP\" |\n",
+                "operationId": "verify_otp_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyOtp"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerifyOTP"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerify404"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerify422"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/sms/send/sandbox": {
+            "post": {
+                "tags": [
+                    "Sandbox - SMS Notifications and Promotions"
+                ],
+                "summary": "Sandbox - Send SMS",
+                "description": "This method helps you to send sms containing desired text to destination number<br>\n\nThe following table describes the msisdn option to be used as an input<br>\n\n Msisdn          | Description          | Response |\n---------------- |:---------------------|:-------------------------- |\n6282123060001       | Valid Phone number          | 201 \"SMS sent successfully\" |\n6282123060002        |   Msisdn invalid           | 400 \"Msisdn invalid: msisdn length should between 4-16 characters\" |\n6282123060003        | Invalid Header           |  401 \"Authorization failed\" |\n6282123060004        | insufficient quota            |  403 \"SMS testing usage has exceed OTP testing quota\" |\n6282123060005        | Blocked Msisdn            |  409 \"Msisdn invalid: msisdn has been blocked\" |\n6282123060006        | Too Many Request            |  429 \"Too many request in the allowed time frame\" |\n",
+                "operationId": "send_sms_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendSms"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendSms"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend401"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend429"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSend500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SendOtp": {
+                "title": "SendOtp",
+                "required": [
+                    "msisdn"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "template": {
+                        "description": "Optional.Template to be send to destination number. Include $OTP in template for generated OTP.",
+                        "type": "string",
+                        "example": "This is your Verihubs OTP $OTP."
+                    },
+                    "otp": {
+                        "description": "Optional. Code generated by client.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "time_limit": {
+                        "description": "Optional. Expiration time for verify OTP in seconds.",
+                        "type": "string",
+                        "example": "300"
+                    },
+                    "challenge": {
+                        "description": "This value is a category. You can verify OTP based on the same challenge.",
+                        "type": "string",
+                        "example": "update_account"
+                    },
+                    "callback_url": {
+                        "description": "Optional.  This URL will be called by the server when the desired event will occur.",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "SendSms": {
+                "title": "SendSms",
+                "required": [
+                    "msisdn",
+                    "text"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "text": {
+                        "description": "SMS Body",
+                        "type": "string",
+                        "example": "This is text example"
+                    },
+                    "premium": {
+                        "description": "used for Transactional SMS (Text Message from Business to Customer that provides valuable information about their product, service or processes) or OTP with better Network Connections",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "callback_url": {
+                        "description": "Optional. This URL will be called by the server when the desired event will occur. Callback will work if you use premium route",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "VerifyOtp": {
+                "title": "VerifyOtp",
+                "required": [
+                    "msisdn",
+                    "otp"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "This value is destination number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "otp": {
+                        "description": "Code received by destination number.",
+                        "type": "string"
+                    },
+                    "challenge": {
+                        "description": "This value is a category. You can verify OTP based on the same challenge.",
+                        "type": "string",
+                        "example": "update_account"
+                    }
+                }
+            },
+            "ResponseVerifyOTP": {
+                "title": "ResponseVerifyOTP",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP has been verified"
+                    }
+                }
+            },
+            "ResponseSendSms": {
+                "title": "ResponseSendSms",
+                "required": [
+                    "message",
+                    "msisdn",
+                    "session_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "SMS sent successfully"
+                    },
+                    "msisdn": {
+                        "description": "destination number with international prefix country code.",
+                        "example": 6282123060001
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request.",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    },
+                    "segment_count": {
+                        "description": "Shows segmentation SMS where SMS with over 160 characters will be split into more than 1 segment.",
+                        "type": "integer",
+                        "example": 2
+                    }
+                }
+            },
+            "ResponseSendOTP": {
+                "title": "ResponseSendOTP",
+                "required": [
+                    "message",
+                    "otp",
+                    "msisdn",
+                    "session_id",
+                    "try_count"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP sent successfully"
+                    },
+                    "otp": {
+                        "description": "Code received by destination number.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "msisdn": {
+                        "description": "destination number with international prefix country code.",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request.",
+                        "type": "string",
+                        "example": "adwaww-wdwa-fegr-wrwr"
+                    },
+                    "try_count": {
+                        "description": "Shows count of send OTP attempts to destination number in the span of 10 minutes.",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "segment_count": {
+                        "description": "Shows segmentation SMS where SMS with over 160 characters will be split into more than 1 segment.",
+                        "type": "integer",
+                        "example": 2
+                    }
+                }
+            },
+            "ResponseSend400": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Msisdn is not allowed, please use the custom msisdn"
+                    }
+                }
+            },
+            "ResponseSend401": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Authorization failed"
+                    }
+                }
+            },
+            "ResponseVerify404": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP not found"
+                    }
+                }
+            },
+            "ResponseVerify422": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP cannot be verified because it has already reached the time limit."
+                    }
+                }
+            },
+            "ResponseSend429": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Too many request in the allowed time frame"
+                    }
+                }
+            },
+            "ResponseSend500": {
+                "title": "Error Validation",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    }
+}
