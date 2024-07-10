@@ -1,0 +1,341 @@
+---
+title: "Vanilla HTML"
+---
+Follow these steps to get started with Vanilla HTML.
+
+1.  Prepare a folder/directory. For this tutorial, we'll be using this directory structure:
+    
+    ```directory structure directory structure
+    project-root/
+        |
+        +-- ocr/
+        |
+        \-- index.html
+    
+    ```
+    
+    The `ocr` folder/directory should contain the ocr engine and builders like `builder.js`.
+    
+2.  Populate `index.html`. We will add more later.
+    
+    ```index.html index.html
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <!-- script and style definitions -->
+      </head>
+      <body>
+        <!-- body -->
+      </body>
+    </html>
+    
+    ```
+    
+    The `imports` section will be populated with script imports and style for better demo UI, and the `body` section will be populated with some html elements and a script to be loaded after the html elements are loaded.
+    
+3.  Replace `#!html <!-- script and style definitions -->` with script tag below.
+    
+    ```index.html index.html
+            <title>Document</title>
+            <script src="./ocr/builder.js"></script>
+            <style>
+                #data-result {
+                    font-family: 'Courier New', Courier, monospace;
+                    white-space: pre-wrap;
+                    background-color: #0002;
+                    overflow: auto;
+                }
+            </style>
+        </head>
+    
+    ```
+    
+    The script tag above will import the WebSDK builder to be used in the tutorial application. It will then populate a `Builder` class in the `window` global object. The style tag will then be used to style the data returned by the OCR WebSDK.
+    
+4.  Replace `#!html <!-- body -->` with some HTML elements, as shown below.
+    
+    ```index.html index.html
+        </head>
+        <body>
+            <button onclick="doOCRProcess()">
+                Run OCR Process
+            </button>
+            <img id="image-result" src="" />
+            <div id="data-result"></div>
+            <script>
+                ((global) => {
+                    // Create OCR WebSDK instance
+    
+                    // Set up doOCRProcess global function
+    
+                    // Set up message receiver for OCR WebSDK
+                })(window);
+            </script>
+        </body>
+    
+    ```
+    
+    *   The `button` element is for starting the OCR WebSDK process.
+    *   The `image` element with id `image-result` is for displaying the resulting image from the OCR WebSDK.
+    *   The `div` element with id `data-result` is for displaying data result of the OCR WebSDK.
+    *   The `script` element is used to prepare OCR WebSDK and data handling from the SDK.
+5.  Replace `#!js // Create OCR WebSDK instance` with code below.
+    
+    ```index.html index.html
+    ((global) => {
+      global.OCRSDK = new OCRBuilder()
+        .setAttemptCount(3)
+        .setProxyMiddleware({
+          Extract: {
+            url: 'http://localhost:8888/ocr/extract-async',
+            headers: {
+              'App-ID': '<replace-me-with-app-id>',
+              'API-Key': '<replace-me-with-api-key>',
+            },
+          },
+          ExtractResult: {
+            url: 'http://localhost:8888/ocr/extract-async/result',
+            headers: {
+              'App-ID': '<replace-me-with-app-id>',
+              'API-Key': '<replace-me-with-api-key>',
+            },
+          },
+          License: {
+            url: 'http://localhost:8888/license/{license_id}/check',
+            headers: {
+              'App-ID': '<replace-me-with-app-id>',
+              'API-Key': '<replace-me-with-api-key>',
+            },
+          },
+        })
+        .setURL('/ocr')
+        .build();
+    
+      // Set up doOCRProcess global function
+    
+      // Set up message receiver for OCR WebSDK
+    })(window);
+    
+    ```
+    
+    Replace proxy middleware URLs with a URL that points to the correct endoints, and replace `<replace-me-with-app-id>` and `<replace-me-with-api-key>` with the appropriate APP-ID and APIKey for the OCR (remove the headers if the api doesn't need credentials or the url is pointing towards an intermediate endpoint).
+    
+    <Warning>
+    
+    ## Look Out!
+    
+    To not accidentally leak of AppID and APIKey for OCR, always pass them to an intermediate endpoint (like a proxy middleware) and append the AppID and APIKey header before reaching Verihubs' OCR service in production. Additional data can also be passed to this intermediate endpoint for end user identification.
+    
+    For more information about creating a Proxy Middleware, refer to [Proxy Middleware](/docs/ocr-fastapi)
+    .
+    
+    For API documentation of the Builder, refer to [`Builder`](/docs/ocr-builder)
+    .
+    
+    </Warning>
+6.  Replace `#!js // Set up doOCRProcess global function` with code below.
+    
+    ```index.html index.html
+                        .build();
+    
+                    global.doOCRProcess = function() {
+                        global.OCRSDK.onStart();
+                    };
+    
+                    // Set up message receiver for OCR WebSDK
+                })(window);
+    
+    ```
+    
+    The code above creates a global function `doOCRProcess` to be called by the `button` element. This function then invokes `onStart` function of the OCR WebSDK instance upon being called by the `button` element being clicked.
+    
+7.  Replace `#!js // Set up message receiver for OCR WebSDK` with code below.
+    
+    ```index.html index.html
+                    };
+    
+                    global.addEventListener('message', function (message) {
+                        var data = message.data.data;
+                        var subject = message.data.subject;
+                        switch (subject) {
+                            case "OCR.Verbose":
+                                alert(data.message);
+                                break;
+                            case "Internal.Error":
+                                switch (data.message) {
+                                    case "SANDBOX_ID_NOT_ALLOWED":
+                                        alert("Invalid sandbox image code");
+                                        global.OCRSDK.onDestroy();
+                                        break;
+                                    case "INSUFFICIENT_QUOTA":
+                                        alert("Insufficient quota");
+                                        global.OCRSDK.onDestroy();
+                                        break;
+                                    case "INTERNAL_SERVER_ERROR":
+                                        alert("Internal server error occured.");
+                                        break;
+                                    case "PROCESS_TIMEOUT":
+                                        alert("KTP Extraction timeout.");
+                                        break;
+                                    default:
+                                        alert("An error occured. Please check the console.");
+                                        console.log(data.message);
+                                        break;
+                                }
+                                break;
+                            case "OCR.Success":
+                                const imageElement = document.getElementById('image-result');
+                                const jsonElement = document.getElementById('data-result');
+                                imageElement.src = data.image.url;
+                                jsonElement.innerText = JSON.stringify(
+                                    data,
+                                    undefined,
+                                    2
+                                );
+                                setTimeout(() => {
+                                    global.OCRSDK.onDestroy();
+                                }, 3000);
+                                break;
+                            case "OCR.Cancelled":
+                            case "OCR.OutOfChance":
+                                document.getElementById('data-result').innerText = data.message;
+                                global.OCRSDK.onDestroy();
+                                break;
+                            case "Camera.NotFound":
+                            case "Camera.PermissionDenied":
+                                alert("Camera is not detected or permission denied"),
+                                global.OCRSDK.onDestroy();
+                                break;
+                        }
+                    });
+                })(window);
+    
+    ```
+    
+    <Info>
+    
+    ## Info
+    
+    Check [System Messages](/docs/ocr-system-messages)
+     for full system message references.
+    
+    </Info>
+
+Combining all of the steps above, the full content file of `index.html`:
+
+```index.html index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./ocr/builder.js"></script>
+    <style>
+      #data-result {
+        font-family: 'Courier New', Courier, monospace;
+        white-space: pre-wrap;
+        background-color: #0002;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="doOCRProcess()">Run OCR Process</button>
+    <img id="image-result" src="" />
+    <div id="data-result"></div>
+    <script>
+      ((global) => {
+        global.OCRSDK = new OCRBuilder()
+          .setAttemptCount(3)
+          .setProxyMiddleware({
+            Extract: {
+              url: 'http://localhost:8888/ocr/extract-async',
+              headers: {
+                'App-ID': '<replace-me-with-app-id>',
+                'API-Key': '<replace-me-with-api-key>',
+              },
+            },
+            ExtractResult: {
+              url: 'http://localhost:8888/ocr/extract-async/result',
+              headers: {
+                'App-ID': '<replace-me-with-app-id>',
+                'API-Key': '<replace-me-with-api-key>',
+              },
+            },
+            License: {
+              url: 'http://localhost:8888/license/{license_id}/check',
+              headers: {
+                'App-ID': '<replace-me-with-app-id>',
+                'API-Key': '<replace-me-with-api-key>',
+              },
+            },
+          })
+          .setURL('/ocr')
+          .build();
+
+        global.doOCRProcess = function () {
+          global.OCRSDK.onStart();
+        };
+
+        global.addEventListener('message', function (message) {
+          var data = message.data.data;
+          var subject = message.data.subject;
+          switch (subject) {
+            case 'OCR.Verbose':
+              alert(data.message);
+              break;
+            case 'Internal.Error':
+              switch (data.message) {
+                case 'SANDBOX_ID_NOT_ALLOWED':
+                  alert('Invalid sandbox image code');
+                  global.OCRSDK.onDestroy();
+                  break;
+                case 'INSUFFICIENT_QUOTA':
+                  alert('Insufficient quota');
+                  global.OCRSDK.onDestroy();
+                  break;
+                case 'INTERNAL_SERVER_ERROR':
+                  alert('Internal server error occured.');
+                  break;
+                case 'PROCESS_TIMEOUT':
+                  alert('KTP Extraction timeout.');
+                  break;
+                default:
+                  alert('An error occured. Please check the console.');
+                  console.log(data.message);
+                  break;
+              }
+              break;
+            case 'OCR.Success':
+              const imageElement = document.getElementById('image-result');
+              const jsonElement = document.getElementById('data-result');
+              imageElement.src = data.image.url;
+              jsonElement.innerText = JSON.stringify(data, undefined, 2);
+              setTimeout(() => {
+                global.OCRSDK.onDestroy();
+              }, 3000);
+              break;
+            case 'OCR.Cancelled':
+            case 'OCR.OutOfChance':
+              document.getElementById('data-result').innerText = data.message;
+              global.OCRSDK.onDestroy();
+              break;
+            case 'Camera.NotFound':
+            case 'Camera.PermissionDenied':
+              alert('Camera is not detected or permission denied'),
+                global.OCRSDK.onDestroy();
+              break;
+          }
+        });
+      })(window);
+    </script>
+  </body>
+</html>
+
+```
+
+To try the above implementation, you can host the folder/directory as the root of a HTTP server.
