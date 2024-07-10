@@ -1,91 +1,467 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "docs-verihubs",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/inverted.png",
+    "light": "/logo/regular.png"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#20255e",
+    "light": "#1a1e4b",
+    "dark": "#20255e",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#20255e",
+      "to": "#1a1e4b"
     }
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "name": "Lihat Produk",
+      "url": "#product-list"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Jadwalkan Demo Gratis",
+    "url": "https://verihubs.com/#contact-us-form"
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
+      "name": "API Documentation",
+      "url": "reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
+  "anchors": [],
+  "modeToggle": {
+    "default": "dark"
+  },
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "GETTING STARTED",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        {
+          "group": "Greetings",
+          "pages": [
+            "docs/greetings",
+            "docs/sign-up",
+            "docs/sign-in"
+          ]
+        },
+        {
+          "group": "Company Access",
+          "pages": [
+            "docs/company-access",
+            "docs/multiple-company-access"
+          ]
+        },
+        {
+          "group": "Applications",
+          "pages": [
+            "docs/applications",
+            "docs/rate-limit"
+          ]
+        },
+        "docs/service-level-agreement",
+        "docs/contact-us"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "SECURITY CONCERN",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "docs/api-security-checklist"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "DOCUMENTATION",
       "pages": [
-        "api-reference/introduction"
+        {
+          "group": "SMS",
+          "pages": [
+            "docs/sms-otp",
+            "docs/sms-announcement",
+            "docs/sms-segment-count-explanation",
+            "docs/sms-international-supported-countries",
+            "docs/supported-local-operator-prefix"
+          ]
+        },
+        {
+          "group": "WhatsApp",
+          "pages": [
+            "docs/whatsapp-get-started",
+            "docs/whatsapp-template",
+            "docs/whatsapp-otp",
+            "docs/whatsapp-notifications",
+            "docs/whatsapp-session-message",
+            "docs/whatsapp-webhook",
+            "docs/whatsapp-business-supported-countries",
+            "docs/verihubs-whatsapp-migration",
+            "docs/whatsapp-new-authentication-template",
+            "docs/new-authentication-template-preview"
+          ]
+        },
+        {
+          "group": "Identity Verification",
+          "pages": [
+            {
+              "group": "Electronic Certificate Issuance",
+              "pages": [
+                "docs/electronic-certificate-issuance",
+                "docs/sertel-demo",
+                "docs/sertel-transaction-details",
+                "docs/sertel-request-response",
+                "docs/sertel-selfie-id-card-best-practice",
+                "docs/liveness-certel",
+                "docs/sertel-service-monitoring"
+              ]
+            },
+            {
+              "group": "NPWP Verification",
+              "pages": [
+                "docs/npwp-verification-introduction",
+                "docs/npwp-verification-transaction-details",
+                "docs/npwp-verification-request-response"
+              ]
+            },
+            {
+              "group": "Tax Number Verification",
+              "pages": [
+                "docs/tax-number-verification-introduction",
+                "docs/tax-number-verification-demo",
+                "docs/tax-number-verification-transaction-details",
+                "docs/tax-number-verification-request-response"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Face",
+          "pages": [
+            "docs/face-recognition",
+            "docs/sdk-liveness-version-support"
+          ]
+        },
+        {
+          "group": "Scan",
+          "pages": [
+            "docs/ocr"
+          ]
+        },
+        {
+          "group": "Watchlist Screening",
+          "pages": [
+            "docs/watchlist-screening",
+            {
+              "group": "API",
+              "pages": [
+                "docs/watchlist-api",
+                "docs/watchlist-api-request-response",
+                "docs/watchlist-profile-types"
+              ]
+            },
+            {
+              "group": "Dashboard",
+              "pages": [
+                "docs/watchlist-screening-dashboard",
+                "docs/watchlist-dashboard-demo",
+                "docs/watchlist-dashboard-settings",
+                "docs/watchlist-dashboard-search",
+                "docs/result-page",
+                "docs/transaction-logs-page"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Income Verification",
+          "pages": [
+            "docs/income-verification-1",
+            "docs/endpoints",
+            "docs/examples-1",
+            "docs/range-income"
+          ]
+        }
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "DASHBOARD",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "docs/sidebar-menu",
+        "docs/dashboard",
+        "docs/profile",
+        "docs/sandbox"
+      ]
+    },
+    {
+      "group": "LIVENESS WEBSDK",
+      "pages": [
+        "docs/overview",
+        {
+          "group": "Getting Started",
+          "pages": [
+            "docs/vanilla-html",
+            "docs/react"
+          ]
+        },
+        {
+          "group": "Proxy Middleware",
+          "pages": [
+            "docs/fastapi"
+          ]
+        },
+        {
+          "group": "API",
+          "pages": [
+            "docs/builder",
+            "docs/system-messages",
+            "docs/types"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "OCR WEBSDK",
+      "pages": [
+        "docs/ocr-overview",
+        {
+          "group": "Getting Started",
+          "pages": [
+            "docs/ocr-vanilla-html",
+            "docs/ocr-react"
+          ]
+        },
+        {
+          "group": "Proxy Middleware",
+          "pages": [
+            "docs/ocr-fastapi"
+          ]
+        },
+        {
+          "group": "API",
+          "pages": [
+            "docs/ocr-builder",
+            "docs/ocr-system-messages",
+            "docs/ocr-types"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "SMS API DOCUMENTATION",
+      "pages": [
+        {
+          "group": "SMS OTP",
+          "pages": [
+            "reference/send_otp_post-1",
+            "reference/verify_otp_post-1"
+          ]
+        },
+        {
+          "group": "SMS Notifications and Promotions",
+          "pages": [
+            "reference/send_sms_post-1",
+            "reference/send_sms_bulk_post"
+          ]
+        },
+        {
+          "group": "SMS & OTP",
+          "pages": [
+            "reference/post_otp_blocked-1",
+            "reference/delete_otp_blocked-1"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "WHATSAPP API DOCUMENTATION",
+      "pages": [
+        {
+          "group": "Whatsapp OTP",
+          "pages": [
+            "reference/send_whatsapp_otp_post-1",
+            "reference/verify_whatsapp_otp_post-1"
+          ]
+        },
+        {
+          "group": "Whatsapp Templates",
+          "pages": [
+            "reference/template_whatsapp_get"
+          ]
+        },
+        {
+          "group": "Whatsapp Message",
+          "pages": [
+            "reference/send_whatsapp_msg_post"
+          ]
+        },
+        {
+          "group": "Whatsapp Session Message",
+          "pages": [
+            "reference/send_whatsapp_session_post"
+          ]
+        },
+        {
+          "group": "WhatsApp Bulk Message",
+          "pages": [
+            "reference/send_bulk_message_v1_whatsapp_message_bulk_post"
+          ]
+        },
+        {
+          "group": "Blocked Numbers",
+          "pages": [
+            "reference/get_otp_blocked",
+            "reference/post_otp_blocked",
+            "reference/delete_otp_blocked"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "DATA API DOCUMENTATION",
+      "pages": [
+        {
+          "group": "Electronic Certificate Issuance Service",
+          "pages": [
+            "reference/extract_sertel_post"
+          ]
+        },
+        {
+          "group": "NPWP Verification",
+          "pages": [
+            "reference/post_npwp_check"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "AI API DOCUMENTATION",
+      "pages": [
+        {
+          "group": "Face",
+          "pages": [
+            "reference/enroll_face_post-1",
+            "reference/enroll_face_delete",
+            "reference/compare_face_post-1",
+            "reference/verify_face_post-1",
+            "reference/search_face_post",
+            "reference/detect_face_liveness_post-1"
+          ]
+        },
+        {
+          "group": "KTP - Synchronous",
+          "pages": [
+            "reference/extract_sync_text_post"
+          ]
+        },
+        {
+          "group": "KTP - Asynchronous",
+          "pages": [
+            "reference/extract_async_text_post",
+            "reference/extract_async_result_text_post"
+          ]
+        },
+        {
+          "group": "SIM",
+          "pages": [
+            "reference/extract_sim_text_post"
+          ]
+        },
+        {
+          "group": "NPWP",
+          "pages": [
+            "reference/extract_npwp_text_post"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "SANDBOX - AI API DOCUMENTATION",
+      "pages": [
+        {
+          "group": "Face",
+          "pages": [
+            "reference/enroll_face_post",
+            "reference/enroll_face_delete-1",
+            "reference/compare_face_post",
+            "reference/verify_face_post",
+            "reference/search_face_post-1",
+            "reference/detect_face_liveness_post"
+          ]
+        },
+        {
+          "group": "KTP",
+          "pages": [
+            "reference/extract_async_text_post-1",
+            "reference/extract_async_result_text_post-1"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "SANDBOX - DATA API DOCUMENTATION",
+      "pages": [
+        {
+          "group": "Sandbox - Electronic Certificate Issuance Service",
+          "pages": [
+            "reference/sandbox-sertel-hit"
+          ]
+        },
+        {
+          "group": "Sandbox - NPWP Verification",
+          "pages": [
+            "reference/sandbox-npwp-hit"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "SANDBOX - WHATSAPP API DOCUMENTATION",
+      "pages": [
+        {
+          "group": "Whatsapp OTP",
+          "pages": [
+            "reference/send_whatsapp_otp_post",
+            "reference/verify_whatsapp_otp_post"
+          ]
+        },
+        {
+          "group": "Whatsapp Message",
+          "pages": [
+            "reference/send_whatsapp_msg_post-1"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "SANDBOX - SMS API DOCUMENTATION",
+      "pages": [
+        {
+          "group": "Sandbox - SMS OTP",
+          "pages": [
+            "reference/send_otp_post",
+            "reference/verify_otp_post"
+          ]
+        },
+        {
+          "group": "Sandbox - SMS Notifications and Promotions",
+          "pages": [
+            "reference/send_sms_post"
+          ]
+        }
       ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
-  }
+    "instagram": "https://www.instagram.com/verihubs/",
+    "linkedin": "https://www.linkedin.com/company/verihubs/"
+  },
+  "openapi": [
+    "/openapi-0.json",
+    "/openapi-1.json",
+    "/openapi-2.json",
+    "/openapi-3.json",
+    "/openapi-4.json",
+    "/openapi-5.json",
+    "/openapi-6.json",
+    "/openapi-7.json"
+  ]
 }
