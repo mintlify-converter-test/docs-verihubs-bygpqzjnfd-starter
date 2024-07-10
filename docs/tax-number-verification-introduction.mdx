@@ -1,0 +1,24 @@
+---
+title: "Introduction"
+---
+Tax Number Verification service allows you to check the status of the associated NPWP from the government database source. This service is the successor of Verihubs' NPWP Verification Service and consist of two different endpoints that allows you to flexibly choose to hit using Nomor Induk Kependudukan (NIK) or Nomor Pokok Wajib Pajak (NPWP) separately based on your needs.
+
+# 🎈What is Changing?
+
+For current NPWP Verification Service user, you may be wondering what changes the Tax Number Verification Service brings. Here, we compiled the main changes that will help you to understand the difference between both services.
+
+| Aspect | What is New? |
+| --- | --- |
+| Endpoint | New URL.  NIK Endpoint: [https://api.verihubs.com/tax/nik/verify](https://api.verihubs.com/tax/nik/verify)  NPWP Endpoint: [https://api.verihubs.com/tax/npwp/verify](https://api.verihubs.com/tax/npwp/verify) |
+| Request Parameter | With each endpoints have specific purposes for each identifier (NIK/NPWP), you now only have to input the data and not have to choose the right parameter for each identifier anymore. Check [Request & Response](/docs/tax-number-verification-request-response) guide for more details. |
+| Transaction Details Information | You now able to get the information on which identifier you used during the transaction, the NIK or NPWP, via the Transaction Details menu in Client Dashboard Version 3. Check [Transaction Details](/docs/tax-number-verification-transaction-details) guide for more details. |
+
+# 🎈Abbreviation & Terms
+
+| Abbreviation | Terms |
+| --- | --- |
+| NIK | Nomor Induk Kependudukan; Resident identity number that is unique or distinctive, singular and attached to a person who is registered as an Indonesian Resident. |
+| NPWP | Nomor Pokok Wajib Pajak; The number given to the taxpayer as a means of tax administration which is used as a personal identification or identity of the taxpayer in exercising his rights and fulfilling his tax obligations. |
+| WP  | Wajib Pajak; Individuals or entities, including taxpayers, tax cutters, and tax collectors, who have tax rights and obligations in accordance with the provisions of laws and regulations in the field of taxation. |
+| Status WP Aktif | _Wajib Pajak_ has subjectively and objectively fulfilled the requisites in tax obligation fulfillment. |
+| Status WP NE | NE = Non Efektif; _Wajib Pajak_ has not subjectively and objectively fulfilled the requisites in tax obligation fulfillment.    This status may occur to one of following conditions:  1\. _Wajib Pajak Orang Pribadi_ who carry out business activities or independent work who are no longer actually carrying out business activities or independent work.  2\. _Wajib Pajak Orang Pribadi_ who do not carry out business or freelance activities and whose income is below _Penghasilan Tidak Kena Pajak_ (PTKP).  3\. _Wajib Pajak Orang Pribadi_, as mentioned on point #2, that owning an NPWP as an administrative requirement, among other things, to apply a job position or to open a financial account. |
