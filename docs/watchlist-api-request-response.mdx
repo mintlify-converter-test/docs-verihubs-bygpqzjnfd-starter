@@ -1,0 +1,66 @@
+---
+title: "API Request & Response"
+---
+# 🎈Endpoint
+
+| Method | Endpoint |
+| --- | --- |
+| **GET** | `https://api.verihubs.com/watchlist-screening/verify` |
+
+# 🎈Headers
+
+| Key | Type | Description |
+| --- | --- | --- |
+| App-ID | String | Application ID that generated from Application Menu in Verihubs Client Dashboard.  To hit in Testing and Live mode you need a Production Application ID. |
+| API-Key | String | API-Key that generated from Application Menu in Verihubs Client Dashboard that related to specific Application ID. |
+
+You can generate your Application ID and API-Key in the [Application page in Verihubs Client Dashboard.](https://app.verihubs.com/cloud/application)
+.
+
+# 🎈Request
+
+## Request Parameter
+
+| Parameter | Type | Description | Example |
+| --- | --- | --- | --- |
+| full\_name | String | Individual full name. | Joko Widodo |
+| birth\_date | String | Birthdate of the person in YYYY-MM-DD format. | 1969-10-30 |
+| birth\_place | String | Birthplace of the person. | Surabaya |
+| country | String | Country where the person resides in. | Indonesia |
+| reference\_id | String | This reference\_id can be used to indicate your company’s transaction and must be unique for each transactions. If the reference\_id value is empty, then Verihubs will auto-generate one for you. | Watchlist\_123 |
+
+# 🎈Response
+
+## Response Parameter
+
+| Field | Type | String |
+| --- | --- | --- |
+| id  | string | Auto generated Verihubs Transaction ID that can be used for reconciliation purpose (unique for every transaction). |
+| reference\_id | string |     |
+| full\_name | string | Full name of the individual that matched the search criteria. |
+| birth\_date | string | Birth date of the individual that matched the search criteria in YYYY-MM-DD format. |
+| risk\_level | string | Risk level of the individual profile that matched the search criteria \["high", "medium", "low", "unknown"\]. |
+| count | integer | Number of total matched profile based on the search criteria. |
+| pep\_count | integer | Number of total matches profile in [PEP case](/docs/profile-types) based on the search criteria. |
+| rca\_count | integer | Number of total matches profile in [RCA case](/docs/profile-types) based on the search criteria. |
+| sip\_count | integer | Number of total matches profile in [SIP case](/docs/profile-types) based on the search criteria. |
+| sanction\_count | integer | Number of total matches profile in [Sanction case](/docs/profile-types) based on the search criteria. |
+| watchlist\_count | integer | Number of total matches profile in [Watchlist case](/docs/profile-types) based on the search criteria. |
+| crime\_count | integer | Number of total matches profile in [Crime case](/docs/profile-types) based on the search criteria. |
+| max\_similarity | float | Maximum similarity value between your query and matches profile. |
+| birth\_place | string | Birthplace of the individual that matched the search criteria. |
+| death\_date | string | Deathdate of the individual that matched the search criteria if the individual is deceased. |
+| description | string | Short description of the individual that matched the search criteria. |
+| detail\_description | string | More details description of the individual that matched the search criteria. |
+| alias | string | Aliases/other names. of the individual that matched the search criteria. |
+| addresses | string | Home address of the individual that matched the search criteria. |
+| associates | string | Families & relatives of the individual that matched the search criteria. |
+| crimes | string | Detailed information regarding criminal acts committed by the individual that matched the search criteria. |
+| roles | string | Detailed information regarding the position held by the individual that matched the search criteria. |
+| sanctions | string | Detailed information regarding the sanctions imposed on the individual that matched the search criteria. |
+| sources | string | Links for any related sources. |
+| media | string | Links for any related media. |
+| images | string | Links for any related images. |
+| types | string | Types of profile \["PEP", "RCA", "SIP", "Sanction", "Watchlist", "Crime"\] |
+| similarity | string | Similarity value between your query and matches profile. |
+| match\_fields | string | The match fields on the information you’ve entered with the results. |
