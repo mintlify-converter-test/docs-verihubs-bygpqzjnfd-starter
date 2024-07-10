@@ -1,0 +1,249 @@
+---
+title: "System Messages"
+---
+These messages are posted via [`postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
+ to the parent of the SDK iframe. The best practice to classify these messages are only through `subject` of each message.
+
+## Camera.NotAllowed
+
+This message will be posted when the SDK detects an available camera with blacklisted camera name substring, specified on [`Builder.setVirtualCameraLabel`](./builder#setvirtualcameralabel)
+.
+
+```message message
+{
+  "subject": "Camera.NotAllowed",
+  "data": {
+    "message": "Virtual camera detected, please use device camera."
+  }
+}
+
+```
+
+## Camera.NotFound
+
+This message will be posted when the browser doesn't detect any video input.
+
+```message message
+{
+  "subject": "Camera.NotFound",
+  "data": {
+    "message": "Camera not Found"
+  }
+}
+
+```
+
+## Camera.PermissionDenied
+
+This message will be posted when the user denies a camera permission request.
+
+```message message
+{
+  "subject": "Camera.PermissionDenied",
+  "data": {
+    "message": "Please allow camera permission to continue the process."
+  }
+}
+
+```
+
+## Internal.\*
+
+This message will be posted when there is any exception thrown internally by  
+the SDK.
+
+```message message
+{
+  "subject": "Internal.${EXCEPTION_NAME}",
+  "data": {
+    "message": EXCEPTION_MESSAGE
+  }
+}
+
+```
+
+<Info>
+
+## Note
+
+*   `${EXCEPTION_NAME}` is the exception name thrown internally.
+*   `EXCEPTION_MESSAGE` is the exception message thrown internally.
+
+</Info>
+
+## LicenseVerification.Undefined
+
+This message will be posted when SDK built with wrong `License ID` or `Public Key` or without `License ID` or `Public Key`.
+
+```message message
+{
+  "subject": "LicenseVerification.Undefined",
+  "data": {
+    "message": "SDK is built with wrong ${license} or without ${license}"
+  }
+}
+
+```
+
+<Info>
+
+## Note
+
+The `${license}` is either license ID or public key.
+
+</Info>
+
+## LicenseVerification.Error
+
+This message will be posted when license service failed to validate license.
+
+```message message
+{
+  "subject": "LicenseVerification.Error",
+  "data": {
+    "message": "License service error"
+  }
+}
+
+```
+
+## LicenseVerification.Invalid
+
+This message will be posted when license does not match with response from license service. License may already expired or wrong license type.
+
+```message message
+{
+  "subject": "LicenseVerification.Invalid",
+  "data": {
+    "message": "License does not matched. License may already expired or wrong license type."
+  }
+}
+
+```
+
+## LicenseVerification.Success
+
+This message will be posted when license verification success.
+
+```message message
+{
+  "subject": "LicenseVerification.Success",
+  "data": {
+    "message": "License verification success."
+  }
+}
+
+```
+
+## ScreenOrientation.NotAllowed
+
+This message will be posted when the user changes the device orientation while in the process of active liveness.
+
+```message message
+{
+  "subject": "ScreenOrientation.NotAllowed",
+  "data": {
+    "message": "make sure your device orientation is in ${orientation}, otherwise it will affect the result."
+  }
+}
+
+```
+
+<Info>
+
+## Note
+
+The `${orientation}` is the orientation the active liveness expects.
+
+</Info>
+
+## Verification.Disrupted
+
+This message will be posted when the user's full face is not detected after a successfull full face detection and 3 seconds after the active liveness model is loaded.
+
+```message message
+{
+  "subject": "Verification.Disrupted",
+  "data": {
+    "message": "Verification has been disrupted."
+  }
+}
+
+```
+
+## Verification.Success
+
+This message will be posted when the whole liveness process is finished.
+
+```message message
+{
+  "subject": "Verification.Success",
+  "data": {
+    "image": {
+      "dimension": [WIDTH, HEIGHT],
+      "size": SIZE_OF_FILE,
+      "url": BARE_PNG_BASE64,
+      "quality": QUALITY_COMPRESSION
+    },
+    "response": PASSIVE_LIVENESS_RESPONSE,
+    "signature": AUTHENTICITY_SIGNATURE,
+    "timestamp": RESULT_TIMESTAMP
+  }
+}
+
+```
+
+<Info>
+
+## Note
+
+*   `WIDTH` and `HEIGHT` is the resulting image dimension.
+*   `SIZE_OF_FILE` is the original size of the image in bytes.
+*   `BARE_PNG_BASE64` is the image data in base64, without prepending image uri format of `data:image/png;base64,`.
+*   `QUALITY_COMPRESSION` is the compression ratio of the resulting image compared to the captured image, in the scale of 0 to 100.
+*   `PASSIVE_LIVENESS_RESPONSE` is the resulting passive liveness response service.
+*   `AUTHENTICITY_SIGNATURE` is the signature from [`Builder.setCredential`](./builder#setcredential)
+     input and image HMAC-SHA256. Format: `${clientId}${SHA256(${BARE_PNG_BASE64}).toString().toLowerCase()}${RESULT_TIMESTAMP}`.
+*   `RESULT_TIMESTAMP` is the timestamp of the image taken.
+
+</Info>
+
+## Verification.Timeout
+
+This message will be posted after the timeout duration from the start of verification page appearance, expires, as set by [`Builder.setTimeout`](./builder#settimeout)
+.
+
+```message message
+{
+  "subject": "Verification.Timeout",
+  "data": {
+    "message": "Verification process has been timeout."
+  }
+}
+
+```
+
+## Verification.Verbose
+
+This message will be posted when the active liveness instruction changes.
+
+```message message
+{
+  "subject": "Verification.Verbose",
+  "data": {
+    "service": "liveness",
+    "command": CURRENT_INSTRUCTION,
+    "status": MATCHED_FRAMES,
+  }
+}
+
+```
+
+<Info>
+
+## Note
+
+*   `CURRENT_INSTRUCTION` is the new or current instruction of the active liveness, such as `see_straight`, `look_left`, `look_right`, or `open_mouth`.
+*   `MATCHED_FRAMES` is the frame count that the face matches the current instruction. It will be reset when the face doesn't match the current instruction consecutively. Format: `${counter}/7`.
+
+</Info>
