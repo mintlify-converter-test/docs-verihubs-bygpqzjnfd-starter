@@ -1,0 +1,71 @@
+---
+title: "API Request & Response"
+---
+# 🎈Headers
+
+| Key | Type | Description |
+| --- | --- | --- |
+| App-ID | String | Application ID that generated from Application Menu in Verihubs Client Dashboard.  To hit in Testing and Live mode you need a Production Application ID. |
+| API-Key | String | API-Key that generated from Application Menu in Verihubs Client Dashboard that related to specific Application ID. |
+
+You can generate your Application ID and API-Key in the [Application page in Verihubs Client Dashboard.](https://app.verihubs.com/cloud/application)
+.
+
+# 🎈Request Parameter
+
+| Payloads | Type | Description | Example |
+| --- | --- | --- | --- |
+| nik\* | string | 16-digit of Wajib Pajak's NIK as stated on KTP. | 1234567891234567 |
+| npwp\* | string | Wajib Pajak's NPWP as stated on NPWP card and has to be inputted without the point (.) and strip (-) symbols that are shown in the Kartu NPWP. Verihubs accept these formats of NPWP:    \- 15 digit NPWP.  \- 16 digit NPWP.  \- 22 digit NITKU. | If the NPWP written on NPWP card is 01.002.003.4-056.000, then input it as is 010020034056000 |
+| purpose | string | The main purpose of validation. Currently there is no number of character limitation in this payload. | Pengecekan status WP |
+| user\_consent | boolean | When user\_consent is true, the response will show the user's NPWP along with the validation status.    When user\_consent is false, the response will only show the validation status without showing user's NPWP. | true |
+| reference\_id | string | ID that can be generated from your side to indicate your company's transaction. Must be unique per transaction. Verihubs will also auto-generate this ID if it left empty/non-exist in the payload. | npwp#123456 |
+
+<Note>
+
+## ️Users have to choose between NIK or NPWP to be inputted in the body for the checking process. Hitting the Verihubs NPWP Verification endpoint with both the NPWP and NIK in the body will result in an INVALID\_PAYLOAD response.
+
+</Note>
+
+# 🎈Response
+
+## Response Parameter
+
+| Response | Type | Description | Examples |
+| --- | --- | --- | --- |
+| message | String | Status of the transaction | Successfully check NPWP |
+| data | Object | Result of the verification that contains id, reference\_id, npwp, nama, alamat, status\_wp and status\_spt. | N/A |
+| id  | String | 32-digit auto-generated Verihubs transaction ID | 123a4a56-7b8c-91a2-34b5-67a8e9a1234a |
+| reference\_id | String | ID that can be generated from your side to indicate your company's transaction. Must be unique. | npwp#123456 |
+| npwp | String | NPWP from the inputted NIK if user\_consent is set TRUE | 010020034056000 |
+| nama | String | Masked registered name of the NPWP owner. | J\*HN D\*\* |
+| alamat | String | Masked registered address of the NPWP owner. | W\_K TW\_R 1, JL D.. P\_NJ\*\_T\_N K\_V. 9 001 011 |
+| status\_wp | String | The Wajib Pajak (WP) status of the associated NPWP that will be shown as **AKTIF** or **NE** (re: Non Efektif). | AKTIF |
+| status\_spt | String | The Surat Pemberitahuan (SPT) Tahunan status of the associated NPWP for the last 2 years that will be shown as **VALID** or **INVALID**. | VALID |
+
+## Detailed Response
+
+| Code | Description | Response |
+| --- | --- | --- |
+| 200 | **Successful Request**; This is a transaction that is considered successful and has been successfully verified by the data source) | {  "message": "Successfully check NPWP",  "data": {  "id": "Transaction ID",  "referenceid": "Reference ID from Client",  "npwp": "NPWP Number",  "nama": "Masked Name",  "alamat": "Masked Address",  "status\_wp": "AKTIF/NE",  "status\_spt": "VALID/INVALID"  }  } |
+| 400 | **Bad Request**; This is a transaction that is considered failed due to validation errors, an error\_field will appear explaining the error. | {  "message": "Authorization Failed",  "error\_code": "BAD REQUEST",  "error\_fields": \[\]  } |
+| 401 | **Authorization Failed**; The transaction cannot proceed because it is unauthorized. | {  "message": "Authorization Failed",  "error\_code": "UNAUTHORIZED",  "error\_fields": \[\]  } |
+| 403 | **Insufficient quota**; The transaction failed due to insufficient quota, please contact Verihubs Customer Support (CS) Team. | {  "message": "Insufficient testing quota",  "error\_code": "FORBIDDEN",  "error\_fields": \[\]  } |
+| 429 | **Spam Error**; The transaction is read as spam, please wait a few seconds before re-performing the hit process. | {  "message": "Too many request in the allowed time frame",  "error\_code": "TOO\_MANY\_REQUEST",  "error\_fields": \[\]  } |
+| 500 | **Internal Server Error**; The transaction failed due to a server error that could be caused by data source constraints, timeout, internal error. | {  "message": "Internal Server Error",  "error\_code": "INTERNAL\_SERVER\_ERROR",  "error\_fields": \[\]  } |
+
+### NIK, NPWP and User Consent Variations
+
+| Payload Used | User Consent | Request | Response | Remarks |
+| --- | --- | --- | --- | --- |
+| NIK | True | {  **"nik": "true NIK",**  "purpose": "real purpose",  **"user\_consent": true,**  “reference\_id”: “Client Generated Reference ID”  } | {  "message": "Successfully check NPWP",  "data": {  "id": "Transaction ID",  "referenceid": "Reference ID from Client",  **"npwp": "NPWP Number",**  "nama": "Masked Name",  "alamat": "Masked Address",  "status\_wp": "AKTIF/NE",  "status\_spt": "VALID/INVALID"  }  } | The NPWP number will be shown if the NIK payload is being used and user\_consent is true. |
+| NIK | False/Empty/Not Exist | {  **"nik": "true NIK",**  "purpose": "real purpose",  **"user\_consent": false,**  “reference\_id”: “Client Generated Reference ID”  } | {  "message": "Successfully check NPWP",  "data": {  "id": "Transaction ID",  "referenceid": "Reference ID from Client",  "nama": "Masked Name",  "alamat": "Masked Address",  "status\_wp": "AKTIF/NE",  "status\_spt": "VALID/INVALID"  }  } | The NPWP number will not be shown if the NIK payload is being used and user\_consent is false. |
+| NPWP | True/False/Empty/Not Exist | {  **"npwp": "true NPWP",**  "purpose": "real purpose",  **"user\_consent": true,**  “reference\_id”: “Client Generated Reference ID”  } | {  "message": "Successfully check NPWP",  "data": {  "id": "Transaction ID",  "referenceid": "Reference ID from Client",  "nama": "Masked Name",  "alamat": "Masked Address",  "status\_wp": "AKTIF/NE",  "status\_spt": "VALID/INVALID"  }  } | The user\_consent payload will be ignored if the NPWP is being used for the verification. |
+| NIK + NPWP | True/False/Empty/Not Exist | {  **"nik": "true NIK",**  **“npwp”: “true NPWP”,**  "purpose": "real purpose",  **"user\_consent": true**  } | {  "message": "Invalid payload",  "error\_code": "INVALID\_PAYLOAD",  "error\_fields": \[  {  "field": "nik",  "message": "NPWP and NIK cannot be used on body at the same time"  }  \]  } | Only a single request payload option between NIK or NPWP is allowed to be used. |
+
+### Reference ID Variations
+
+| Client Reference ID | Request | Response | Remarks |
+| --- | --- | --- | --- |
+| Client Generated | {  "nik": "true NIK",  "purpose": "real purpose",  "user\_consent": true,  “reference\_id”: “Client Generated Reference ID”  } | {  "message": "Successfully check NPWP",  "data": {  "id": "Transaction ID",  "referenceid": "Client Generated Reference ID",  "npwp": "NPWP Number",  "nama": "Masked Name",  "alamat": "Masked Address",  "status\_wp": "AKTIF/NE",  "status\_spt": "VALID/INVALID"  }  } | The response will show the exact same Reference ID if the client chooses to generate it by themself. |
+| Empty    _or_    Not Exist | {  "nik": "true NIK",  "purpose": "real purpose",  "user_consent": true,  **“reference\_id”: “”**  }    \_or_    {  "nik": "true NIK",  "purpose": "real purpose",  "user\_consent": true  } | {  "message": "Successfully check NPWP",  "data": {  "id": "Transaction ID",  **"referenceid": "Verihubs Generated Reference ID",**  "npwp": "NPWP Number",  "nama": "Masked Name",  "alamat": "Masked Address",  "status\_wp": "AKTIF/NE",  "status\_spt": "VALID/INVALID"  }  } | Verihubs will generate a specific Reference ID if within the request payload client doesn’t include ones. |
