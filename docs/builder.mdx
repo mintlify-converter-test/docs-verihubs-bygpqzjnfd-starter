@@ -1,0 +1,278 @@
+---
+title: "Builder"
+---
+# Builder
+
+Liveness WebSDK instance builder for using Livenews WebSDK
+
+## build
+
+Builds the SDK interface that can be started and destroyed.
+
+```declaration declaration
+build(): LivenessSDK;
+
+```
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`LivenessSDK`](types#livenesssdk) | the SDK interface |
+
+## inspect
+
+Inspects the passed configuration for debugging.
+
+```declaration declaration
+inspect(): void;
+
+```
+
+## setCompressionAlgorithm
+
+Sets the compression algorithm options.
+
+```declaration declaration
+setCompressionAlgorithm(algorithm: CompressionAlgorithm): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| algorithm | [`CompressionAlgorithm`](types#compressionalgorithm) | the compression algorithm options |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setContent
+
+Sets the text content of the SDK to the desired text. Usually used for translation.
+
+```declaration declaration
+setContent(content: LivenessContentConfiguration): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| content | [`LivenessContentConfiguration`](types#livenesscontentconfiguration) | the text and image content to replace |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setCredential
+
+Sets the credential to generate image signature for authenticity checking.
+
+```declaration declaration
+setCredential(credential: Credential): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| credential | [`Credential`](types#credential) | credential used to generate image signature |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setDisruptDuration
+
+Duration from the start of show camera preview till disrupt detection enabled.
+
+```declaration declaration
+setDisruptDuration(duration: number): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| duration | `number` | the timeout duration from the start of show camera preview till disrupt detection enabled in millisecond |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setInstruction
+
+Sets the instruction configuration.
+
+```declaration declaration
+setInstruction(instructions: Instruction[], options: InstructionOptions): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| instructions | [`Instruction[]`](types#instruction) | an array of instructions made available to appear in instruction randomization. |
+| options | [`InstructionOptions`](types#instructionoptions) | more instruction parameters |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+**Image:**
+
+<img className="block" src="images/files_readme_io/_26038c7_verification_instruction_config.png" alt="Verification content names/paths on running verification" />
+
+Verification content names/paths on running verification
+
+<Info>
+
+## Note
+
+The running verification screen will only be shown when the active liveness model is running
+
+</Info>
+
+## setProxyMiddleware
+
+Sets the endpoint url proxy collection to be used for the SDK.
+
+```declaration declaration
+setProxyMiddleware(proxy: ProxyMiddleware): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| proxy | [`ProxyMiddleware`](types#proxymiddleware) | endpoint proxy collection to be used |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setScreenOrientation
+
+Sets the preferred orientation to be forced when capturing photo.
+
+```declaration declaration
+setScreenOrientation(orientation: ScreenOrientation): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| orientation | [`ScreenOrientation`](types#screenorientation) | the preferred orientation |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setTimeout
+
+Sets the timeout duration from the start of verification page appearance. After this timeout expires, the SDK will post [`Verification.Timeout`](./messages.md#verificationtimeout)
+ message.
+
+```declaration declaration
+setTimeout(duration: number): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| duration | `number` | the timeout duration from the start of verification page appearance |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setTheme
+
+Sets the theme configuration for the SDK.
+
+```declaration declaration
+setTheme(theme: LivenessThemeConfiguration): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| theme | [`LivenessThemeConfiguration`](types#livenessthemeconfiguration) | theme configurations |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setURL
+
+Sets the SDK base path for starting the SDK.
+
+```declaration declaration
+setURL(url: string): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| url | `string` | the SDK base path |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
+
+## setVirtualCameraLabel
+
+Sets an array of string of blacklisted camera name substring. Will post [`Camera.NotAllowed`](./messages.md#cameranotallowed)
+ if there is an available camera with blacklisted camera name substring.
+
+```declaration declaration
+setVirtualCameraLabel(labels: string[]): Builder;
+
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| labels | `string[]` | array of strings to be checked |
+
+**Returns:**
+
+| Type | Description |
+| --- | --- |
+| [`Builder`](#builder) | this builder |
