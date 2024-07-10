@@ -1,0 +1,542 @@
+{
+    "openapi": "3.0.2",
+    "servers": [
+        {
+            "url": "https://api.verihubs.com/"
+        }
+    ],
+    "info": {
+        "title": "Sandbox - Whatsapp API Documentation",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "Sandbox Whatsapp",
+            "description": "This Verihubs WhatsApp Sandbox allows you to try WhatsApp Business API in sandbox environment."
+        }
+    ],
+    "paths": {
+        "/v1/whatsapp/otp/send/sandbox": {
+            "post": {
+                "tags": [
+                    "Whatsapp OTP"
+                ],
+                "summary": "Sandbox - Send Whatsapp OTP",
+                "description": "This method allows you to generate and send Whatsapp message containing one-time password in sandbox environment. \n\n#### Callback Description\nCallbacks requires the url to be filled on payload. \n```\nyour-callback-url.com/callback\n```\nExample callback that we'll send\n```\nyour-callback-url.com/callback?session_id=d0f5fb5c-2d50-4d3f-aea7-20018ab15806&status=1\n```\n\nTo obtain the appropriate response, the payload input must adhere to the predetermined scenario. <br>\nInput other than the scenario will be considered an Invalid Scenario <br>\n\n#### Response & Status Description\n\nMsisdn       | Description          | Response |\n-----------|:---------------------|:-------------------------- |\n6282123060001        | Success Payload      | 201 \"OTP sent successfully\" requested |\n6282123060002        | Bad Request          | 400 \"Validation error\" |\n6282123060003        | Invalid Header       |   401 \"Authorization failed\" |\n6282123060004        | insufficient quota   | 403 \"Quota insufficient\" |\n6282123060005        | Blocked Msisdn       | 409 \"Msisdn invalid: msisdn has been blocked\"\n6282123060006        | Too Many Request     | 429 \"Too many request in the allowed time frame\"  |\n|\n",
+                "operationId": "send_whatsapp_otp_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendWhatsappOtp"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendWhatsappOTP"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/whatsapp/otp/verify/sandbox": {
+            "post": {
+                "tags": [
+                    "Whatsapp OTP"
+                ],
+                "summary": "Sandbox - Verify Whatsapp OTP",
+                "description": "This method helps you to verify one-time password to destination number in sandbox environment.\n\nTo obtain the appropriate response, the payload input must adhere to the predetermined scenario. <br>\n   Input other than the scenario will be considered an Invalid Scenario <br>\n #### Response & Status Description\n  Msisdn       | Description          | Response |\n   -----------|:---------------------|:-------------------------- |\n   6282123060007        | Verify OTP Success      | 200 \"OTP has been verified\" |\n   6282123060008        | User Input Invalid OTP          | 404 \" OTP not found\" |\n   6282123060009        | Exceeded time limit      |   422 \"OTP cannot be verified because Time limit exceeded\"|\n   |\n",
+                "operationId": "verify_whatsapp_otp_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyWhatsappOtp"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseVerifyWhatsappOTP"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/whatsapp/message/send/sandbox": {
+            "post": {
+                "tags": [
+                    "Whatsapp Message"
+                ],
+                "summary": "Sandbox - Send Whatsapp Message",
+                "description": "\nThis method helps you to generate and send Whatsapp message to destination number in sandbox environment.\n\n#### Callback Description\nCallbacks requires the url to be filled on payload. \n```\nyour-callback-url.com/callback\n```\nExample callback that we'll send\n```\nyour-callback-url.com/callback?session_id=d0f5fb5c-2d50-4d3f-aea7-20018ab15806&status=1\n```\n\n To obtain the appropriate response, the payload input must adhere to the predetermined scenario. <br>\nInput other than the scenario will be considered an Invalid Scenario <br>\n\n\n#### Response & Status Description\n\nStatus       | Description          | Condition |\n-----------|:---------------------|:-------------------------- |\n6282123060001        | Success Payload      | 201 \"Message sent successfully\" |\n6282123060002        | Bad Request          | 400 Validation error\" |\n6282123060003        | Invalid Header       | 401 \"Authorization failed\"  |\n6282123060004        | insufficient quota   | 403 \"Quota insufficient\" |\n6282123060005        | Blocked Msisdn       | 409 \"Msisdn invalid: msisdn has been blocked\" |\n6282123060006        | Too Many Request     | 429 \"Too many request in the allowed time frame\" |\n",
+                "operationId": "send_whatsapp_msg_post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "App-ID",
+                            "type": "string"
+                        },
+                        "name": "App-ID",
+                        "in": "header"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "API-Key",
+                            "type": "string"
+                        },
+                        "name": "API-Key",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendWhatsappMessage"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSendWhatsappMessage"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string"
+                    }
+                }
+            },
+            "SendWhatsappOtp": {
+                "title": "SendWhatsappOtp",
+                "required": [
+                    "msisdn",
+                    "content"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. Scenario is the only valid msisdn to use. Any other msisdn format will be marked as Invalid.",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "content": {
+                        "description": "String that will replaced variable from Template. For example 'This is your OTP Code {{1}}. Please use only in {{2}}'. If you put Registration in payload array 1, it will change variable {{1}} to Registration.",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "Verihubs"
+                        }
+                    },
+                    "otp": {
+                        "description": "Optional. Code generated by client.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "challenge": {
+                        "description": "This value is a category. You can verify OTP based on the same challenge.",
+                        "type": "string",
+                        "example": "update_account"
+                    },
+                    "time_limit": {
+                        "description": "Optional. Expiration time for verify OTP in seconds.",
+                        "type": "string",
+                        "example": "300"
+                    },
+                    "lang_code": {
+                        "description": "Optional. Language code to send in a different language (need to be approved first too)",
+                        "type": "string",
+                        "example": "en"
+                    },
+                    "otp_length": {
+                        "description": "Optional. Length of the OTP, do not send alongside self generated OTP code payload (payload otp)",
+                        "type": "string",
+                        "example": "5"
+                    },
+                    "callback_url": {
+                        "description": "Optional. This URL will be called by the server when the desired event will occur.",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "VerifyWhatsappOtp": {
+                "title": "VerifyWhatsappOtp",
+                "required": [
+                    "msisdn",
+                    "otp"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "This value is destination number. You need to include international prefix number.",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "otp": {
+                        "description": "Code received by destination number.",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "challenge": {
+                        "description": "This value is a category. You can verify OTP based on the same challenge.",
+                        "type": "string",
+                        "example": "update_account"
+                    }
+                }
+            },
+            "SendWhatsappMessage": {
+                "title": "SendWhatsappMessage",
+                "required": [
+                    "msisdn"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. Scenario is the only valid msisdn to use. Any other  msisdn format will be marked as Invalid.",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "content": {
+                        "description": "Optional. String that will replaced variable from Template. For example 'Hello {{1}}, thank you for your interest for our product. Contact us at {{2}} if you need additional help'. If you put Verihubs in payload array 1, it will change variable {{1}} to Verihubs.",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "Verihubs"
+                        }
+                    },
+                    "lang_code": {
+                        "description": "Optional. Language code to send in a different language (need to be approved first too)",
+                        "type": "string",
+                        "example": "en"
+                    },
+                    "callback_url": {
+                        "description": "Optional. This URL will be called by the server when the desired event will occur.",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "SendWhatsappSession": {
+                "title": "SendWhatsappSession",
+                "required": [
+                    "msisdn",
+                    "content"
+                ],
+                "type": "object",
+                "properties": {
+                    "msisdn": {
+                        "description": "Destination Phone Number. Scenario is the only valid msisdn to use. Any other  msisdn format will be marked as Invalid.",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "content": {
+                        "description": "Message that wants to be sent.",
+                        "type": "string",
+                        "example": "Hello welcome to Verihubs Apps"
+                    },
+                    "callback_url": {
+                        "description": "Optional. This URL will be called by the server when the desired event will occur.",
+                        "type": "string",
+                        "example": "https://your-url-callback.com"
+                    }
+                }
+            },
+            "ResponseSendWhatsappOTP": {
+                "title": "ResponseSendOTP",
+                "required": [
+                    "message",
+                    "otp",
+                    "msisdn",
+                    "session_id",
+                    "try_count"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP sent successfully"
+                    },
+                    "otp": {
+                        "description": "Code received by destination number",
+                        "type": "string",
+                        "example": "234123"
+                    },
+                    "msisdn": {
+                        "description": "destination number with international prefix country code",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request",
+                        "type": "string",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    },
+                    "try_count": {
+                        "description": "Shows count of send OTP attempts to destination number in the span of 10 minutes",
+                        "type": "integer",
+                        "example": 2
+                    }
+                }
+            },
+            "ResponseVerifyWhatsappOTP": {
+                "title": "ResponseVerifyOTP",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "OTP has been verified"
+                    }
+                }
+            },
+            "ResponseSendWhatsappMessage": {
+                "title": "ResponseSendMessage",
+                "required": [
+                    "message",
+                    "msisdn",
+                    "session_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Message sent successfully"
+                    },
+                    "msisdn": {
+                        "description": "destination number with international prefix country code",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request",
+                        "type": "string",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    }
+                }
+            },
+            "ResponseSendWhatsappSession": {
+                "title": "ResponseSendWhatsappSession",
+                "required": [
+                    "message",
+                    "msisdn",
+                    "session_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "example": "Session message sent successfully"
+                    },
+                    "msisdn": {
+                        "description": "destination number with international prefix country code",
+                        "type": "string",
+                        "example": "6282123060001"
+                    },
+                    "session_id": {
+                        "description": "Generated ID which associated with verification request",
+                        "type": "string",
+                        "example": "asddede-asdae234-34sfd3-fe234d"
+                    }
+                }
+            }
+        }
+    }
+}
